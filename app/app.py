@@ -78,6 +78,11 @@ def fmt_signed_minutes(minutes: float) -> str:
     return f"{'+' if m >= 0 else '-'}{abs(m)} 分钟"
 
 
+def dataset_label(name: str) -> str:
+    """数据集在界面上显示的名字（取不到就退回内部键，保证加数据集时不会报错）。"""
+    return DATASET_LABELS.get(name, name)
+
+
 # ------------------------------------------------------------------
 # 人群（数据集）说明书：输入表单由这份数据渲染，不写死控件
 # ------------------------------------------------------------------
@@ -88,7 +93,7 @@ def fmt_signed_minutes(minutes: float) -> str:
 #      但没有日期列，做不了「载入最近 N 天 → 预测今晚」。
 # 把「能填什么」写成**数据**而不是散落在代码里的 if-else：加一个数据集只加一条说明、
 # 渲染代码不动；更重要的是每一项都能追溯到模型卡里真实存在的特征，不会出现
-# 「填了没反应」的假控件（教训见 user_test/summary.md 第 4 节第 8 条）。
+# 「填了没反应」的假控件。
 # 字段键说明：
 #   kind              number / slider / time / radio
 #   from_stats        取值范围与默认值取自模型卡 feature_stats[<名>]（树模型不外推，按训练范围限死）
@@ -100,15 +105,15 @@ POPULATION_LABELS = {
     "fitbit": "手环用户（Fitbit 真实设备数据）",
     "lifestyle": "睡眠健康人群（含性别）",
 }
-# 默认进入哪条线（原为 "fitbit"，2026-10-09 改）：
-# 实测把「真实的一天」从很闲拉到很活跃（1500 步 / 久坐 1000 分 -> 22770 步 / 久坐 150 分），
-# 手环线的点预测只在 6h51 ~ 8h09 之间动，而且**比这位示例用户自己的习惯更活跃时几乎不动**
-# （15000 步 / 久坐 300 分 只比 7000 步 / 久坐 600 分 低约 9 分钟）：模型学到
-# 「步数↑->睡眠↓」「久坐↑->睡眠↓」两个方向，而真实的一天里两者必然反向变动、互相抵消，
-# 所以首屏看上去像「填了没反应」。人群线（sleep_health_lifestyle）每一项输入都明显改变结果
-# （压力自评 3->8 约 104 分钟、活动 30->90 约 67 分钟），首屏观感更符合「填了有反应」。
-# 手环线保留在侧栏选择器里：它是唯一用**真实设备数据**的线，也是报告里全部实验
-# （CV 稳定性 / 切片分析 / 数据质量门槛）的对象，删掉它等于删掉实验证据链。
+# 数据集在界面上显示的名字：模型卡里存的是内部键（fitbit_bellabeat），
+# 直接显示给使用者看不懂，这里换成可读名称，取不到就退回原键。
+DATASET_LABELS = {
+    "fitbit_bellabeat": "Fitbit Bellabeat 公开数据集",
+    "sleep_health_lifestyle": "睡眠健康与生活方式数据集",
+}
+# 默认进入哪条线：人群线（sleep_health_lifestyle）的每一项输入都会明显改变结果；
+# 手环线的预测主要由历史基线决定、输入只做小幅微调，作为首屏容易被误读成"填了没反应"。
+# 手环线仍保留在侧栏选择器里：它是唯一使用真实设备数据的一条线。
 DEFAULT_POPULATION = "lifestyle"
 STEPS_MAX_FALLBACK = 23000        # 模型卡里取不到步数上限时的兜底值
 
@@ -130,25 +135,22 @@ POPULATIONS: dict[str, dict] = {
             "steps": {
                 "name_cn": "步数", "label": "今天走了多少步", "kind": "number", "unit": " 步",
                 "from_stats": "steps", "round_up": 1000, "fallback_max": STEPS_MAX_FALLBACK,
-                # 步长 500 而不是 100：实测这条线上 100 步只能改变约 0.6 分钟，
-                # 点十下才动 6 分钟，用户会以为"填了没反应"（见 README §5 第 24 条）。
+                # 步长 500 而不是 100：100 步在这条线上只能改变约 0.6 分钟，
+                # 步长太小会让用户以为输入没有生效。
                 "step": 500, "default": 7000, "stats_hint": False,
                 "check": (0, 0), "check_uses_upper": True,
                 "check_msg": "步数不能是负数。",
                 "over_max": "步数最多填 {hi:,} 步：训练数据里最多 22,770 步，再往上填结果不会变。",
                 "at_max": "提示：步数已经填到训练数据的上限（{hi:,} 步），再往上加不会改变结果。",
                 "help": "手机或手环上的步数即可，记不清可以填个大概；训练数据里最多 22,770 步，"
-                        "接近上限后再往上填，估计不会再有变化。"
-                        "按钮每次 ±500 步，想比较不同活动量建议直接输入相差几千步的数值。",
+                        "接近上限后再往上填不会有变化。按钮每次 ±500 步。",
             },
             "very_active_minutes": {
                 "name_cn": "中高强度活动", "label": "中高强度活动（分钟）", "kind": "slider",
                 "min": 0, "max": 180, "step": 5, "default": 25, "unit": " 分钟",
                 "check": (0, 1440),
                 "check_msg": "{name}要在 0~1440 分钟之间（一天只有 1440 分钟）。",
-                "help": "快走、跑步、球类等让心跳明显加快的时间。"
-                        "提醒：这一项在本模型里影响最小（整条拉满也只有几分钟），"
-                        "填了看不出变化是正常的，点「生成预测」后会把影响多少实测给你看。",
+                "help": "快走、跑步、球类等让心跳明显加快的时间；这一项对预测的影响很小。",
             },
             "sedentary_minutes": {
                 "name_cn": "久坐时间", "label": "久坐时间（分钟）", "kind": "slider",
@@ -161,50 +163,36 @@ POPULATIONS: dict[str, dict] = {
                 "name_cn": "计划就寝时刻", "label": "你打算几点上床睡觉", "kind": "time",
                 "default": "23:30", "step_minutes": 15, "requires_feature": "bedtime_minutes",
                 "check": (0, 1439), "check_msg": "就寝时刻要在 00:00~23:59 之间。",
-                "unsupported": "当前数据集（{dataset}）没有记录「计划就寝时刻」字段，"
-                               "**这一项不会被模型使用**，所以不需要填。"
-                               "换成含该字段的数据集后会自动出现。",
+                "unsupported": "当前数据集没有「计划就寝时刻」字段，"
+                               "**这一项不会被模型使用**，所以不需要填。",
             },
         },
-        "extra_caption": "补充信息（心率 / BMI / 年龄）这里没有输入框：当前数据集"
-                         "（{dataset}）里没有这三列，模型也从未见过它们，填了不会改变任何结果。",
-        "history_caption": "已载入演示用户 {demo} 的最近 {n} 天记录，其平均睡眠为 {mean}；"
-                           "填写的数值会与这段历史一起参与计算。",
+        "extra_caption": "这里没有心率 / BMI / 年龄的输入框："
+                         "当前数据集里没有这三列，模型也用不到。",
+        "history_caption": "已载入示例用户 {demo} 的最近 {n} 天记录（平均睡眠 {mean}）；"
+                           "填写的数值会与这段记录一起参与计算。",
         # 结果页文案模板：这两条线对「拿什么当参照」的说法不同
-        # （手环线是"你自己的历史平均"，横截面线只有"典型人"），所以写成模板放进说明书。
+        # （手环线是"示例用户的历史平均"，人群线只有"人群典型值"），所以写成模板放进说明书。
         "result_note": "和**{subject}** {demo} 的历史平均（{mean}）相比，今晚预计 **{delta}**。",
-        "result_note_caption": "这里的「历史平均」指的是原型载入的**{subject}**历史记录，"
-                               "不是你自己的记录（目前没有上传个人历史的入口），"
-                               "所以这句只用来解释数字怎么来的。",
+        "result_note_caption": "以上对比用的是原型载入的**{subject}**记录，"
+                               "不是使用者本人的记录。",
         "history_used": "- 历史记录：最近 {n} 天",
         "explain_reference": "示例用户的历史平均水平",
         "reference_label": "历史平均",
-        # ---- 以下是"输入有反应 / 没反应"这套诚实化文案（见 README §5 第 24/25 条）----
         # 输入灵敏度实测：数字由 src/predict.py::field_sensitivity 现算，这里只放措辞。
-        "sens_expander": "每个输入能改变多少？（按你这次填的值实测）",
-        "sens_title": "**把每一项单独拉到自己的两端**（各取 5 个点，其他项保持你填的值），"
+        "sens_expander": "每个输入能改变多少？",
+        "sens_title": "下面把每一项单独拉到它能取的**两端**（各取 5 个点，其他项保持你填的值），"
                       "看预测最多能变多少：",
-        # 这段提示按 2026-10-09 的实测重写过（原版说"把步数改到相差几千步就能看出差别"，
-        # 实测是错的：只有往下改久坐、或把一整天降到很闲才明显，"比平时更活跃"那一侧几乎是平的）。
-        # 下面每个数字都是这一组实测现算的（基线 7000 步 / 中高强度 25 分 / 久坐 600 分 = 488.8 分钟），
-        # 属于 README §5 第 24 条那条"输入灵敏度实测"线索的延伸。
-        "sens_hint": "提示：这一版预测大部分来自**历史基线**（这位示例用户自己的最近记录），"
-                     "今天填的活动只做几十（分钟）量级的微调。实测有个反直觉的地方："
-                     "**比平时更活跃几乎不改变结果**（15000 步 / 久坐 300 分 只比 "
-                     "7000 步 / 久坐 600 分 低 9 分钟）；**真正拉得动的是久坐**"
-                     "（600 分 -> 750 分 约 -40 分钟，-> 900 分 约 -70 分钟），"
-                     "一天几乎没动（1500 步 + 久坐 1000 分）约 -77 分钟。"
-                     "还有一个反直觉的：**只把步数降下来、久坐不动，预测反而 +49 分钟**。"
-                     "原因在于模型学到的是「步数↑ -> 睡眠↓」「久坐↑ -> 睡眠↓」两个方向，"
-                     "而真实的一天里这两项必然反向变动、互相抵消，所以点预测看上去很稳 —— "
-                     "这不是界面坏了。点「生成预测」后，会把每一项能改变多少**实测**给你看。",
+        # 手环线的预测由历史基线主导，今天填的活动只值几十（分钟）；输入页只做预期管理，
+        # 具体数字留到结果页按用户真正提交的值现算（见 cached_sensitivity）。
+        "sens_hint": "提示：这条线的预测主要由**历史基线**决定，今天填的活动只做小幅调整；"
+                     "点「生成预测」后，可以展开「每个输入能改变多少」看逐项实测结果。",
         "sens_line": "- {name}：最多约 {span} 分钟（{lo} ~ {hi}）",
-        "sens_weak_suffix": " —— **影响很小，填了看不出变化是正常的**",
+        "sens_weak_suffix": " —— **影响很小**",
         "sens_weak_threshold": 15,       # 影响小于这个分钟数就算"很小"，加上面那句
         "sens_unused_line": "- {name}：模型没有用这一项",
-        "sens_footer": "这些数字是**现算的**：整条拉满也只有几十（分钟）量级，而模型自己的"
-                       "典型误差就有 ±{typical_error} 小时——所以这一版结果基本由**历史基线**"
-                       "决定，今天填的活动只做微调。上面那个**区间**比点估计更值得看。",
+        "sens_footer": "以上数字按本次输入现算。模型自身的典型误差约 ±{typical_error} 小时，"
+                       "相比之下，上面那个**区间**比点估计更值得参考。",
         # 结果页两段式：个人基线 + 今日调整
         "baseline_fields": ["steps", "very_active_minutes", "sedentary_minutes"],
         "baseline_source": "history",
@@ -212,21 +200,18 @@ POPULATIONS: dict[str, dict] = {
         "adjustment_label": "今天的活动调整",
         "baseline_basis_text": "把这位示例用户最近 {n} 天里这几项的中位数当成「寻常的一天」",
         "baseline_caption": "「个人基线」用的是**这位示例用户自己**最近 {n} 天的中位数活动量，"
-                            "代表他寻常一天的预测值，你填的只是把它往今天挪一挪。"
-                            "（目前没有上传个人历史的入口，所以基线来自演示用户、不是你。）",
-        "effect_note_intro": "**这一版几乎由历史基线决定，今天的活动只做几十（分钟）量级的微调**——",
-        "effect_note_fallback": "实测（默认输入下单独拉一项，取各项量程两端）：步数从 0 拉到 "
-                                "22,770 步（训练上限）约改变 56 分钟、久坐从 0 拉到 900 分钟 "
-                                "约 69 分钟、中高强度从 0 拉到 180 分钟只改变约 6 分钟；",
-        "effect_note_tail": "而模型自己的典型误差就有 ±{typical_error} 小时。所以「填了看不出变化」"
-                            "是正常现象，不是界面坏了；另外步数超过约 20,000 步之后预测不再变化"
-                            "（树模型不外推）。相比之下，上面那个**区间**才更值得看。",
+                            "代表他寻常一天的睡眠水平；你填的今天活动是在它之上做的调整。",
+        "effect_note_intro": "**本次预测主要由历史基线决定，今天填的活动只做小幅调整**——",
+        "effect_note_fallback": "把一项单独拉到取值范围两端时：步数 0 → 22,770 步约改变 56 分钟、"
+                                "久坐 0 → 900 分钟约 69 分钟、中高强度 0 → 180 分钟约 6 分钟；",
+        "effect_note_tail": "而模型自身的典型误差约 ±{typical_error} 小时；此外步数超过约 "
+                            "20,000 步之后预测不再变化。相比之下，上面那个**区间**更值得参考。",
         "effect_note_measured": "本次实测（每项单独拉到两端，其他项保持你填的值）：{spans}；"
                                 "你这次填的活动只让结果变动 {adjustment}。",
     },
 
     # ---- 第二条线：睡眠健康人群（含性别）----
-    # 这个数据集是横截面（每人 1 条、没有日期列），所以界面给的是"人群对照值"，
+    # 这个数据集是横截面（每人 1 条、没有日期列），所以界面给的是"人群参考值"，
     # 不是"今晚你会睡多久"；措辞上必须区分开，否则是过度承诺。
     "lifestyle": {
         "label": POPULATION_LABELS["lifestyle"],
@@ -235,8 +220,9 @@ POPULATIONS: dict[str, dict] = {
         "subject": "示例对象",
         "intro": "告诉我 **你的基本情况与今天的状态**，我会对照 {n_total} 人的人群数据，"
                  "给出一个睡眠时长的参考值。",
-        "info": "这份数据是**横截面**的（每人 1 条记录、没有日期列）：给的是与你条件相近的"
-                "**人群对照值**，不是「你今晚具体会睡多久」，模型里也没有任何历史基线。",
+        "info": "这份数据每人只有一条记录、没有历史序列：结果是与你的条件相近的"
+                "**人群参考值**，不是「你今晚具体会睡多久」，这条线也没有个人基线。"
+                "（该数据按规则生成，不是真实人群调查，因此误差数字偏小。）",
         "sections": [
             ("你的情况", ["gender", "age"]),
             ("今天的状态", ["stress_level", "heart_rate_mean", "active_minutes", "steps"]),
@@ -246,16 +232,14 @@ POPULATIONS: dict[str, dict] = {
                 "name_cn": "性别", "label": "性别", "kind": "radio", "unit": "",
                 "options": {"女": "Female", "男": "Male"}, "default": "男",
                 "requires_feature": "gender_",
-                "help": "数据集只有男 / 女两类，模型里是 gender_Female / gender_Male 两个哑变量；"
-                        "消融实验显示去掉性别后 MAE 只从 3.6 变成 3.5 分钟——它值得留在分析口径里，"
-                        "但不该指望它提高精度（见 reports/sleep_health_lifestyle/gender_analysis.md）。",
+                "help": "数据集里只有男 / 女两类；这一项对预测的影响很小。",
             },
             "age": {
                 "name_cn": "年龄", "label": "年龄（岁）", "kind": "number", "unit": " 岁",
                 "from_stats": "age", "step": 1, "default_from_stats": True,
                 "check": (0, 0), "check_from_bounds": True,
                 "check_msg": "{name}要在训练数据的范围里（{lo:.0f}~{hi:.0f} 岁）。",
-                "help": "年龄是这份数据里最强的特征之一。",
+                "help": "年龄是这份数据里影响睡眠时长的主要因素之一。",
             },
             "stress_level": {
                 "name_cn": "压力自评", "label": "今天的压力自评（1~10，10 最紧张）",
@@ -263,7 +247,7 @@ POPULATIONS: dict[str, dict] = {
                 "from_stats": "stress_level", "step": 1, "default_from_stats": True,
                 "check": (0, 0), "check_from_bounds": True,
                 "check_msg": "{name}要在训练数据的范围里（{lo:.0f}~{hi:.0f} 分）。",
-                "help": "数据集里是 1~10 的自评量表，也是本模型权重最大的输入。",
+                "help": "1~10 的自评量表，10 表示最紧张；这一项对结果影响最大。",
             },
             "heart_rate_mean": {
                 "name_cn": "平均静息心率", "label": "平均静息心率（次/分）",
@@ -290,49 +274,42 @@ POPULATIONS: dict[str, dict] = {
                 "at_max": "提示：步数已经填到训练数据的上限（{hi:,} 步），再往上加不会改变结果。",
             },
         },
-        "extra_caption": "BMI / 职业 / 睡眠障碍这里没有输入框：模型没有把它们当特征"
-                         "（BMI 与睡眠障碍在这份数据里与目标近乎同源，见 gender_analysis.md 第 6 节）。",
-        "history_caption": "已载入{subject} {demo}（{n} 条横截面记录，平均睡眠 {mean}）作为参照；"
+        "extra_caption": "这里没有 BMI / 职业 / 睡眠障碍的输入框：模型没有用到这几项。",
+        "history_caption": "已载入{subject} {demo}（共 {n} 条记录，平均睡眠 {mean}）作为参照；"
                            "填写的数值会与它一起参与计算。",
         "result_note": "和**{subject}** {demo} 的参照水平（{mean}）相比，预计 **{delta}**。",
-        "result_note_caption": "这里的「参照水平」指的是原型载入的**{subject}**记录"
-                               "（横截面数据集每人只有 1 条），不是你自己的记录"
-                               "（目前没有上传个人历史的入口），所以这句只用来解释数字怎么来的。",
-        "history_used": "- 参照记录：{n} 条（横截面，没有日期列）",
-        "explain_reference": "示例对象那条真实记录",
+        "result_note_caption": "以上对比用的是原型载入的**{subject}**记录，"
+                               "不是使用者本人的记录。",
+        "history_used": "- 参照记录：{n} 条",
+        "explain_reference": "示例对象的那条记录",
         "reference_label": "示例对象记录",
-        # ---- 与手环线同一套诚实化文案（见 README §5 第 24/25 条），但措辞不同 ----
         # 横截面数据没有"个人历史"，所以这里量的是"每项输入在人群模型里的影响"，
         # 基线也换成"所有输入取中位数"（典型人），不能说成"你的个人基线"。
-        "sens_expander": "每个输入能改变多少？（按你这次填的值实测）",
-        "sens_title": "**把每一项单独拉到自己的两端**（各取 5 个点，其他项保持你填的值），"
+        "sens_expander": "每个输入能改变多少？",
+        "sens_title": "下面把每一项单独拉到它能取的**两端**（各取 5 个点，其他项保持你填的值），"
                       "看预测最多能变多少：",
-        "sens_hint": "提示：这条线每一项输入都会改变结果（其中压力自评影响最大）；"
-                     "点「生成预测」后，会按你填的值实测每一项能改变多少。",
+        "sens_hint": "提示：这条线的每一项输入都会改变结果，其中「压力自评」影响最大。",
         "sens_line": "- {name}：最多约 {span} 分钟（{lo} ~ {hi}）",
-        "sens_weak_suffix": " —— 影响偏小，别指望它改变结论",
+        "sens_weak_suffix": " —— 影响偏小",
         "sens_weak_threshold": 15,
         "sens_unused_line": "- {name}：模型没有用这一项",
-        "sens_footer": "这些数字是**现算的**。这份数据由规则生成、特征间近乎确定关系，"
-                       "所以典型误差只有 ±{typical_error} 小时，看着很准；但它是"
-                       "**人群对照值**，不是「你今晚会睡多久」（见报告 metrics.md）。",
+        "sens_footer": "以上数字按本次输入现算。这条线用的是按规则生成的演示数据，误差数字"
+                       "偏小、看着很准；但它给的是**人群参考值**，不是「你今晚会睡多久」。",
         "baseline_fields": ["age", "stress_level", "heart_rate_mean", "active_minutes", "steps"],
         "baseline_source": "stats",
         "baseline_label": "人群典型值",
         "adjustment_label": "你的情况调整",
         "baseline_basis_text": "所有输入都取训练数据的中位数（典型人）",
-        "baseline_caption": "「人群典型值」= 所有输入都取中位数时的预测值，用来当参照；"
-                            "横截面数据集每人只有 1 条记录，没有个人历史可言，"
-                            "所以这条线不存在「你的基线」。",
+        "baseline_caption": "「人群典型值」＝把所有输入取为人群中位数时的预测值，用作对照；"
+                            "这条线没有个人历史，因此不存在「你的基线」。",
         "effect_note_intro": "**这条线的结果来自「当天状态量」，不是历史基线**——",
         "effect_note_fallback": "压力自评、年龄、活动分钟、心率、步数里，压力自评影响最大；",
-        "effect_note_tail": "所以这里每一项输入都会改变结果——每项到底能改变多少，见下面"
-                            "「每个输入能改变多少」。但有两点必须说清："
-                            "① 数据集是 374 人的横截面（每人 1 条、没有日期列），"
-                            "它给的是「与你条件相近的**人群中心值**」，不能读成「你今晚会睡多久」；"
-                            "② 典型误差 ±{typical_error} 小时看着很小，是因为这份数据由规则生成、"
-                            "特征间近乎确定关系，**低 MAE 是数据生成机制的假象**，"
-                            "不代表模型真的能预测一个人的睡眠（见 reports/sleep_health_lifestyle/metrics.md）。",
+        "effect_note_tail": "所以这条线的每一项输入都会改变结果，各项的影响大小见下面"
+                            "「每个输入能改变多少」。需要说明两点："
+                            "① 这份数据每人只有一条记录，给出的是「与你条件相近的"
+                            "**人群参考值**」，不能读成「你今晚会睡多久」；"
+                            "② 这里误差 ±{typical_error} 小时看着很小，是因为数据按规则生成、"
+                            "各项之间近乎确定关系，不代表模型真的能预测一个人的睡眠。",
         "effect_note_measured": "本次实测（每项单独拉到两端，其他项保持你填的值）：{spans}。",
     },
 }
@@ -390,8 +367,8 @@ def help_text(card: dict, field: dict) -> str | None:
         lo, hi = stats.get("min"), stats.get("max")
         if lo is not None and hi is not None:
             parts.append(
-                f"训练数据里这项的范围是 {lo:g}~{hi:g}{field.get('unit', '')}，"
-                "超出这个范围模型没有学过（树模型不外推）。"
+                f"训练数据里这项的范围是 {lo:g}~{hi:g}{field.get('unit', '')}；"
+                "超出这个范围的取值模型没有见过，结果不会再变。"
             )
     return " ".join(parts) if parts else None
 
@@ -453,8 +430,8 @@ def format_input(field: dict, value) -> str:
 def validate_inputs(inputs: dict, card: dict, fields: dict[str, dict]) -> list[str]:
     """挡掉不可能的输入，返回给用户看的错误文案（空列表表示通过）。
 
-    界面上用的是滑块与数字输入框，正常操作很难越界；这里仍保留校验，因为
-    「假控件 / 照收不可能的值」正是上一轮自查发现的问题（见 user_test/summary.md 第 4 节）。
+    界面上用的是滑块与数字输入框，正常操作很难越界；这里仍保留校验，
+    避免界面照收不可能的值。
     """
     problems: list[str] = []
     for key, value in inputs.items():
@@ -480,14 +457,14 @@ def validate_inputs(inputs: dict, card: dict, fields: dict[str, dict]) -> list[s
 
 
 # ------------------------------------------------------------------
-# 输入灵敏度实测：把"填了没反应"当场量出来
+# 输入灵敏度实测：把每一项输入对预测的影响量出来
 # ------------------------------------------------------------------
 def sensitivity_values(pop: dict, card: dict) -> dict[str, list]:
     """给每个输入项挑扫描点（灵敏度实测用）。
 
     数字项取 5 个点铺满可用范围；单选项（性别）就用它的全部选项。
     为什么不去猜"哪几个值最典型"：实测结果要让**这一版模型**自己说话，
-    挑点越中立，结论越可信（某几项影响为 0 也是重要结论，见 README §5 第 24 条）。
+    挑点越中立，结论越可信（某几项影响为 0 也是重要结论）。
     带 "_" 结尾的条目是"模型没有这一项"的占位说明，不是输入，跳过。
     """
     values: dict[str, list] = {}
@@ -533,7 +510,7 @@ def cached_sensitivity(art: dict, pop: dict, inputs: dict) -> dict:
 
 
 def sensitivity_lines(sens: dict, pop: dict) -> list[str]:
-    """实测结果 -> 人话清单。影响小的那几行会被特别标出来（诚实说明"填了没反应"）。"""
+    """实测结果 -> 人话清单。影响小的那几行会被特别标出来。"""
     lines: list[str] = []
     threshold = pop.get("sens_weak_threshold", 15)
     for key, info in sens.items():
@@ -599,8 +576,7 @@ def page_input(art: dict, pop: dict) -> bool:
         st.warning("没有找到历史记录，模型将用训练数据的中位数充当你的个人基线，结果会更保守。")
 
     # 表单按说明书渲染：这一节里"模型真的用得到"的项才出现控件，
-    # 用不到的项如实说明为什么没有（假控件比少一个功能更糟，
-    # 见 user_test/summary.md 第 4 节第 8 条）。
+    # 用不到的项如实说明为什么没有（假控件比少一个功能更糟）。
     inputs: dict = {}
     with st.form("input_form"):
         for section_title, entries in pop["sections"]:
@@ -665,11 +641,12 @@ def page_input(art: dict, pop: dict) -> bool:
                     baseline_fields=pop.get("baseline_fields"),
                     baseline_source=pop.get("baseline_source", "history"),
                 )
-        except Exception as exc:            # 任何异常都要说出声，不能变成"点了没反应"
+        except Exception as exc:            # 任何异常都要说清楚，不能变成"点了没反应"
             st.error(
-                "这次没能算出结果（是界面出错，不是你填错了）。请再点一次「生成预测」；"
-                f"如果还是这样，请把这句话发给主试：`{type(exc).__name__}: {exc}`"
+                "这次没能算出结果，请再点一次「生成预测」；如果仍然失败，"
+                "请把下面的错误信息提供给主试。"
             )
+            st.code(f"{type(exc).__name__}: {exc}", language="text")
             return False
         if not np.isfinite(result["predicted_minutes"]):
             st.error("模型这次返回了空值，给不出预测。请把上面的输入稍微改一下再试一次。")
@@ -719,9 +696,8 @@ def page_result(art: dict, pop: dict) -> None:
     getattr(st, style)(f"**这次的把握：{r['confidence']}**。{r['confidence_reason']}")
 
     st.markdown(
-        "**怎么读这个范围？** 它来自两个分位数模型（10% 和 90% 分位）。"
-        f"在历史数据里，真实睡眠时长大约有 80% 的概率落在上面对应的区间里；"
-        f"本次模型的典型误差（按验证集估计）约为 ±{r['typical_error_minutes'] / 60:.1f} 小时。"
+        "**怎么读这个范围？** 在历史数据里，真实睡眠时长大约有 80% 的概率落在上面对应的区间里；"
+        f"本次模型的典型误差约为 ±{r['typical_error_minutes'] / 60:.1f} 小时。"
     )
     # 数字从哪来：基线 + 今日调整。split_baseline 现算，说明书里写了 baseline_fields 才有这一段
     baseline = r.get("baseline")
@@ -740,7 +716,7 @@ def page_result(art: dict, pop: dict) -> None:
                 if field:
                     st.markdown(f"- {field['name_cn']}：{format_input(field, value)}")
 
-    # 灵敏度实测：把"填了没反应"当场量出来（正文一句话 + 展开可见的逐项清单）
+    # 灵敏度实测：正文一句话 + 展开可见的逐项清单
     sens = cached_sensitivity(art, pop, inputs)
     spans = sensitivity_summary(sens, pop)
     if spans:
@@ -780,7 +756,8 @@ def page_result(art: dict, pop: dict) -> None:
         used.append(pop["history_used"].format(n=len(art["history"])))
         used.append(
             f"- 模型：{r['model_name']}（在 {r['trained_on']['n_train']} 条记录上训练，"
-            f"{r['trained_on']['n_features']} 个特征；数据来源：{r['trained_on']['dataset']}）"
+            f"{r['trained_on']['n_features']} 个特征；数据来源："
+            f"{dataset_label(r['trained_on']['dataset'])}）"
         )
         st.markdown("\n".join(used))
 
@@ -805,9 +782,8 @@ def personal_reference(art: dict, pop: dict) -> pd.Series:
     """反事实解释的参照值：演示记录里的特征值；没有记录或某项缺失时退回模型卡里的中位数。
 
     为什么不按「记录条数」决定用不用历史：横截面数据集（每人 1 条）没有"历史平均"可言，
-    但它那一条真实记录正好可以当"对照示例对象"——这与输入页 history_caption 的说法一致，
-    还能避免"默认输入 = 中位数 = 参照值"导致解释页整页空白（上一轮自查里
-    「解释页不能是空的」的教训）。
+    但它那一条记录正好可以当"对照示例对象"——这与输入页 history_caption 的说法一致，
+    还能避免"默认输入 = 中位数 = 参照值"导致解释页整页空白。
     """
     hist = art["history"]
     features = art["card"]["features"]
@@ -882,7 +858,8 @@ def render_sidebar(art: dict, pop: dict) -> None:
         st.caption(
             f"人群：{pop['label']}\n\n"
             f"模型：{card['best_model']}\n\n"
-            f"数据：{card['dataset']}（{card['sizes']['train'] + card['sizes']['val']} 条训练记录）\n\n"
+            f"数据：{dataset_label(card['dataset'])}"
+            f"（{card['sizes']['train'] + card['sizes']['val']} 条训练记录）\n\n"
             f"训练时间：{card.get('created_at', '未知')}"
         )
         if st.button("重新开始", use_container_width=True):

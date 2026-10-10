@@ -112,7 +112,7 @@ def confidence_level(interval_width_hours: float, mae_hours: float) -> tuple[str
     if interval_width_hours <= 4.0 and interval_width_hours <= max(2.0, mae_hours * 4.0):
         return "中等", (
             f"区间较宽（约 {interval_width_hours:.1f} 小时），与该模型 ±{mae_hours:.1f} 小时的"
-            "典型误差相当；也可能是这次输入与训练数据不太接近。"
+            "典型误差相当。"
         )
     return "较低", (
         f"区间很宽（约 {interval_width_hours:.1f} 小时），超出该模型 ±{mae_hours:.1f} 小时的"

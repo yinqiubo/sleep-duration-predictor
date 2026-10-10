@@ -24,7 +24,7 @@ python -m scripts.test_app
 
 - 准备一台电脑、一个浏览器窗口（建议 100% 缩放，窗口最大化）；
 - 关闭聊天工具通知，避免打断计时；
-- 准备 `user_test/raw.csv` 用于记录（**2026-10-08 起**：示例行 `示例P0` 已删除、4 名真实参与者 P1–P4 已录入，见 `user_test/summary.md` 与 `user_test/questionnaire.md`）；
+- 准备 `user_test/raw.csv` 用于记录（已有 4 名参与者 P1–P4 的记录，见 `user_test/summary.md` 与 `user_test/questionnaire.md`）；
 - 征得参与者口头同意：**这是课程作业原型，不是医疗器械，记录是匿名的**。
 
 > ⚠️ **测试时必须如实说明的已知限制**：原型载入的历史是**演示用户 `2026352035` 的 28 天记录

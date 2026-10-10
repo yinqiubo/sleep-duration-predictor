@@ -214,7 +214,6 @@ def local_explanation(
     caveats = [
         "以上归因是「把该项替换成参照值后重新预测」得到的近似结果，不是严格的因果结论。",
         "模型只学到了数据中的相关关系，不能说明「改变行为就一定改变睡眠时长」。",
-        f"参照值取「{reference_label}」（**本原型用的是示例数据，不是使用者本人的记录**）；"
-        "没有示例记录时退回训练集的中位数。",
+        f"参照值取「{reference_label}」——本原型用的是示例数据，不是使用者本人的记录。",
     ]
     return {"headline": headline, "factors": factors, "caveats": caveats}

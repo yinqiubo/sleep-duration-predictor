@@ -31,10 +31,10 @@
 > - **C 的远端已就绪、真实网址还没登记**：本机已 `git init -b main` 并完成首提交（**150 个文件**、提交 `08c3ead`），
 >   随后推了 4 个提交到 `origin`（`https://github.com/yinqiubo/sleep-duration-predictor.git`）：`29202a8` 记录仓库状态 →
 >   `2441717` / `55b2538` 固定云端依赖 → **`94abf17`（2026-10-10 第七轮：默认人群线 + 提示文案）**；
->   `main` 与 `origin/main` 同步、`git status` 干净、`git show HEAD:app/app.py` = **`1e4c5203`**；
+>   `main` 与 `origin/main` 同步、`git status` 干净、`git show HEAD:app/app.py` = **`2ddb7b7b`**（第八轮清了界面文案后又更新，见第 1 步）；
 >   但**整个仓库里没有一处记下 `https://<名字>.streamlit.app` 的真实网址**（只有占位符），
 >   所以「老师随时能打开」这条链接目前**仍无法确认是否已建**——请在 share.streamlit.io 确认（第 2 节第 4 步），
->   并把网址补回 `docs/00` §8.6、本文件第 4 步与 `README` §1.3。
+>   并把网址补回 `docs/00` §7.6、本文件第 4 步与 `README` §1.3。
 >
 > ⚠️ `python deploy\check_network.py` **探不到 SRV 这一层**（它只请求 `trycloudflare.com` 的 HTTP 端点，
 > 返回 405 就判"可用"），所以它报告"临时公网可用"时，仍要按第 1 节**实跑一次**、看到 `Registered tunnel connection`
@@ -99,7 +99,8 @@ git config --global user.email "你的邮箱"
 > 仓库里每个文件与工作区**逐字节一致**（`model.pkl` 仍是 `e4423da8`）；
 > ✅ **2026-10-10 第七轮已收尾**：`app/app.py` `9a9e4a42 → 1e4c5203`（默认人群线 + 手环线提示按实测重写）与
 > 6 份文档一起提交为 **`94abf17`**（7 个文件、179 insertions），已 `git push` 到 `origin/main`；
-> `git status` 干净、`git show HEAD:app/app.py` 打印 **`1e4c5203`** → **下面第 9 项检查因此通过**
+> ✅ **第八轮（同日）**：把界面文案里的开发笔记清干净（`app/app.py 1e4c5203 → 2ddb7b7b`）后再次提交并推送；
+> `git status` 干净、`git show HEAD:app/app.py` 打印 **`2ddb7b7b`** → **下面第 9 项检查因此通过**
 > （提交信息用 ASCII：`R17 default population + hint copy`，理由见第 1 步的 `.cmd` 编码说明）；
 > 另外**已用 clone 出来的副本跑过界面自检**（`python -m scripts.test_app`）：两条人群线、三个页面全绿
 > （`TESTAPP_EXIT_0`），也就是"云端只有仓库内容"时界面确实能跑。
@@ -110,7 +111,7 @@ git config --global user.email "你的邮箱"
 ```cmd
 cd /d "E:\人机交互技术\homework_1"
 git init -b main
-git config core.autocrlf false            :: 让仓库里存的就是原文件字节（CRLF），克隆后与 docs/00 §8.3 的 SHA-256 台账逐字节一致
+git config core.autocrlf false            :: 让仓库里存的就是原文件字节（CRLF），克隆后与 docs/00 §7.3 的 SHA-256 台账逐字节一致
 git add .
 git add -f models/model.pkl models/candidates.pkl models/quantiles.pkl models/model_card.json models/history_sample.csv models/feature_importance.csv
 git add -f models/sleep_health_lifestyle/model.pkl models/sleep_health_lifestyle/candidates.pkl models/sleep_health_lifestyle/quantiles.pkl models/sleep_health_lifestyle/model_card.json models/sleep_health_lifestyle/history_sample.csv models/sleep_health_lifestyle/feature_importance.csv
@@ -247,7 +248,7 @@ run_app.cmd
 | 6 | 持久网址（方案 C） | 见第 2 节 | 得到 `https://xxx.streamlit.app` 且电脑关机后可访问 |
 | 7 | 测试结束 | `deploy\stop_web.cmd` | `port 8501 is free`、`cloudflared is stopped` |
 | 8 | **两套模型都进了仓库**（方案 C 前置条件） | `git ls-files models/` | 列出 **12 个文件**，`models/model.pkl` 与 `models/sleep_health_lifestyle/model.pkl` 都在（漏一个，云端切人群就报错） |
-| 9 | 仓库内容与交付台账一致（连换行也不能变） | `git show HEAD:app/app.py \| python -c "import sys,hashlib;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest()[:8])"` | 打印 **`1e4c5203`**（与 `docs/00` §8.3 台账一致）；`git status` 干净（若打印 `9a9e4a42`，说明仓库里还是第七轮之前的版本 → 按第 1 步补一次 `git add app/app.py` + `git commit`） |
+| 9 | 仓库内容与交付台账一致（连换行也不能变） | `git show HEAD:app/app.py \| python -c "import sys,hashlib;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest()[:8])"` | 打印 **`2ddb7b7b`**（与 `docs/00` §7.3 台账一致）；`git status` 干净（若打印 `1e4c5203`，说明仓库里还是第八轮之前的版本 → 按第 1 步补一次 `git add app/app.py` + `git commit`） |
 
 ---
 
