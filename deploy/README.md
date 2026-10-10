@@ -94,6 +94,9 @@ git config --global user.email "你的邮箱"
 > ✅ **本机已完成（2026-10-10 实测）**：`git init -b main` + `git config core.autocrlf false` + 首提交 `08c3ead`，
 > 共 **150 个文件**入库（其中 `models/` 13 个 = 两套各 6 个 + `.gitkeep`），提交后 `git status` 干净、
 > 仓库里每个文件与工作区**逐字节一致**（`app/app.py` 仍是 `9a9e4a42`、`model.pkl` 仍是 `e4423da8`）；
+> ⚠️ **但 2026-10-10 第七轮又改了 `app/app.py`（`9a9e4a42 → 1e4c5203`），本地仓库现在落后一个提交**：
+> 推送前先 `git add app/app.py` 再 `git commit -m "R17 default population + hint copy"`（**提交信息用 ASCII**，
+> 理由见第 1 步的 `.cmd` 编码说明），否则下面第 9 项检查会打印 `9a9e4a42`（仓库里还是旧版）；
 > 另外**已用 clone 出来的副本跑过界面自检**（`python -m scripts.test_app`）：两条人群线、三个页面全绿
 > （`TESTAPP_EXIT_0`），也就是"云端只有仓库内容"时界面确实能跑。
 > 下面的命令留作**记录与重建**用，你不必再跑一遍；可以直接从第 2 步开始。
@@ -238,7 +241,7 @@ run_app.cmd
 | 6 | 持久网址（方案 C） | 见第 2 节 | 得到 `https://xxx.streamlit.app` 且电脑关机后可访问 |
 | 7 | 测试结束 | `deploy\stop_web.cmd` | `port 8501 is free`、`cloudflared is stopped` |
 | 8 | **两套模型都进了仓库**（方案 C 前置条件） | `git ls-files models/` | 列出 **12 个文件**，`models/model.pkl` 与 `models/sleep_health_lifestyle/model.pkl` 都在（漏一个，云端切人群就报错） |
-| 9 | 仓库内容与交付台账一致（连换行也不能变） | `git show HEAD:app/app.py \| python -c "import sys,hashlib;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest()[:8])"` | 打印 **`9a9e4a42`**（与 `docs/00` §8.3 台账一致）；`git status` 干净 |
+| 9 | 仓库内容与交付台账一致（连换行也不能变） | `git show HEAD:app/app.py \| python -c "import sys,hashlib;print(hashlib.sha256(sys.stdin.buffer.read()).hexdigest()[:8])"` | 打印 **`1e4c5203`**（与 `docs/00` §8.3 台账一致）；`git status` 干净（若打印 `9a9e4a42`，说明仓库里还是第七轮之前的版本 → 按第 1 步补一次 `git add app/app.py` + `git commit`） |
 
 ---
 
