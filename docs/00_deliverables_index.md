@@ -182,7 +182,7 @@
 | 优先级 | 事项 | 为什么 | 怎么做 |
 |---|---|---|---|
 | **P0** | 跑 `python cleanup_before_submit.py --yes` 后压缩打包 | 交作业最后一步；删掉 53 MB 的 `cloudflared.exe` 与 `__pycache__` | 在该脚本所在目录 `E:\人机交互技术\` 运行（`--yes` 才真删；不加参数只预览） |
-| **P0（新，2026-10-10）** | 建**持久公网网址**（方案 C：GitHub + Streamlit Community Cloud） | 作业要交"可访问链接"，而**只有这条路在本人电脑关机后仍能打开**：临时隧道已死链、仓库此前没建（详见 §8.6） | 按 `deploy/README.md` 第 2 节；**本地仓库已就绪**（2026-10-10：`git init -b main` + 两套模型 `-f` 入库 + 首提交 `08c3ead`，**150 个文件**、与工作区逐字节一致；⚠️ 2026-10-10 第七轮又改了 `app/app.py`，**推送前先 `git add app/app.py` 并提交一次**，见 `deploy/README.md` 第 1 步），只差你在 GitHub 新建空仓库 → `git push` → share.streamlit.io 建 app（Main file path = `app/app.py`） |
+| **P0（新，2026-10-10）** | 建**持久公网网址**（方案 C：GitHub + Streamlit Community Cloud） | 作业要交"可访问链接"，而**只有这条路在本人电脑关机后仍能打开**：临时隧道已死链（详见 §8.6） | 按 `deploy/README.md` 第 2 节；**本地仓库已就绪并已推送**（`git init -b main` + 两套模型 `-f` 入库 + 首提交 `08c3ead`（150 个文件）→ 云端依赖固定 `2441717`/`55b2538` → **第七轮 `94abf17`**，`main` 与 `origin/main` 同步、`git status` 干净、`git show HEAD:app/app.py` = `1e4c5203`）。**只剩最后一段**：在 share.streamlit.io 建 app（Repository = `yinqiubo/sleep-duration-predictor`、Branch = `main`、**Main file path = `app/app.py`**、Python 3.13），并把得到的网址登记回本文件 §8.6 与 `README` §1.3 |
 | **P0** | 决定要不要**录 2 分钟演示视频** | 作业写的是"可操作原型**或**演示视频"——原型已可跑，所以是可选；但老师若只收静态材料，视频最稳 | 录：打开界面 → 填一组数据 → 生成 → 讲解释与区间 → 改输入重算 |
 | P1 | 在 README/报告里插 3 张界面截图 | 评分看"交互设计"，截图比文字直观 | 启动后截：输入页、结果页（含区间）、解释区 |
 | ~~P1~~ **已做（2026-10-09）** | 加"人群对照"页（把性别数据集接进界面） | 涉及新界面工作量与"模型未重训"的一致性 | 已实现为侧栏「预测对象」切换：`app/app.py` + `src/predict.py` + `src/explain.py`，指纹与自检证据见 `docs/03_data_source.md` §7.8.7；**模型未重训**，8 个交付产物只有 `app.py` 变了（R14 实测；R15 那轮 7 个产物逐字节未变） |

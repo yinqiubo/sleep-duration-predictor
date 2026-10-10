@@ -17,8 +17,8 @@
 
 结论：**临时演示用 B，长期链接用 C，兜底永远可用 A。**
 
-> ⚠️ **2026-10-10 复测（本机换了网络，上面这张表已过期）：只有 A 仍然可用，B 不可用、C 的远端尚未建**
-> （C 的**本地仓库**已在 2026-10-10 建好并首提交，见第 2 节；缺的只是 GitHub 远端与 Streamlit 应用）。
+> ⚠️ **2026-10-10 复测（本机换了网络，上面这张表已过期）：只有 A 仍然可用，B 不可用；C 的远端已建并已推送，缺的只是"真实网址有没有登记"**
+> （C 的**本地仓库**已在 2026-10-10 建好并首提交、随后推送到 GitHub，见第 2 节第 1 步）。
 > - **A 可用**：本机 `http://127.0.0.1:8501` / 局域网 `http://10.22.109.176:8501`，`/_stcore/health` 实测 **HTTP 200**
 >   （启动 1.1 s 就绪；`deploy\stop_web.cmd` 后端口释放，实测通过）；
 > - **B 已不可用（死链）**：本机 DNS 是 `10.10.10.11`，它**不做 SRV 解析**
@@ -28,10 +28,13 @@
 >   `https://modelling-yorkshire-possession-typing.trycloudflare.com` 本机与公网健康检查**都失败**。
 >   另外 `deploy/_tunnel.log` 里 2989 条事件中有 **1775 条 error**（`Register tunnel error from server side` 反复出现）——
 >   即便 DNS 修好，免费快速隧道本身也没有 uptime 保证，只能当"演示期间"用。
-> - **C 的本地仓库已就绪、远端还没建**：本机已 `git init -b main` 并完成首提交（**150 个文件**、提交 `08c3ead`，
->   两套模型已 `-f` 入库，`git status` 干净、仓库内每个文件与工作区逐字节一致 —— 见第 2 节第 1 步）；
->   但 GitHub 远端仓库与 Streamlit 应用还没建，所以"老师随时能打开"的链接目前**不存在**；
->   GitHub 实测 205 ms、share.streamlit.io 200 可达 → 这条路可做。
+> - **C 的远端已就绪、真实网址还没登记**：本机已 `git init -b main` 并完成首提交（**150 个文件**、提交 `08c3ead`），
+>   随后推了 4 个提交到 `origin`（`https://github.com/yinqiubo/sleep-duration-predictor.git`）：`29202a8` 记录仓库状态 →
+>   `2441717` / `55b2538` 固定云端依赖 → **`94abf17`（2026-10-10 第七轮：默认人群线 + 提示文案）**；
+>   `main` 与 `origin/main` 同步、`git status` 干净、`git show HEAD:app/app.py` = **`1e4c5203`**；
+>   但**整个仓库里没有一处记下 `https://<名字>.streamlit.app` 的真实网址**（只有占位符），
+>   所以「老师随时能打开」这条链接目前**仍无法确认是否已建**——请在 share.streamlit.io 确认（第 2 节第 4 步），
+>   并把网址补回 `docs/00` §8.6、本文件第 4 步与 `README` §1.3。
 >
 > ⚠️ `python deploy\check_network.py` **探不到 SRV 这一层**（它只请求 `trycloudflare.com` 的 HTTP 端点，
 > 返回 405 就判"可用"），所以它报告"临时公网可用"时，仍要按第 1 节**实跑一次**、看到 `Registered tunnel connection`
@@ -93,10 +96,11 @@ git config --global user.email "你的邮箱"
 
 > ✅ **本机已完成（2026-10-10 实测）**：`git init -b main` + `git config core.autocrlf false` + 首提交 `08c3ead`，
 > 共 **150 个文件**入库（其中 `models/` 13 个 = 两套各 6 个 + `.gitkeep`），提交后 `git status` 干净、
-> 仓库里每个文件与工作区**逐字节一致**（`app/app.py` 仍是 `9a9e4a42`、`model.pkl` 仍是 `e4423da8`）；
-> ⚠️ **但 2026-10-10 第七轮又改了 `app/app.py`（`9a9e4a42 → 1e4c5203`），本地仓库现在落后一个提交**：
-> 推送前先 `git add app/app.py` 再 `git commit -m "R17 default population + hint copy"`（**提交信息用 ASCII**，
-> 理由见第 1 步的 `.cmd` 编码说明），否则下面第 9 项检查会打印 `9a9e4a42`（仓库里还是旧版）；
+> 仓库里每个文件与工作区**逐字节一致**（`model.pkl` 仍是 `e4423da8`）；
+> ✅ **2026-10-10 第七轮已收尾**：`app/app.py` `9a9e4a42 → 1e4c5203`（默认人群线 + 手环线提示按实测重写）与
+> 6 份文档一起提交为 **`94abf17`**（7 个文件、179 insertions），已 `git push` 到 `origin/main`；
+> `git status` 干净、`git show HEAD:app/app.py` 打印 **`1e4c5203`** → **下面第 9 项检查因此通过**
+> （提交信息用 ASCII：`R17 default population + hint copy`，理由见第 1 步的 `.cmd` 编码说明）；
 > 另外**已用 clone 出来的副本跑过界面自检**（`python -m scripts.test_app`）：两条人群线、三个页面全绿
 > （`TESTAPP_EXIT_0`），也就是"云端只有仓库内容"时界面确实能跑。
 > 下面的命令留作**记录与重建**用，你不必再跑一遍；可以直接从第 2 步开始。
@@ -158,6 +162,8 @@ git push
 6. 复制浏览器地址栏的 `https://<名字>.streamlit.app`，这就是可以发给任何人的网页地址。
 
 **第 5 步 · 以后怎么更新**：改完代码 `git add -A && git commit -m "..." && git push`，云端会自动重新部署（约 1 分钟）。
+> R17 这一轮就是这么做的：`55b2538 → 94abf17`（详见第 1 步的收尾记录）。如果推完 1–2 分钟云端**没有**变化，
+> 就在 share.streamlit.io 里打开该 app → **Manage app → Reboot**（或 `Rerun`）手动触发一次。
 
 **云端为什么不需要数据**：`data/raw`、`data/processed` 没有入库，云端只用 `app/ + src/ + config/ + models/`。
 这是刻意的——上线只是"让界面能被访问"，不重新训练，所以云端结果与本地完全一致。
