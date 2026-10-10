@@ -1,28 +1,17 @@
-# 睡眠时长预测项目依赖
-# 安装：pip install -r requirements.txt
-# Python 版本：3.10 - 3.13（本项目在 Python 3.13.5 / Windows 下开发验证）
+# 云端上线专用依赖（固定版本，与本地实测环境一致，保证 models/*.pkl 能正常反序列化）
+#
+# 本地实测（Windows + Python 3.13.5，2026-10-04）：
+#   pandas 2.2.3 / numpy 2.4.6 / scikit-learn 1.6.1 / joblib 1.4.2
+#   streamlit 1.45.1 / matplotlib 3.10.0 / tabulate 0.9.0
+#
+# 用法见 deploy/README.md 第 5 节：在云端仓库里用本文件覆盖根目录 requirements.txt，
+# 原因是模型是用 sklearn 1.6.1 训练的，云端装到不同大版本可能出现 InconsistentVersionWarning
+# 甚至反序列化失败；固定版本可以完全避免这一类"云端才报错"的问题。
 
-# ---- 核心（必须） ----
-pandas>=2.2
-numpy>=1.26
-scikit-learn>=1.5        # 预处理、模型、指标、划分、分位数回归
-joblib>=1.4              # 模型持久化
-tabulate>=0.9            # to_markdown：生成 metrics.md / error_analysis.md 中的表格
-
-# ---- 可视化 ----
-matplotlib>=3.8          # 全部图表（未使用 seaborn，故不列入依赖）
-
-# ---- 交互原型（必须） ----
-streamlit>=1.36          # 原型界面；内置换行 altair 图表，无需单独安装
-
-# ---- 可选增强（缺失时代码自动降级，见 src/train.py 顶部导入保护） ----
-# lightgbm>=4.3          # 更强的 GBDT；不可用时自动回退到 sklearn GradientBoosting
-# shap>=0.45             # 更细的特征贡献；不可用时自动回退到 permutation importance
-
-# ---- 数据获取（可选） ----
-# kaggle>=1.6            # 命令行下载 Kaggle 数据集：kaggle datasets download -d arashnic/fitbit
-
-# 说明：
-# 1) 本项目【不需要】PyTorch / TensorFlow，理由见 docs/02_tech_stack.md 第 1 节。
-# 2) 【不需要】PyYAML：配置写在 config/dataset.py（Python 模块），零额外依赖。
-# 3) 如果 pip 安装 lightgbm 失败，不用管，直接跳过，主流程仍可完整运行。
+pandas==2.2.3
+numpy==2.4.6
+scikit-learn==1.6.1
+joblib==1.4.2
+streamlit==1.45.1
+matplotlib==3.10.0
+tabulate==0.9.0
