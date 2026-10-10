@@ -99,7 +99,7 @@ git config --global user.email "你的邮箱"
 > 仓库里每个文件与工作区**逐字节一致**（`model.pkl` 仍是 `e4423da8`）；
 > ✅ **2026-10-10 第七轮已收尾**：`app/app.py` `9a9e4a42 → 1e4c5203`（默认人群线 + 手环线提示按实测重写）与
 > 6 份文档一起提交为 **`94abf17`**（7 个文件、179 insertions），已 `git push` 到 `origin/main`；
-> ✅ **第八轮（同日）**：把界面文案里的开发笔记清干净（`app/app.py 1e4c5203 → 2ddb7b7b`）后再次提交并推送；
+> ✅ **第八轮（同日）**：把界面文案里的开发笔记清干净（`app/app.py 1e4c5203 → 2ddb7b7b`）后以 **`65341ee`** 提交并推送（14 个文件、271 insertions）；
 > `git status` 干净、`git show HEAD:app/app.py` 打印 **`2ddb7b7b`** → **下面第 9 项检查因此通过**
 > （提交信息用 ASCII：`R17 default population + hint copy`，理由见第 1 步的 `.cmd` 编码说明）；
 > 另外**已用 clone 出来的副本跑过界面自检**（`python -m scripts.test_app`）：两条人群线、三个页面全绿

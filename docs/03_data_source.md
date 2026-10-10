@@ -868,7 +868,7 @@ python -m scripts.gender_analysis
 `history_sample.csv 4d205822`、`feature_importance.csv cbeaa08d`、`metrics.md 6c4e1b2f`、
 `metrics.json a4946b20`、`error_analysis.md 61ac52f2`）；**预期变化**只有三个改了文案的文件：
 `app/app.py` `1e4c5203 → 2ddb7b7b`、`src/metrics.py` `fa4cc2c3 → d747576f`、`src/explain.py` `3a6a0f5f → fcc3ecc7`
-（后两个不在交付台账内）。
+（后两个不在交付台账内）；本轮提交 **`65341ee`**，已 `git push` 到 `origin/main`。
 
 ---
 

@@ -644,7 +644,8 @@
   - 交付包：删 `deploy/cloudflared.exe`（约 53 MB）、`deploy/_tunnel.log`、4 个 `__pycache__`、
     `data/processed/` 下的实验变体表（`*_f2_*` / `*_qg_*` / `*_ctx_*`）；
   - 文档同步：`README` §5 第 28 条、`docs/00` §7.3 指纹 + 新增 §7.8、`docs/03` 新增 §7.8.11、
-    `docs/04` 第 31 条 + §6（更正"未初始化 Git 仓库"这条已过期的说法）、`deploy/README.md` 第 1 步与第 9 项检查。
+    `docs/04` 第 31 条 + §6（更正"未初始化 Git 仓库"这条已过期的说法）、`deploy/README.md` 第 1 步与第 9 项检查；
+  - 提交 **`65341ee`**（14 个文件、271 insertions），已 `git push` 到 `origin/main`。
 - **✔ 验收**（命令 + 数字，全部实跑）：
   - `python -m py_compile app/app.py src/metrics.py src/explain.py` → 通过；
     `python -m scripts.test_app` → `[OK] 首屏渲染正常：今晚我能睡多久？；默认人群 'lifestyle'` +

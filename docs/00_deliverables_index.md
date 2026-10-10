@@ -67,7 +67,7 @@
 | `docs/02_tech_stack.md` | 200 | 技术栈与**为什么不用 PyTorch**、目录约定、环境与版本 |
 | `docs/03_data_source.md` | 909 | **数据来源说明**（作业必交）：候选甄别、选定明细、字段映射、清洗规则、偏差与限制、核对清单 |
 | `docs/04_ai_usage.md` | 139 | AI 使用说明：用在哪、我怎么验收、否决了 AI 什么 |
-| `docs/05_prompt_log.md` | 860 | 提示词记录：**16 个阶段 + 14 句逐字提示词** + 6 个可复用模板 + “刻意不问”清单（2026-10-10 实测 **860 行**） |
+| `docs/05_prompt_log.md` | 861 | 提示词记录：**16 个阶段 + 14 句逐字提示词** + 6 个可复用模板 + “刻意不问”清单（2026-10-10 实测 **861 行**） |
 
 ### 4.3 实验与证据 `reports/`（83 个文件，核心 12 个 + 变体若干）
 
@@ -338,7 +338,7 @@ python -m scripts.smoke_test         :: 模型/界面链路自检
 | 模型未重训 | 逐字节核对 | `model.pkl e4423da8` 等 **8 个线上交付产物全部未变** |
 
 **指纹变化**：`app/app.py` `1e4c5203 → 2ddb7b7b`；另外两个改了文案的模块不在交付台账内
-（`src/metrics.py` `fa4cc2c3 → d747576f`、`src/explain.py` `3a6a0f5f → fcc3ecc7`）。
+（`src/metrics.py` `fa4cc2c3 → d747576f`、`src/explain.py` `3a6a0f5f → fcc3ecc7`）；本轮提交 **`65341ee`**，已 `git push` 到 `origin/main`。
 
 ---
 
