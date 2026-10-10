@@ -17,7 +17,8 @@
 
 结论：**临时演示用 B，长期链接用 C，兜底永远可用 A。**
 
-> ⚠️ **2026-10-10 复测（本机换了网络，上面这张表已过期）：只有 A 仍然可用，B 不可用、C 尚未建。**
+> ⚠️ **2026-10-10 复测（本机换了网络，上面这张表已过期）：只有 A 仍然可用，B 不可用、C 的远端尚未建**
+> （C 的**本地仓库**已在 2026-10-10 建好并首提交，见第 2 节；缺的只是 GitHub 远端与 Streamlit 应用）。
 > - **A 可用**：本机 `http://127.0.0.1:8501` / 局域网 `http://10.22.109.176:8501`，`/_stcore/health` 实测 **HTTP 200**
 >   （启动 1.1 s 就绪；`deploy\stop_web.cmd` 后端口释放，实测通过）；
 > - **B 已不可用（死链）**：本机 DNS 是 `10.10.10.11`，它**不做 SRV 解析**
@@ -27,7 +28,9 @@
 >   `https://modelling-yorkshire-possession-typing.trycloudflare.com` 本机与公网健康检查**都失败**。
 >   另外 `deploy/_tunnel.log` 里 2989 条事件中有 **1775 条 error**（`Register tunnel error from server side` 反复出现）——
 >   即便 DNS 修好，免费快速隧道本身也没有 uptime 保证，只能当"演示期间"用。
-> - **C 尚未建**：仓库还没 `git init`（见第 2 节），所以"老师随时能打开"的链接目前**不存在**；
+> - **C 的本地仓库已就绪、远端还没建**：本机已 `git init -b main` 并完成首提交（**150 个文件**、提交 `08c3ead`，
+>   两套模型已 `-f` 入库，`git status` 干净、仓库内每个文件与工作区逐字节一致 —— 见第 2 节第 1 步）；
+>   但 GitHub 远端仓库与 Streamlit 应用还没建，所以"老师随时能打开"的链接目前**不存在**；
 >   GitHub 实测 205 ms、share.streamlit.io 200 可达 → 这条路可做。
 >
 > ⚠️ `python deploy\check_network.py` **探不到 SRV 这一层**（它只请求 `trycloudflare.com` 的 HTTP 端点，
@@ -88,6 +91,13 @@ git config --global user.email "你的邮箱"
 
 **第 1 步 · 把项目提交成一个仓库（关键：模型必须强制入库）**
 
+> ✅ **本机已完成（2026-10-10 实测）**：`git init -b main` + `git config core.autocrlf false` + 首提交 `08c3ead`，
+> 共 **150 个文件**入库（其中 `models/` 13 个 = 两套各 6 个 + `.gitkeep`），提交后 `git status` 干净、
+> 仓库里每个文件与工作区**逐字节一致**（`app/app.py` 仍是 `9a9e4a42`、`model.pkl` 仍是 `e4423da8`）；
+> 另外**已用 clone 出来的副本跑过界面自检**（`python -m scripts.test_app`）：两条人群线、三个页面全绿
+> （`TESTAPP_EXIT_0`），也就是"云端只有仓库内容"时界面确实能跑。
+> 下面的命令留作**记录与重建**用，你不必再跑一遍；可以直接从第 2 步开始。
+
 `.gitignore` 排除了 `models/*`，而云端**必须**有模型产物，否则界面会报 `ModelNotTrainedError`：
 
 ```cmd
@@ -131,6 +141,8 @@ git commit -m "pin dependency versions for cloud"
 git push
 ```
 > 想还原本地的宽松版本：`copy /y deploy\requirements_local.txt requirements.txt`（原文已备份在 `deploy/`）。
+> 💡 **想少推一次**：把本步提到第 2 步的 `git push` **之前**做（先 `copy` 再一次性 `git push -u origin main`），
+> 效果完全相同，只是省掉第二次 push。
 
 **第 4 步 · 在 Streamlit Cloud 建应用**
 
