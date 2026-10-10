@@ -1,0 +1,2683 @@
+{
+  "generated_from": "scripts/gate_experiment.py",
+  "model": "random_forest",
+  "params": {
+    "n_estimators": 300,
+    "max_depth": 8,
+    "min_samples_leaf": 3
+  },
+  "folds": 5,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "prepared": [],
+  "row_identity": {
+    "checked": true,
+    "n_base": 395,
+    "n_context": 395,
+    "n_common": 395,
+    "only_in_base": [],
+    "only_in_context": [],
+    "same_rows": true
+  },
+  "datasets": [
+    {
+      "dataset": "fitbit_bellabeat",
+      "n_rows": 395,
+      "n_users": 22,
+      "n_features": 70,
+      "target_mean_minutes": 431.9,
+      "target_std_minutes": 100.8,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 63.76,
+        "mae_std": 17.47,
+        "mae_min": 44.06,
+        "mae_max": 88.25,
+        "mae_range": 44.19,
+        "baseline_mae_mean": 77.56,
+        "improve": 0.1779,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 315,
+            "n_test": 80,
+            "test_users": 5,
+            "MAE_minutes": 74.19,
+            "baseline_MAE_minutes": 92.32,
+            "bias_minutes": 7.62
+          },
+          {
+            "run": "fold1",
+            "n_train": 315,
+            "n_test": 80,
+            "test_users": 5,
+            "MAE_minutes": 54.17,
+            "baseline_MAE_minutes": 64.99,
+            "bias_minutes": -18.19
+          },
+          {
+            "run": "fold2",
+            "n_train": 316,
+            "n_test": 79,
+            "test_users": 5,
+            "MAE_minutes": 58.13,
+            "baseline_MAE_minutes": 73.71,
+            "bias_minutes": 10.55
+          },
+          {
+            "run": "fold3",
+            "n_train": 317,
+            "n_test": 78,
+            "test_users": 4,
+            "MAE_minutes": 88.25,
+            "baseline_MAE_minutes": 94.28,
+            "bias_minutes": 44.52
+          },
+          {
+            "run": "fold4",
+            "n_train": 317,
+            "n_test": 78,
+            "test_users": 3,
+            "MAE_minutes": 44.06,
+            "baseline_MAE_minutes": 62.48,
+            "bias_minutes": -15.54
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 60.2,
+        "mae_std": 15.63,
+        "mae_min": 46.3,
+        "mae_max": 77.12,
+        "mae_range": 30.82,
+        "baseline_mae_mean": 68.51,
+        "improve": 0.1214,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 340,
+            "n_test": 55,
+            "test_users": 4,
+            "MAE_minutes": 77.12,
+            "baseline_MAE_minutes": 96.76,
+            "bias_minutes": 14.76,
+            "users": "1644430081、4558609924、6117666160、8378563200"
+          },
+          {
+            "run": "seed2",
+            "n_train": 288,
+            "n_test": 107,
+            "test_users": 4,
+            "MAE_minutes": 46.3,
+            "baseline_MAE_minutes": 58.28,
+            "bias_minutes": 1.61,
+            "users": "4702921684、6117666160、6962181067、8378563200"
+          },
+          {
+            "run": "seed3",
+            "n_train": 293,
+            "n_test": 102,
+            "test_users": 4,
+            "MAE_minutes": 57.17,
+            "baseline_MAE_minutes": 50.5,
+            "bias_minutes": -21.63,
+            "users": "4388161847、4702921684、6962181067、7086361926"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_bellabeat_qg",
+      "n_rows": 376,
+      "n_users": 16,
+      "n_features": 70,
+      "target_mean_minutes": 434.1,
+      "target_std_minutes": 89.9,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 56.99,
+        "mae_std": 10.36,
+        "mae_min": 48.62,
+        "mae_max": 74.29,
+        "mae_range": 25.67,
+        "baseline_mae_mean": 72.07,
+        "improve": 0.2092,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 302,
+            "n_test": 74,
+            "test_users": 3,
+            "MAE_minutes": 53.26,
+            "baseline_MAE_minutes": 65.21,
+            "bias_minutes": 6.06
+          },
+          {
+            "run": "fold1",
+            "n_train": 298,
+            "n_test": 78,
+            "test_users": 4,
+            "MAE_minutes": 58.45,
+            "baseline_MAE_minutes": 71.49,
+            "bias_minutes": 12.69
+          },
+          {
+            "run": "fold2",
+            "n_train": 305,
+            "n_test": 71,
+            "test_users": 3,
+            "MAE_minutes": 50.34,
+            "baseline_MAE_minutes": 71.87,
+            "bias_minutes": -13.34
+          },
+          {
+            "run": "fold3",
+            "n_train": 301,
+            "n_test": 75,
+            "test_users": 3,
+            "MAE_minutes": 48.62,
+            "baseline_MAE_minutes": 63.92,
+            "bias_minutes": -7.64
+          },
+          {
+            "run": "fold4",
+            "n_train": 298,
+            "n_test": 78,
+            "test_users": 3,
+            "MAE_minutes": 74.29,
+            "baseline_MAE_minutes": 87.87,
+            "bias_minutes": 44.59
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 48.4,
+        "mae_std": 6.86,
+        "mae_min": 41.11,
+        "mae_max": 54.72,
+        "mae_range": 13.61,
+        "baseline_mae_mean": 61.69,
+        "improve": 0.2154,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 291,
+            "n_test": 85,
+            "test_users": 3,
+            "MAE_minutes": 41.11,
+            "baseline_MAE_minutes": 59.03,
+            "bias_minutes": 0.81,
+            "users": "2026352035、4445114986、6962181067"
+          },
+          {
+            "run": "seed2",
+            "n_train": 305,
+            "n_test": 71,
+            "test_users": 3,
+            "MAE_minutes": 49.37,
+            "baseline_MAE_minutes": 53.48,
+            "bias_minutes": 11.98,
+            "users": "4388161847、4445114986、5577150313"
+          },
+          {
+            "run": "seed3",
+            "n_train": 312,
+            "n_test": 64,
+            "test_users": 3,
+            "MAE_minutes": 54.72,
+            "baseline_MAE_minutes": 72.56,
+            "bias_minutes": -10.14,
+            "users": "5553957443、6117666160、8792009665"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_2seg",
+      "n_rows": 799,
+      "n_users": 23,
+      "n_features": 70,
+      "target_mean_minutes": 436.6,
+      "target_std_minutes": 105.8,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 73.23,
+        "mae_std": 7.02,
+        "mae_min": 67.37,
+        "mae_max": 83.53,
+        "mae_range": 16.16,
+        "baseline_mae_mean": 81.08,
+        "improve": 0.0969,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 640,
+            "n_test": 159,
+            "test_users": 5,
+            "MAE_minutes": 67.37,
+            "baseline_MAE_minutes": 77.53,
+            "bias_minutes": -6.19
+          },
+          {
+            "run": "fold1",
+            "n_train": 639,
+            "n_test": 160,
+            "test_users": 5,
+            "MAE_minutes": 83.53,
+            "baseline_MAE_minutes": 93.05,
+            "bias_minutes": 38.58
+          },
+          {
+            "run": "fold2",
+            "n_train": 641,
+            "n_test": 158,
+            "test_users": 5,
+            "MAE_minutes": 77.53,
+            "baseline_MAE_minutes": 88.79,
+            "bias_minutes": 11.65
+          },
+          {
+            "run": "fold3",
+            "n_train": 635,
+            "n_test": 164,
+            "test_users": 4,
+            "MAE_minutes": 68.84,
+            "baseline_MAE_minutes": 88.78,
+            "bias_minutes": -10.3
+          },
+          {
+            "run": "fold4",
+            "n_train": 641,
+            "n_test": 158,
+            "test_users": 4,
+            "MAE_minutes": 68.86,
+            "baseline_MAE_minutes": 57.26,
+            "bias_minutes": 15.56
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 84.29,
+        "mae_std": 29.05,
+        "mae_min": 59.34,
+        "mae_max": 116.18,
+        "mae_range": 56.84,
+        "baseline_mae_mean": 89.82,
+        "improve": 0.0616,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 643,
+            "n_test": 156,
+            "test_users": 5,
+            "MAE_minutes": 116.18,
+            "baseline_MAE_minutes": 115.89,
+            "bias_minutes": 39.12,
+            "users": "1644430081、3977333714、4558609924、6117666160、8378563200"
+          },
+          {
+            "run": "seed2",
+            "n_train": 532,
+            "n_test": 267,
+            "test_users": 5,
+            "MAE_minutes": 77.34,
+            "baseline_MAE_minutes": 78.07,
+            "bias_minutes": -9.76,
+            "users": "5553957443、6117666160、6962181067、7086361926、8378563200"
+          },
+          {
+            "run": "seed3",
+            "n_train": 620,
+            "n_test": 179,
+            "test_users": 5,
+            "MAE_minutes": 59.34,
+            "baseline_MAE_minutes": 75.49,
+            "bias_minutes": 7.52,
+            "users": "1503960366、4319703577、4558609924、6775888955、6962181067"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_2seg_qg",
+      "n_rows": 780,
+      "n_users": 18,
+      "n_features": 70,
+      "target_mean_minutes": 436.5,
+      "target_std_minutes": 98.7,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 71.1,
+        "mae_std": 4.61,
+        "mae_min": 66.51,
+        "mae_max": 77.31,
+        "mae_range": 10.8,
+        "baseline_mae_mean": 77.53,
+        "improve": 0.0829,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 622,
+            "n_test": 158,
+            "test_users": 4,
+            "MAE_minutes": 66.51,
+            "baseline_MAE_minutes": 76.33,
+            "bias_minutes": -8.2
+          },
+          {
+            "run": "fold1",
+            "n_train": 630,
+            "n_test": 150,
+            "test_users": 3,
+            "MAE_minutes": 77.31,
+            "baseline_MAE_minutes": 83.22,
+            "bias_minutes": 34.54
+          },
+          {
+            "run": "fold2",
+            "n_train": 630,
+            "n_test": 150,
+            "test_users": 3,
+            "MAE_minutes": 68.89,
+            "baseline_MAE_minutes": 81.99,
+            "bias_minutes": 6.47
+          },
+          {
+            "run": "fold3",
+            "n_train": 616,
+            "n_test": 164,
+            "test_users": 4,
+            "MAE_minutes": 74.58,
+            "baseline_MAE_minutes": 88.86,
+            "bias_minutes": -18.39
+          },
+          {
+            "run": "fold4",
+            "n_train": 622,
+            "n_test": 158,
+            "test_users": 4,
+            "MAE_minutes": 68.23,
+            "baseline_MAE_minutes": 57.27,
+            "bias_minutes": 18.09
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 73.15,
+        "mae_std": 3.98,
+        "mae_min": 70.05,
+        "mae_max": 77.64,
+        "mae_range": 7.59,
+        "baseline_mae_mean": 78.94,
+        "improve": 0.0733,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 613,
+            "n_test": 167,
+            "test_users": 4,
+            "MAE_minutes": 77.64,
+            "baseline_MAE_minutes": 78.69,
+            "bias_minutes": -26.26,
+            "users": "1927972279、5577150313、6117666160、7086361926"
+          },
+          {
+            "run": "seed2",
+            "n_train": 591,
+            "n_test": 189,
+            "test_users": 4,
+            "MAE_minutes": 71.76,
+            "baseline_MAE_minutes": 80.72,
+            "bias_minutes": -3.48,
+            "users": "4319703577、4388161847、5553957443、8378563200"
+          },
+          {
+            "run": "seed3",
+            "n_train": 618,
+            "n_test": 162,
+            "test_users": 4,
+            "MAE_minutes": 70.05,
+            "baseline_MAE_minutes": 77.4,
+            "bias_minutes": -17.98,
+            "users": "4445114986、6117666160、7086361926、8792009665"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_2seg_ctx",
+      "n_rows": 395,
+      "n_users": 22,
+      "n_features": 70,
+      "target_mean_minutes": 431.9,
+      "target_std_minutes": 100.8,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 60.67,
+        "mae_std": 14.77,
+        "mae_min": 43.26,
+        "mae_max": 80.66,
+        "mae_range": 37.4,
+        "baseline_mae_mean": 77.56,
+        "improve": 0.2177,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 315,
+            "n_test": 80,
+            "test_users": 5,
+            "MAE_minutes": 69.25,
+            "baseline_MAE_minutes": 92.32,
+            "bias_minutes": 13.47
+          },
+          {
+            "run": "fold1",
+            "n_train": 315,
+            "n_test": 80,
+            "test_users": 5,
+            "MAE_minutes": 50.94,
+            "baseline_MAE_minutes": 64.99,
+            "bias_minutes": -8.26
+          },
+          {
+            "run": "fold2",
+            "n_train": 316,
+            "n_test": 79,
+            "test_users": 5,
+            "MAE_minutes": 59.25,
+            "baseline_MAE_minutes": 73.71,
+            "bias_minutes": 13.59
+          },
+          {
+            "run": "fold3",
+            "n_train": 317,
+            "n_test": 78,
+            "test_users": 4,
+            "MAE_minutes": 80.66,
+            "baseline_MAE_minutes": 94.28,
+            "bias_minutes": 39.47
+          },
+          {
+            "run": "fold4",
+            "n_train": 317,
+            "n_test": 78,
+            "test_users": 3,
+            "MAE_minutes": 43.26,
+            "baseline_MAE_minutes": 62.48,
+            "bias_minutes": -25.74
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 57.42,
+        "mae_std": 13.78,
+        "mae_min": 47.93,
+        "mae_max": 73.22,
+        "mae_range": 25.29,
+        "baseline_mae_mean": 68.51,
+        "improve": 0.162,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 340,
+            "n_test": 55,
+            "test_users": 4,
+            "MAE_minutes": 73.22,
+            "baseline_MAE_minutes": 96.76,
+            "bias_minutes": 18.23,
+            "users": "1644430081、4558609924、6117666160、8378563200"
+          },
+          {
+            "run": "seed2",
+            "n_train": 288,
+            "n_test": 107,
+            "test_users": 4,
+            "MAE_minutes": 47.93,
+            "baseline_MAE_minutes": 58.28,
+            "bias_minutes": 7.74,
+            "users": "4702921684、6117666160、6962181067、8378563200"
+          },
+          {
+            "run": "seed3",
+            "n_train": 293,
+            "n_test": 102,
+            "test_users": 4,
+            "MAE_minutes": 51.1,
+            "baseline_MAE_minutes": 50.5,
+            "bias_minutes": -6.33,
+            "users": "4388161847、4702921684、6962181067、7086361926"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_2seg_ctx_qg",
+      "n_rows": 376,
+      "n_users": 16,
+      "n_features": 70,
+      "target_mean_minutes": 434.1,
+      "target_std_minutes": 89.9,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 55.0,
+        "mae_std": 4.94,
+        "mae_min": 50.14,
+        "mae_max": 61.78,
+        "mae_range": 11.64,
+        "baseline_mae_mean": 72.07,
+        "improve": 0.2368,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 302,
+            "n_test": 74,
+            "test_users": 3,
+            "MAE_minutes": 53.27,
+            "baseline_MAE_minutes": 65.21,
+            "bias_minutes": 0.86
+          },
+          {
+            "run": "fold1",
+            "n_train": 298,
+            "n_test": 78,
+            "test_users": 4,
+            "MAE_minutes": 58.46,
+            "baseline_MAE_minutes": 71.49,
+            "bias_minutes": 10.88
+          },
+          {
+            "run": "fold2",
+            "n_train": 305,
+            "n_test": 71,
+            "test_users": 3,
+            "MAE_minutes": 51.37,
+            "baseline_MAE_minutes": 71.87,
+            "bias_minutes": -9.28
+          },
+          {
+            "run": "fold3",
+            "n_train": 301,
+            "n_test": 75,
+            "test_users": 3,
+            "MAE_minutes": 50.14,
+            "baseline_MAE_minutes": 63.92,
+            "bias_minutes": -7.5
+          },
+          {
+            "run": "fold4",
+            "n_train": 298,
+            "n_test": 78,
+            "test_users": 3,
+            "MAE_minutes": 61.78,
+            "baseline_MAE_minutes": 87.87,
+            "bias_minutes": 26.65
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 49.61,
+        "mae_std": 7.45,
+        "mae_min": 41.27,
+        "mae_max": 55.62,
+        "mae_range": 14.35,
+        "baseline_mae_mean": 61.69,
+        "improve": 0.1958,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 291,
+            "n_test": 85,
+            "test_users": 3,
+            "MAE_minutes": 41.27,
+            "baseline_MAE_minutes": 59.03,
+            "bias_minutes": -13.42,
+            "users": "2026352035、4445114986、6962181067"
+          },
+          {
+            "run": "seed2",
+            "n_train": 305,
+            "n_test": 71,
+            "test_users": 3,
+            "MAE_minutes": 51.94,
+            "baseline_MAE_minutes": 53.48,
+            "bias_minutes": -5.42,
+            "users": "4388161847、4445114986、5577150313"
+          },
+          {
+            "run": "seed3",
+            "n_train": 312,
+            "n_test": 64,
+            "test_users": 3,
+            "MAE_minutes": 55.62,
+            "baseline_MAE_minutes": 72.56,
+            "bias_minutes": -3.1,
+            "users": "5553957443、6117666160、8792009665"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_bellabeat_f2",
+      "n_rows": 395,
+      "n_users": 22,
+      "n_features": 71,
+      "target_mean_minutes": 431.9,
+      "target_std_minutes": 100.8,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std",
+        "history_days"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 63.77,
+        "mae_std": 17.47,
+        "mae_min": 43.94,
+        "mae_max": 87.96,
+        "mae_range": 44.02,
+        "baseline_mae_mean": 77.56,
+        "improve": 0.1777,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 315,
+            "n_test": 80,
+            "test_users": 5,
+            "MAE_minutes": 74.62,
+            "baseline_MAE_minutes": 92.32,
+            "bias_minutes": 7.94
+          },
+          {
+            "run": "fold1",
+            "n_train": 315,
+            "n_test": 80,
+            "test_users": 5,
+            "MAE_minutes": 54.09,
+            "baseline_MAE_minutes": 64.99,
+            "bias_minutes": -18.71
+          },
+          {
+            "run": "fold2",
+            "n_train": 316,
+            "n_test": 79,
+            "test_users": 5,
+            "MAE_minutes": 58.25,
+            "baseline_MAE_minutes": 73.71,
+            "bias_minutes": 10.17
+          },
+          {
+            "run": "fold3",
+            "n_train": 317,
+            "n_test": 78,
+            "test_users": 4,
+            "MAE_minutes": 87.96,
+            "baseline_MAE_minutes": 94.28,
+            "bias_minutes": 44.87
+          },
+          {
+            "run": "fold4",
+            "n_train": 317,
+            "n_test": 78,
+            "test_users": 3,
+            "MAE_minutes": 43.94,
+            "baseline_MAE_minutes": 62.48,
+            "bias_minutes": -15.44
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 60.19,
+        "mae_std": 15.63,
+        "mae_min": 46.38,
+        "mae_max": 77.15,
+        "mae_range": 30.77,
+        "baseline_mae_mean": 68.51,
+        "improve": 0.1215,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 340,
+            "n_test": 55,
+            "test_users": 4,
+            "MAE_minutes": 77.15,
+            "baseline_MAE_minutes": 96.76,
+            "bias_minutes": 14.49,
+            "users": "1644430081、4558609924、6117666160、8378563200"
+          },
+          {
+            "run": "seed2",
+            "n_train": 288,
+            "n_test": 107,
+            "test_users": 4,
+            "MAE_minutes": 46.38,
+            "baseline_MAE_minutes": 58.28,
+            "bias_minutes": 2.31,
+            "users": "4702921684、6117666160、6962181067、8378563200"
+          },
+          {
+            "run": "seed3",
+            "n_train": 293,
+            "n_test": 102,
+            "test_users": 4,
+            "MAE_minutes": 57.03,
+            "baseline_MAE_minutes": 50.5,
+            "bias_minutes": -21.9,
+            "users": "4388161847、4702921684、6962181067、7086361926"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_2seg_f2",
+      "n_rows": 799,
+      "n_users": 23,
+      "n_features": 89,
+      "target_mean_minutes": 436.6,
+      "target_std_minutes": 105.8,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "bedtime_minutes_sin",
+        "bedtime_minutes_cos",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std",
+        "history_days",
+        "bedtime_minutes_sin_lag1",
+        "bedtime_minutes_cos_lag1",
+        "bedtime_minutes_sin_lag2",
+        "bedtime_minutes_cos_lag2",
+        "bedtime_minutes_sin_lag3",
+        "bedtime_minutes_cos_lag3",
+        "bedtime_minutes_sin_lag7",
+        "bedtime_minutes_cos_lag7",
+        "bedtime_roll3_sin",
+        "bedtime_roll3_cos",
+        "bedtime_regularity_3",
+        "bedtime_roll3_mean_minutes",
+        "bedtime_roll7_sin",
+        "bedtime_roll7_cos",
+        "bedtime_regularity_7",
+        "bedtime_roll7_mean_minutes"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 75.26,
+        "mae_std": 11.89,
+        "mae_min": 64.45,
+        "mae_max": 94.68,
+        "mae_range": 30.23,
+        "baseline_mae_mean": 81.08,
+        "improve": 0.0718,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 640,
+            "n_test": 159,
+            "test_users": 5,
+            "MAE_minutes": 73.47,
+            "baseline_MAE_minutes": 77.53,
+            "bias_minutes": 4.24
+          },
+          {
+            "run": "fold1",
+            "n_train": 639,
+            "n_test": 160,
+            "test_users": 5,
+            "MAE_minutes": 94.68,
+            "baseline_MAE_minutes": 93.05,
+            "bias_minutes": 46.12
+          },
+          {
+            "run": "fold2",
+            "n_train": 641,
+            "n_test": 158,
+            "test_users": 5,
+            "MAE_minutes": 76.59,
+            "baseline_MAE_minutes": 88.79,
+            "bias_minutes": 13.12
+          },
+          {
+            "run": "fold3",
+            "n_train": 635,
+            "n_test": 164,
+            "test_users": 4,
+            "MAE_minutes": 64.45,
+            "baseline_MAE_minutes": 88.78,
+            "bias_minutes": -8.6
+          },
+          {
+            "run": "fold4",
+            "n_train": 641,
+            "n_test": 158,
+            "test_users": 4,
+            "MAE_minutes": 67.13,
+            "baseline_MAE_minutes": 57.26,
+            "bias_minutes": 7.94
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 87.19,
+        "mae_std": 37.25,
+        "mae_min": 57.56,
+        "mae_max": 129.01,
+        "mae_range": 71.45,
+        "baseline_mae_mean": 89.82,
+        "improve": 0.0292,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 643,
+            "n_test": 156,
+            "test_users": 5,
+            "MAE_minutes": 129.01,
+            "baseline_MAE_minutes": 115.89,
+            "bias_minutes": 55.54,
+            "users": "1644430081、3977333714、4558609924、6117666160、8378563200"
+          },
+          {
+            "run": "seed2",
+            "n_train": 532,
+            "n_test": 267,
+            "test_users": 5,
+            "MAE_minutes": 75.0,
+            "baseline_MAE_minutes": 78.07,
+            "bias_minutes": -18.0,
+            "users": "5553957443、6117666160、6962181067、7086361926、8378563200"
+          },
+          {
+            "run": "seed3",
+            "n_train": 620,
+            "n_test": 179,
+            "test_users": 5,
+            "MAE_minutes": 57.56,
+            "baseline_MAE_minutes": 75.49,
+            "bias_minutes": 1.8,
+            "users": "1503960366、4319703577、4558609924、6775888955、6962181067"
+          }
+        ]
+      }
+    },
+    {
+      "dataset": "fitbit_2seg_ctx_qg_f2",
+      "n_rows": 376,
+      "n_users": 16,
+      "n_features": 89,
+      "target_mean_minutes": 434.1,
+      "target_std_minutes": 89.9,
+      "feature_list": [
+        "steps",
+        "very_active_minutes",
+        "fairly_active_minutes",
+        "lightly_active_minutes",
+        "sedentary_minutes",
+        "calories",
+        "weekday",
+        "is_weekend",
+        "bedtime_minutes_sin",
+        "bedtime_minutes_cos",
+        "sleep_minutes_lag1",
+        "sleep_minutes_lag2",
+        "sleep_minutes_lag3",
+        "sleep_minutes_lag7",
+        "steps_lag1",
+        "steps_lag2",
+        "steps_lag3",
+        "steps_lag7",
+        "very_active_minutes_lag1",
+        "very_active_minutes_lag2",
+        "very_active_minutes_lag3",
+        "very_active_minutes_lag7",
+        "fairly_active_minutes_lag1",
+        "fairly_active_minutes_lag2",
+        "fairly_active_minutes_lag3",
+        "fairly_active_minutes_lag7",
+        "lightly_active_minutes_lag1",
+        "lightly_active_minutes_lag2",
+        "lightly_active_minutes_lag3",
+        "lightly_active_minutes_lag7",
+        "sedentary_minutes_lag1",
+        "sedentary_minutes_lag2",
+        "sedentary_minutes_lag3",
+        "sedentary_minutes_lag7",
+        "calories_lag1",
+        "calories_lag2",
+        "calories_lag3",
+        "calories_lag7",
+        "sleep_minutes_roll3_mean",
+        "sleep_minutes_roll3_std",
+        "sleep_minutes_roll7_mean",
+        "sleep_minutes_roll7_std",
+        "steps_roll3_mean",
+        "steps_roll3_std",
+        "steps_roll7_mean",
+        "steps_roll7_std",
+        "very_active_minutes_roll3_mean",
+        "very_active_minutes_roll3_std",
+        "very_active_minutes_roll7_mean",
+        "very_active_minutes_roll7_std",
+        "fairly_active_minutes_roll3_mean",
+        "fairly_active_minutes_roll3_std",
+        "fairly_active_minutes_roll7_mean",
+        "fairly_active_minutes_roll7_std",
+        "lightly_active_minutes_roll3_mean",
+        "lightly_active_minutes_roll3_std",
+        "lightly_active_minutes_roll7_mean",
+        "lightly_active_minutes_roll7_std",
+        "sedentary_minutes_roll3_mean",
+        "sedentary_minutes_roll3_std",
+        "sedentary_minutes_roll7_mean",
+        "sedentary_minutes_roll7_std",
+        "calories_roll3_mean",
+        "calories_roll3_std",
+        "calories_roll7_mean",
+        "calories_roll7_std",
+        "sleep_minutes_user_mean",
+        "sleep_minutes_user_std",
+        "steps_user_mean",
+        "steps_user_std",
+        "very_active_minutes_user_mean",
+        "very_active_minutes_user_std",
+        "history_days",
+        "bedtime_minutes_sin_lag1",
+        "bedtime_minutes_cos_lag1",
+        "bedtime_minutes_sin_lag2",
+        "bedtime_minutes_cos_lag2",
+        "bedtime_minutes_sin_lag3",
+        "bedtime_minutes_cos_lag3",
+        "bedtime_minutes_sin_lag7",
+        "bedtime_minutes_cos_lag7",
+        "bedtime_roll3_sin",
+        "bedtime_roll3_cos",
+        "bedtime_regularity_3",
+        "bedtime_roll3_mean_minutes",
+        "bedtime_roll7_sin",
+        "bedtime_roll7_cos",
+        "bedtime_regularity_7",
+        "bedtime_roll7_mean_minutes"
+      ],
+      "group_kfold": {
+        "protocol": "group_kfold_5",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 5,
+        "mae_mean": 54.24,
+        "mae_std": 5.38,
+        "mae_min": 49.31,
+        "mae_max": 62.14,
+        "mae_range": 12.83,
+        "baseline_mae_mean": 72.07,
+        "improve": 0.2475,
+        "runs": [
+          {
+            "run": "fold0",
+            "n_train": 302,
+            "n_test": 74,
+            "test_users": 3,
+            "MAE_minutes": 53.07,
+            "baseline_MAE_minutes": 65.21,
+            "bias_minutes": 2.81
+          },
+          {
+            "run": "fold1",
+            "n_train": 298,
+            "n_test": 78,
+            "test_users": 4,
+            "MAE_minutes": 56.94,
+            "baseline_MAE_minutes": 71.49,
+            "bias_minutes": 4.13
+          },
+          {
+            "run": "fold2",
+            "n_train": 305,
+            "n_test": 71,
+            "test_users": 3,
+            "MAE_minutes": 49.31,
+            "baseline_MAE_minutes": 71.87,
+            "bias_minutes": -9.51
+          },
+          {
+            "run": "fold3",
+            "n_train": 301,
+            "n_test": 75,
+            "test_users": 3,
+            "MAE_minutes": 49.72,
+            "baseline_MAE_minutes": 63.92,
+            "bias_minutes": 0.38
+          },
+          {
+            "run": "fold4",
+            "n_train": 298,
+            "n_test": 78,
+            "test_users": 3,
+            "MAE_minutes": 62.14,
+            "baseline_MAE_minutes": 87.87,
+            "bias_minutes": 26.97
+          }
+        ]
+      },
+      "repeated_split": {
+        "protocol": "repeated_group_split(1,2,3)",
+        "model": "random_forest",
+        "params": {
+          "n_estimators": 300,
+          "max_depth": 8,
+          "min_samples_leaf": 3
+        },
+        "n_runs": 3,
+        "mae_mean": 49.8,
+        "mae_std": 9.85,
+        "mae_min": 39.97,
+        "mae_max": 59.67,
+        "mae_range": 19.7,
+        "baseline_mae_mean": 61.69,
+        "improve": 0.1927,
+        "runs": [
+          {
+            "run": "seed1",
+            "n_train": 291,
+            "n_test": 85,
+            "test_users": 3,
+            "MAE_minutes": 39.97,
+            "baseline_MAE_minutes": 59.03,
+            "bias_minutes": -12.01,
+            "users": "2026352035、4445114986、6962181067"
+          },
+          {
+            "run": "seed2",
+            "n_train": 305,
+            "n_test": 71,
+            "test_users": 3,
+            "MAE_minutes": 49.77,
+            "baseline_MAE_minutes": 53.48,
+            "bias_minutes": -7.14,
+            "users": "4388161847、4445114986、5577150313"
+          },
+          {
+            "run": "seed3",
+            "n_train": 312,
+            "n_test": 64,
+            "test_users": 3,
+            "MAE_minutes": 59.67,
+            "baseline_MAE_minutes": 72.56,
+            "bias_minutes": -13.93,
+            "users": "5553957443、6117666160、8792009665"
+          }
+        ]
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "tag": "A",
+      "base": "fitbit_bellabeat",
+      "variant": "fitbit_bellabeat_qg",
+      "what": "质量门槛（在当前线上数据集上）",
+      "noise_floor": 30.82,
+      "delta_mae": -6.77,
+      "delta_improve": 0.0313,
+      "delta_target_std": -10.9,
+      "verdict": "略有改善但落在噪声内（证据不足）",
+      "paired": {
+        "pairable": false,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 77.12,
+              "variant_mae": 41.11,
+              "delta_mae": -36.01,
+              "same_scope": false
+            },
+            {
+              "run": "seed2",
+              "base_mae": 46.3,
+              "variant_mae": 49.37,
+              "delta_mae": 3.07,
+              "same_scope": false
+            },
+            {
+              "run": "seed3",
+              "base_mae": 57.17,
+              "variant_mae": 54.72,
+              "delta_mae": -2.45,
+              "same_scope": false
+            }
+          ],
+          "matched": false,
+          "deltas": [
+            -36.01,
+            3.07,
+            -2.45
+          ],
+          "mean_delta": -11.8,
+          "n_improved": 2,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 74.19,
+              "variant_mae": 53.26,
+              "delta_mae": -20.93,
+              "same_scope": false
+            },
+            {
+              "run": "fold1",
+              "base_mae": 54.17,
+              "variant_mae": 58.45,
+              "delta_mae": 4.28,
+              "same_scope": false
+            },
+            {
+              "run": "fold2",
+              "base_mae": 58.13,
+              "variant_mae": 50.34,
+              "delta_mae": -7.79,
+              "same_scope": false
+            },
+            {
+              "run": "fold3",
+              "base_mae": 88.25,
+              "variant_mae": 48.62,
+              "delta_mae": -39.63,
+              "same_scope": false
+            },
+            {
+              "run": "fold4",
+              "base_mae": 44.06,
+              "variant_mae": 74.29,
+              "delta_mae": 30.23,
+              "same_scope": false
+            }
+          ],
+          "matched": false,
+          "deltas": [
+            -20.93,
+            4.28,
+            -7.79,
+            -39.63,
+            30.23
+          ],
+          "mean_delta": -6.77,
+          "n_improved": 3,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "B",
+      "base": "fitbit_2seg",
+      "variant": "fitbit_2seg_qg",
+      "what": "质量门槛（在两段合并数据集上）",
+      "noise_floor": 56.84,
+      "delta_mae": -2.13,
+      "delta_improve": -0.014,
+      "delta_target_std": -7.1,
+      "verdict": "略有改善但落在噪声内（证据不足）",
+      "paired": {
+        "pairable": false,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 116.18,
+              "variant_mae": 77.64,
+              "delta_mae": -38.54,
+              "same_scope": false
+            },
+            {
+              "run": "seed2",
+              "base_mae": 77.34,
+              "variant_mae": 71.76,
+              "delta_mae": -5.58,
+              "same_scope": false
+            },
+            {
+              "run": "seed3",
+              "base_mae": 59.34,
+              "variant_mae": 70.05,
+              "delta_mae": 10.71,
+              "same_scope": false
+            }
+          ],
+          "matched": false,
+          "deltas": [
+            -38.54,
+            -5.58,
+            10.71
+          ],
+          "mean_delta": -11.14,
+          "n_improved": 2,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 67.37,
+              "variant_mae": 66.51,
+              "delta_mae": -0.86,
+              "same_scope": false
+            },
+            {
+              "run": "fold1",
+              "base_mae": 83.53,
+              "variant_mae": 77.31,
+              "delta_mae": -6.22,
+              "same_scope": false
+            },
+            {
+              "run": "fold2",
+              "base_mae": 77.53,
+              "variant_mae": 68.89,
+              "delta_mae": -8.64,
+              "same_scope": false
+            },
+            {
+              "run": "fold3",
+              "base_mae": 68.84,
+              "variant_mae": 74.58,
+              "delta_mae": 5.74,
+              "same_scope": false
+            },
+            {
+              "run": "fold4",
+              "base_mae": 68.86,
+              "variant_mae": 68.23,
+              "delta_mae": -0.63,
+              "same_scope": false
+            }
+          ],
+          "matched": false,
+          "deltas": [
+            -0.86,
+            -6.22,
+            -8.64,
+            5.74,
+            -0.63
+          ],
+          "mean_delta": -2.12,
+          "n_improved": 4,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "C",
+      "base": "fitbit_bellabeat",
+      "variant": "fitbit_2seg_ctx",
+      "what": "历史上下文：同一批行，滞后/滚动/基线改用更长的历史",
+      "noise_floor": 30.82,
+      "delta_mae": -3.09,
+      "delta_improve": 0.0398,
+      "delta_target_std": 0.0,
+      "verdict": "略有改善但落在噪声内（证据不足）",
+      "paired": {
+        "pairable": true,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 77.12,
+              "variant_mae": 73.22,
+              "delta_mae": -3.9,
+              "same_scope": true
+            },
+            {
+              "run": "seed2",
+              "base_mae": 46.3,
+              "variant_mae": 47.93,
+              "delta_mae": 1.63,
+              "same_scope": true
+            },
+            {
+              "run": "seed3",
+              "base_mae": 57.17,
+              "variant_mae": 51.1,
+              "delta_mae": -6.07,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            -3.9,
+            1.63,
+            -6.07
+          ],
+          "mean_delta": -2.78,
+          "n_improved": 2,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 74.19,
+              "variant_mae": 69.25,
+              "delta_mae": -4.94,
+              "same_scope": true
+            },
+            {
+              "run": "fold1",
+              "base_mae": 54.17,
+              "variant_mae": 50.94,
+              "delta_mae": -3.23,
+              "same_scope": true
+            },
+            {
+              "run": "fold2",
+              "base_mae": 58.13,
+              "variant_mae": 59.25,
+              "delta_mae": 1.12,
+              "same_scope": true
+            },
+            {
+              "run": "fold3",
+              "base_mae": 88.25,
+              "variant_mae": 80.66,
+              "delta_mae": -7.59,
+              "same_scope": true
+            },
+            {
+              "run": "fold4",
+              "base_mae": 44.06,
+              "variant_mae": 43.26,
+              "delta_mae": -0.8,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            -4.94,
+            -3.23,
+            1.12,
+            -7.59,
+            -0.8
+          ],
+          "mean_delta": -3.09,
+          "n_improved": 4,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "D",
+      "base": "fitbit_bellabeat_qg",
+      "variant": "fitbit_2seg_ctx_qg",
+      "what": "历史上下文（在质量门槛之上再加）",
+      "noise_floor": 13.61,
+      "delta_mae": -1.99,
+      "delta_improve": 0.0276,
+      "delta_target_std": 0.0,
+      "verdict": "略有改善但落在噪声内（证据不足）",
+      "paired": {
+        "pairable": true,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 41.11,
+              "variant_mae": 41.27,
+              "delta_mae": 0.16,
+              "same_scope": true
+            },
+            {
+              "run": "seed2",
+              "base_mae": 49.37,
+              "variant_mae": 51.94,
+              "delta_mae": 2.57,
+              "same_scope": true
+            },
+            {
+              "run": "seed3",
+              "base_mae": 54.72,
+              "variant_mae": 55.62,
+              "delta_mae": 0.9,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            0.16,
+            2.57,
+            0.9
+          ],
+          "mean_delta": 1.21,
+          "n_improved": 0,
+          "all_same_direction": true,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 53.26,
+              "variant_mae": 53.27,
+              "delta_mae": 0.01,
+              "same_scope": true
+            },
+            {
+              "run": "fold1",
+              "base_mae": 58.45,
+              "variant_mae": 58.46,
+              "delta_mae": 0.01,
+              "same_scope": true
+            },
+            {
+              "run": "fold2",
+              "base_mae": 50.34,
+              "variant_mae": 51.37,
+              "delta_mae": 1.03,
+              "same_scope": true
+            },
+            {
+              "run": "fold3",
+              "base_mae": 48.62,
+              "variant_mae": 50.14,
+              "delta_mae": 1.52,
+              "same_scope": true
+            },
+            {
+              "run": "fold4",
+              "base_mae": 74.29,
+              "variant_mae": 61.78,
+              "delta_mae": -12.51,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            0.01,
+            0.01,
+            1.03,
+            1.52,
+            -12.51
+          ],
+          "mean_delta": -1.99,
+          "n_improved": 1,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "E",
+      "base": "fitbit_bellabeat",
+      "variant": "fitbit_2seg_ctx_qg",
+      "what": "上下文 + 门槛（两个机制叠加后的合计效果）",
+      "noise_floor": 30.82,
+      "delta_mae": -8.76,
+      "delta_improve": 0.0589,
+      "delta_target_std": -10.9,
+      "verdict": "略有改善但落在噪声内（证据不足）",
+      "paired": {
+        "pairable": false,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 77.12,
+              "variant_mae": 41.27,
+              "delta_mae": -35.85,
+              "same_scope": false
+            },
+            {
+              "run": "seed2",
+              "base_mae": 46.3,
+              "variant_mae": 51.94,
+              "delta_mae": 5.64,
+              "same_scope": false
+            },
+            {
+              "run": "seed3",
+              "base_mae": 57.17,
+              "variant_mae": 55.62,
+              "delta_mae": -1.55,
+              "same_scope": false
+            }
+          ],
+          "matched": false,
+          "deltas": [
+            -35.85,
+            5.64,
+            -1.55
+          ],
+          "mean_delta": -10.59,
+          "n_improved": 2,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 74.19,
+              "variant_mae": 53.27,
+              "delta_mae": -20.92,
+              "same_scope": false
+            },
+            {
+              "run": "fold1",
+              "base_mae": 54.17,
+              "variant_mae": 58.46,
+              "delta_mae": 4.29,
+              "same_scope": false
+            },
+            {
+              "run": "fold2",
+              "base_mae": 58.13,
+              "variant_mae": 51.37,
+              "delta_mae": -6.76,
+              "same_scope": false
+            },
+            {
+              "run": "fold3",
+              "base_mae": 88.25,
+              "variant_mae": 50.14,
+              "delta_mae": -38.11,
+              "same_scope": false
+            },
+            {
+              "run": "fold4",
+              "base_mae": 44.06,
+              "variant_mae": 61.78,
+              "delta_mae": 17.72,
+              "same_scope": false
+            }
+          ],
+          "matched": false,
+          "deltas": [
+            -20.92,
+            4.29,
+            -6.76,
+            -38.11,
+            17.72
+          ],
+          "mean_delta": -8.76,
+          "n_improved": 3,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "F",
+      "base": "fitbit_bellabeat",
+      "variant": "fitbit_bellabeat_f2",
+      "what": "加特征：同一批行，新增 history_days（该数据集没有就寝时刻字段）",
+      "noise_floor": 30.82,
+      "delta_mae": 0.01,
+      "delta_improve": -0.0002,
+      "delta_target_std": 0.0,
+      "verdict": "无改善（变化落在噪声内）",
+      "paired": {
+        "pairable": true,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 77.12,
+              "variant_mae": 77.15,
+              "delta_mae": 0.03,
+              "same_scope": true
+            },
+            {
+              "run": "seed2",
+              "base_mae": 46.3,
+              "variant_mae": 46.38,
+              "delta_mae": 0.08,
+              "same_scope": true
+            },
+            {
+              "run": "seed3",
+              "base_mae": 57.17,
+              "variant_mae": 57.03,
+              "delta_mae": -0.14,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            0.03,
+            0.08,
+            -0.14
+          ],
+          "mean_delta": -0.01,
+          "n_improved": 1,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 74.19,
+              "variant_mae": 74.62,
+              "delta_mae": 0.43,
+              "same_scope": true
+            },
+            {
+              "run": "fold1",
+              "base_mae": 54.17,
+              "variant_mae": 54.09,
+              "delta_mae": -0.08,
+              "same_scope": true
+            },
+            {
+              "run": "fold2",
+              "base_mae": 58.13,
+              "variant_mae": 58.25,
+              "delta_mae": 0.12,
+              "same_scope": true
+            },
+            {
+              "run": "fold3",
+              "base_mae": 88.25,
+              "variant_mae": 87.96,
+              "delta_mae": -0.29,
+              "same_scope": true
+            },
+            {
+              "run": "fold4",
+              "base_mae": 44.06,
+              "variant_mae": 43.94,
+              "delta_mae": -0.12,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            0.43,
+            -0.08,
+            0.12,
+            -0.29,
+            -0.12
+          ],
+          "mean_delta": 0.01,
+          "n_improved": 3,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "G",
+      "base": "fitbit_2seg",
+      "variant": "fitbit_2seg_f2",
+      "what": "加特征：同一批行，新增就寝环形历史 + history_days",
+      "noise_floor": 56.84,
+      "delta_mae": 2.03,
+      "delta_improve": -0.0251,
+      "delta_target_std": 0.0,
+      "verdict": "无改善（变化落在噪声内）",
+      "paired": {
+        "pairable": true,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 116.18,
+              "variant_mae": 129.01,
+              "delta_mae": 12.83,
+              "same_scope": true
+            },
+            {
+              "run": "seed2",
+              "base_mae": 77.34,
+              "variant_mae": 75.0,
+              "delta_mae": -2.34,
+              "same_scope": true
+            },
+            {
+              "run": "seed3",
+              "base_mae": 59.34,
+              "variant_mae": 57.56,
+              "delta_mae": -1.78,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            12.83,
+            -2.34,
+            -1.78
+          ],
+          "mean_delta": 2.9,
+          "n_improved": 2,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 67.37,
+              "variant_mae": 73.47,
+              "delta_mae": 6.1,
+              "same_scope": true
+            },
+            {
+              "run": "fold1",
+              "base_mae": 83.53,
+              "variant_mae": 94.68,
+              "delta_mae": 11.15,
+              "same_scope": true
+            },
+            {
+              "run": "fold2",
+              "base_mae": 77.53,
+              "variant_mae": 76.59,
+              "delta_mae": -0.94,
+              "same_scope": true
+            },
+            {
+              "run": "fold3",
+              "base_mae": 68.84,
+              "variant_mae": 64.45,
+              "delta_mae": -4.39,
+              "same_scope": true
+            },
+            {
+              "run": "fold4",
+              "base_mae": 68.86,
+              "variant_mae": 67.13,
+              "delta_mae": -1.73,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            6.1,
+            11.15,
+            -0.94,
+            -4.39,
+            -1.73
+          ],
+          "mean_delta": 2.04,
+          "n_improved": 3,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    },
+    {
+      "tag": "H",
+      "base": "fitbit_2seg_ctx_qg",
+      "variant": "fitbit_2seg_ctx_qg_f2",
+      "what": "加特征（在候选配置之上再加一轮）",
+      "noise_floor": 14.35,
+      "delta_mae": -0.76,
+      "delta_improve": 0.0107,
+      "delta_target_std": 0.0,
+      "verdict": "略有改善但落在噪声内（证据不足）",
+      "paired": {
+        "pairable": true,
+        "per_seed": {
+          "n_runs": 3,
+          "rows": [
+            {
+              "run": "seed1",
+              "base_mae": 41.27,
+              "variant_mae": 39.97,
+              "delta_mae": -1.3,
+              "same_scope": true
+            },
+            {
+              "run": "seed2",
+              "base_mae": 51.94,
+              "variant_mae": 49.77,
+              "delta_mae": -2.17,
+              "same_scope": true
+            },
+            {
+              "run": "seed3",
+              "base_mae": 55.62,
+              "variant_mae": 59.67,
+              "delta_mae": 4.05,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            -1.3,
+            -2.17,
+            4.05
+          ],
+          "mean_delta": 0.19,
+          "n_improved": 2,
+          "all_same_direction": false,
+          "all_improved": false
+        },
+        "per_fold": {
+          "n_runs": 5,
+          "rows": [
+            {
+              "run": "fold0",
+              "base_mae": 53.27,
+              "variant_mae": 53.07,
+              "delta_mae": -0.2,
+              "same_scope": true
+            },
+            {
+              "run": "fold1",
+              "base_mae": 58.46,
+              "variant_mae": 56.94,
+              "delta_mae": -1.52,
+              "same_scope": true
+            },
+            {
+              "run": "fold2",
+              "base_mae": 51.37,
+              "variant_mae": 49.31,
+              "delta_mae": -2.06,
+              "same_scope": true
+            },
+            {
+              "run": "fold3",
+              "base_mae": 50.14,
+              "variant_mae": 49.72,
+              "delta_mae": -0.42,
+              "same_scope": true
+            },
+            {
+              "run": "fold4",
+              "base_mae": 61.78,
+              "variant_mae": 62.14,
+              "delta_mae": 0.36,
+              "same_scope": true
+            }
+          ],
+          "matched": true,
+          "deltas": [
+            -0.2,
+            -1.52,
+            -2.06,
+            -0.42,
+            0.36
+          ],
+          "mean_delta": -0.77,
+          "n_improved": 4,
+          "all_same_direction": false,
+          "all_improved": false
+        }
+      }
+    }
+  ],
+  "feature_deltas": [
+    {
+      "base": "fitbit_bellabeat",
+      "variant": "fitbit_bellabeat_f2",
+      "added": [
+        "history_days"
+      ],
+      "removed": []
+    },
+    {
+      "base": "fitbit_2seg",
+      "variant": "fitbit_2seg_f2",
+      "added": [
+        "bedtime_minutes_sin",
+        "bedtime_minutes_cos",
+        "history_days",
+        "bedtime_minutes_sin_lag1",
+        "bedtime_minutes_cos_lag1",
+        "bedtime_minutes_sin_lag2",
+        "bedtime_minutes_cos_lag2",
+        "bedtime_minutes_sin_lag3",
+        "bedtime_minutes_cos_lag3",
+        "bedtime_minutes_sin_lag7",
+        "bedtime_minutes_cos_lag7",
+        "bedtime_roll3_sin",
+        "bedtime_roll3_cos",
+        "bedtime_regularity_3",
+        "bedtime_roll3_mean_minutes",
+        "bedtime_roll7_sin",
+        "bedtime_roll7_cos",
+        "bedtime_regularity_7",
+        "bedtime_roll7_mean_minutes"
+      ],
+      "removed": []
+    },
+    {
+      "base": "fitbit_2seg_ctx_qg",
+      "variant": "fitbit_2seg_ctx_qg_f2",
+      "added": [
+        "bedtime_minutes_sin",
+        "bedtime_minutes_cos",
+        "history_days",
+        "bedtime_minutes_sin_lag1",
+        "bedtime_minutes_cos_lag1",
+        "bedtime_minutes_sin_lag2",
+        "bedtime_minutes_cos_lag2",
+        "bedtime_minutes_sin_lag3",
+        "bedtime_minutes_cos_lag3",
+        "bedtime_minutes_sin_lag7",
+        "bedtime_minutes_cos_lag7",
+        "bedtime_roll3_sin",
+        "bedtime_roll3_cos",
+        "bedtime_regularity_3",
+        "bedtime_roll3_mean_minutes",
+        "bedtime_roll7_sin",
+        "bedtime_roll7_cos",
+        "bedtime_regularity_7",
+        "bedtime_roll7_mean_minutes"
+      ],
+      "removed": []
+    }
+  ]
+}

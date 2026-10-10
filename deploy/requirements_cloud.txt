@@ -1,0 +1,17 @@
+# 云端上线专用依赖（固定版本，与本地实测环境一致，保证 models/*.pkl 能正常反序列化）
+#
+# 本地实测（Windows + Python 3.13.5，2026-10-04）：
+#   pandas 2.2.3 / numpy 2.4.6 / scikit-learn 1.6.1 / joblib 1.4.2
+#   streamlit 1.45.1 / matplotlib 3.10.0 / tabulate 0.9.0
+#
+# 用法见 deploy/README.md 第 5 节：在云端仓库里用本文件覆盖根目录 requirements.txt，
+# 原因是模型是用 sklearn 1.6.1 训练的，云端装到不同大版本可能出现 InconsistentVersionWarning
+# 甚至反序列化失败；固定版本可以完全避免这一类"云端才报错"的问题。
+
+pandas==2.2.3
+numpy==2.4.6
+scikit-learn==1.6.1
+joblib==1.4.2
+streamlit==1.45.1
+matplotlib==3.10.0
+tabulate==0.9.0

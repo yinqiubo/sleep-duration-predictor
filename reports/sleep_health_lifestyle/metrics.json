@@ -1,0 +1,101 @@
+{
+  "dataset": "sleep_health_lifestyle",
+  "n_test": 74,
+  "models": [
+    {
+      "model": "mean_baseline",
+      "params": "\"训练集均值\"",
+      "val_MAE_minutes": "-",
+      "test_MAE_minutes": 43.6,
+      "test_RMSE_minutes": 49.93,
+      "test_R2": -0.0,
+      "within_30min_ratio": 0.2432,
+      "improve_vs_baseline": 0.0
+    },
+    {
+      "model": "ridge_untuned",
+      "params": "{\"alpha\": 1.0}",
+      "val_MAE_minutes": 18.93,
+      "test_MAE_minutes": 20.18,
+      "test_RMSE_minutes": 25.57,
+      "test_R2": 0.7377,
+      "within_30min_ratio": 0.6757,
+      "improve_vs_baseline": 0.5372
+    },
+    {
+      "model": "ridge",
+      "params": "{\"alpha\": 0.1}",
+      "val_MAE_minutes": 18.91,
+      "test_MAE_minutes": 20.17,
+      "test_RMSE_minutes": 25.55,
+      "test_R2": 0.7382,
+      "within_30min_ratio": 0.6892,
+      "improve_vs_baseline": 0.5374
+    },
+    {
+      "model": "random_forest_untuned",
+      "params": "{\"n_estimators\": 100, \"max_depth\": null, \"min_samples_leaf\": 1}",
+      "val_MAE_minutes": 4.2,
+      "test_MAE_minutes": 4.22,
+      "test_RMSE_minutes": 6.84,
+      "test_R2": 0.9813,
+      "within_30min_ratio": 0.9865,
+      "improve_vs_baseline": 0.9032
+    },
+    {
+      "model": "random_forest",
+      "params": "{\"n_estimators\": 300, \"max_depth\": null, \"min_samples_leaf\": 1}",
+      "val_MAE_minutes": 4.2,
+      "test_MAE_minutes": 4.14,
+      "test_RMSE_minutes": 6.79,
+      "test_R2": 0.9815,
+      "within_30min_ratio": 0.9865,
+      "improve_vs_baseline": 0.905
+    },
+    {
+      "model": "gradient_boosting_untuned",
+      "params": "{\"n_estimators\": 100, \"learning_rate\": 0.1, \"max_depth\": 3}",
+      "val_MAE_minutes": 4.0,
+      "test_MAE_minutes": 3.94,
+      "test_RMSE_minutes": 5.49,
+      "test_R2": 0.9879,
+      "within_30min_ratio": 1.0,
+      "improve_vs_baseline": 0.9096
+    },
+    {
+      "model": "gradient_boosting",
+      "params": "{\"n_estimators\": 300, \"learning_rate\": 0.1, \"max_depth\": 3}",
+      "val_MAE_minutes": 3.58,
+      "test_MAE_minutes": 3.51,
+      "test_RMSE_minutes": 5.3,
+      "test_R2": 0.9887,
+      "within_30min_ratio": 1.0,
+      "improve_vs_baseline": 0.9195
+    },
+    {
+      "model": "gradient_boosting_final(train+val重训)",
+      "params": "{\"n_estimators\": 300, \"learning_rate\": 0.1, \"max_depth\": 3}",
+      "val_MAE_minutes": "-",
+      "test_MAE_minutes": 3.56,
+      "test_RMSE_minutes": 5.29,
+      "test_R2": 0.9888,
+      "within_30min_ratio": 1.0,
+      "improve_vs_baseline": 0.9183
+    }
+  ],
+  "deployed_model": "gradient_boosting_final(train+val重训)",
+  "best_single_model_on_test": "gradient_boosting",
+  "acceptance": {
+    "mae_hours_max": 0.75,
+    "mae_improve_vs_baseline": 0.15,
+    "interval_coverage": [
+      0.7,
+      0.9
+    ]
+  },
+  "interval_coverage_test": {
+    "coverage": 0.7162,
+    "mean_width_minutes": 49.17,
+    "n": 74
+  }
+}

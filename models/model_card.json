@@ -1,0 +1,609 @@
+{
+  "dataset": "fitbit_bellabeat",
+  "created_at": "2026-10-04T01:45:22",
+  "random_seed": 42,
+  "target": "sleep_minutes",
+  "target_unit": "minutes",
+  "n_features": 70,
+  "features": [
+    "steps",
+    "very_active_minutes",
+    "fairly_active_minutes",
+    "lightly_active_minutes",
+    "sedentary_minutes",
+    "calories",
+    "weekday",
+    "is_weekend",
+    "sleep_minutes_lag1",
+    "sleep_minutes_lag2",
+    "sleep_minutes_lag3",
+    "sleep_minutes_lag7",
+    "steps_lag1",
+    "steps_lag2",
+    "steps_lag3",
+    "steps_lag7",
+    "very_active_minutes_lag1",
+    "very_active_minutes_lag2",
+    "very_active_minutes_lag3",
+    "very_active_minutes_lag7",
+    "fairly_active_minutes_lag1",
+    "fairly_active_minutes_lag2",
+    "fairly_active_minutes_lag3",
+    "fairly_active_minutes_lag7",
+    "lightly_active_minutes_lag1",
+    "lightly_active_minutes_lag2",
+    "lightly_active_minutes_lag3",
+    "lightly_active_minutes_lag7",
+    "sedentary_minutes_lag1",
+    "sedentary_minutes_lag2",
+    "sedentary_minutes_lag3",
+    "sedentary_minutes_lag7",
+    "calories_lag1",
+    "calories_lag2",
+    "calories_lag3",
+    "calories_lag7",
+    "sleep_minutes_roll3_mean",
+    "sleep_minutes_roll3_std",
+    "sleep_minutes_roll7_mean",
+    "sleep_minutes_roll7_std",
+    "steps_roll3_mean",
+    "steps_roll3_std",
+    "steps_roll7_mean",
+    "steps_roll7_std",
+    "very_active_minutes_roll3_mean",
+    "very_active_minutes_roll3_std",
+    "very_active_minutes_roll7_mean",
+    "very_active_minutes_roll7_std",
+    "fairly_active_minutes_roll3_mean",
+    "fairly_active_minutes_roll3_std",
+    "fairly_active_minutes_roll7_mean",
+    "fairly_active_minutes_roll7_std",
+    "lightly_active_minutes_roll3_mean",
+    "lightly_active_minutes_roll3_std",
+    "lightly_active_minutes_roll7_mean",
+    "lightly_active_minutes_roll7_std",
+    "sedentary_minutes_roll3_mean",
+    "sedentary_minutes_roll3_std",
+    "sedentary_minutes_roll7_mean",
+    "sedentary_minutes_roll7_std",
+    "calories_roll3_mean",
+    "calories_roll3_std",
+    "calories_roll7_mean",
+    "calories_roll7_std",
+    "sleep_minutes_user_mean",
+    "sleep_minutes_user_std",
+    "steps_user_mean",
+    "steps_user_std",
+    "very_active_minutes_user_mean",
+    "very_active_minutes_user_std"
+  ],
+  "feature_stats": {
+    "steps": {
+      "min": 17.0,
+      "max": 22770.0,
+      "mean": 8574.02,
+      "median": 8954.0
+    },
+    "very_active_minutes": {
+      "min": 0.0,
+      "max": 210.0,
+      "mean": 25.1,
+      "median": 9.0
+    },
+    "fairly_active_minutes": {
+      "min": 0.0,
+      "max": 143.0,
+      "mean": 18.21,
+      "median": 11.0
+    },
+    "lightly_active_minutes": {
+      "min": 2.0,
+      "max": 518.0,
+      "mean": 217.9,
+      "median": 208.0
+    },
+    "sedentary_minutes": {
+      "min": 0.0,
+      "max": 1167.0,
+      "mean": 696.55,
+      "median": 713.0
+    },
+    "calories": {
+      "min": 741.0,
+      "max": 4900.0,
+      "mean": 2395.15,
+      "median": 2203.0
+    },
+    "weekday": {
+      "min": 0.0,
+      "max": 6.0,
+      "mean": 2.97,
+      "median": 3.0
+    },
+    "is_weekend": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.27,
+      "median": 0.0
+    },
+    "sleep_minutes_lag1": {
+      "min": 124.0,
+      "max": 796.0,
+      "mean": 434.42,
+      "median": 437.0
+    },
+    "sleep_minutes_lag2": {
+      "min": 124.0,
+      "max": 775.0,
+      "mean": 433.51,
+      "median": 436.0
+    },
+    "sleep_minutes_lag3": {
+      "min": 152.0,
+      "max": 775.0,
+      "mean": 435.71,
+      "median": 439.0
+    },
+    "sleep_minutes_lag7": {
+      "min": 152.0,
+      "max": 775.0,
+      "mean": 434.86,
+      "median": 439.0
+    },
+    "steps_lag1": {
+      "min": 254.0,
+      "max": 22770.0,
+      "mean": 8755.14,
+      "median": 9143.0
+    },
+    "steps_lag2": {
+      "min": 254.0,
+      "max": 22770.0,
+      "mean": 8812.06,
+      "median": 9388.0
+    },
+    "steps_lag3": {
+      "min": 356.0,
+      "max": 22770.0,
+      "mean": 8802.86,
+      "median": 9324.5
+    },
+    "steps_lag7": {
+      "min": 655.0,
+      "max": 20031.0,
+      "mean": 8803.29,
+      "median": 9324.5
+    },
+    "very_active_minutes_lag1": {
+      "min": 0.0,
+      "max": 210.0,
+      "mean": 25.77,
+      "median": 11.0
+    },
+    "very_active_minutes_lag2": {
+      "min": 0.0,
+      "max": 210.0,
+      "mean": 25.99,
+      "median": 11.0
+    },
+    "very_active_minutes_lag3": {
+      "min": 0.0,
+      "max": 210.0,
+      "mean": 26.15,
+      "median": 11.5
+    },
+    "very_active_minutes_lag7": {
+      "min": 0.0,
+      "max": 210.0,
+      "mean": 26.59,
+      "median": 12.0
+    },
+    "fairly_active_minutes_lag1": {
+      "min": 0.0,
+      "max": 143.0,
+      "mean": 18.61,
+      "median": 12.0
+    },
+    "fairly_active_minutes_lag2": {
+      "min": 0.0,
+      "max": 143.0,
+      "mean": 18.64,
+      "median": 12.0
+    },
+    "fairly_active_minutes_lag3": {
+      "min": 0.0,
+      "max": 143.0,
+      "mean": 18.46,
+      "median": 12.0
+    },
+    "fairly_active_minutes_lag7": {
+      "min": 0.0,
+      "max": 143.0,
+      "mean": 18.67,
+      "median": 12.5
+    },
+    "lightly_active_minutes_lag1": {
+      "min": 17.0,
+      "max": 518.0,
+      "mean": 222.52,
+      "median": 212.0
+    },
+    "lightly_active_minutes_lag2": {
+      "min": 17.0,
+      "max": 518.0,
+      "mean": 223.33,
+      "median": 214.0
+    },
+    "lightly_active_minutes_lag3": {
+      "min": 32.0,
+      "max": 518.0,
+      "mean": 223.71,
+      "median": 214.0
+    },
+    "lightly_active_minutes_lag7": {
+      "min": 46.0,
+      "max": 518.0,
+      "mean": 219.84,
+      "median": 212.5
+    },
+    "sedentary_minutes_lag1": {
+      "min": 218.0,
+      "max": 1096.0,
+      "mean": 706.09,
+      "median": 716.0
+    },
+    "sedentary_minutes_lag2": {
+      "min": 413.0,
+      "max": 1053.0,
+      "mean": 706.09,
+      "median": 716.0
+    },
+    "sedentary_minutes_lag3": {
+      "min": 413.0,
+      "max": 1053.0,
+      "mean": 703.35,
+      "median": 716.0
+    },
+    "sedentary_minutes_lag7": {
+      "min": 413.0,
+      "max": 1053.0,
+      "mean": 705.4,
+      "median": 719.0
+    },
+    "calories_lag1": {
+      "min": 1141.0,
+      "max": 4900.0,
+      "mean": 2421.28,
+      "median": 2221.0
+    },
+    "calories_lag2": {
+      "min": 1141.0,
+      "max": 4900.0,
+      "mean": 2419.47,
+      "median": 2211.0
+    },
+    "calories_lag3": {
+      "min": 1214.0,
+      "max": 4900.0,
+      "mean": 2415.44,
+      "median": 2194.0
+    },
+    "calories_lag7": {
+      "min": 1214.0,
+      "max": 4900.0,
+      "mean": 2392.0,
+      "median": 2177.0
+    },
+    "sleep_minutes_roll3_mean": {
+      "min": 148.5,
+      "max": 736.0,
+      "mean": 434.1,
+      "median": 438.0
+    },
+    "sleep_minutes_roll3_std": {
+      "min": 3.61,
+      "max": 218.98,
+      "mean": 63.49,
+      "median": 53.35
+    },
+    "sleep_minutes_roll7_mean": {
+      "min": 266.43,
+      "max": 662.0,
+      "mean": 434.5,
+      "median": 440.29
+    },
+    "sleep_minutes_roll7_std": {
+      "min": 18.69,
+      "max": 304.72,
+      "mean": 77.94,
+      "median": 66.83
+    },
+    "steps_roll3_mean": {
+      "min": 517.0,
+      "max": 16789.0,
+      "mean": 8726.98,
+      "median": 8913.0
+    },
+    "steps_roll3_std": {
+      "min": 170.97,
+      "max": 8117.18,
+      "mean": 2653.41,
+      "median": 2313.12
+    },
+    "steps_roll7_mean": {
+      "min": 1957.8,
+      "max": 13740.17,
+      "mean": 8774.23,
+      "median": 8959.43
+    },
+    "steps_roll7_std": {
+      "min": 847.07,
+      "max": 8335.94,
+      "mean": 3066.23,
+      "median": 2834.83
+    },
+    "very_active_minutes_roll3_mean": {
+      "min": 0.0,
+      "max": 166.33,
+      "mean": 25.51,
+      "median": 15.33
+    },
+    "very_active_minutes_roll3_std": {
+      "min": 0.0,
+      "max": 98.46,
+      "mean": 16.3,
+      "median": 11.59
+    },
+    "very_active_minutes_roll7_mean": {
+      "min": 0.0,
+      "max": 132.29,
+      "mean": 25.8,
+      "median": 18.29
+    },
+    "very_active_minutes_roll7_std": {
+      "min": 0.0,
+      "max": 76.45,
+      "mean": 18.84,
+      "median": 15.0
+    },
+    "fairly_active_minutes_roll3_mean": {
+      "min": 0.0,
+      "max": 101.0,
+      "mean": 18.57,
+      "median": 14.67
+    },
+    "fairly_active_minutes_roll3_std": {
+      "min": 0.0,
+      "max": 59.18,
+      "mean": 12.59,
+      "median": 10.26
+    },
+    "fairly_active_minutes_roll7_mean": {
+      "min": 0.0,
+      "max": 89.29,
+      "mean": 18.63,
+      "median": 15.6
+    },
+    "fairly_active_minutes_roll7_std": {
+      "min": 0.0,
+      "max": 48.88,
+      "mean": 14.47,
+      "median": 13.84
+    },
+    "lightly_active_minutes_roll3_mean": {
+      "min": 43.5,
+      "max": 448.33,
+      "mean": 222.36,
+      "median": 222.75
+    },
+    "lightly_active_minutes_roll3_std": {
+      "min": 3.21,
+      "max": 204.31,
+      "mean": 53.26,
+      "median": 39.67
+    },
+    "lightly_active_minutes_roll7_mean": {
+      "min": 99.6,
+      "max": 408.14,
+      "mean": 222.45,
+      "median": 222.83
+    },
+    "lightly_active_minutes_roll7_std": {
+      "min": 12.7,
+      "max": 172.46,
+      "mean": 61.73,
+      "median": 57.91
+    },
+    "sedentary_minutes_roll3_mean": {
+      "min": 372.5,
+      "max": 999.5,
+      "mean": 707.08,
+      "median": 710.17
+    },
+    "sedentary_minutes_roll3_std": {
+      "min": 3.21,
+      "max": 265.13,
+      "mean": 87.64,
+      "median": 75.9
+    },
+    "sedentary_minutes_roll7_mean": {
+      "min": 514.29,
+      "max": 885.0,
+      "mean": 706.26,
+      "median": 705.83
+    },
+    "sedentary_minutes_roll7_std": {
+      "min": 20.23,
+      "max": 340.34,
+      "mean": 102.78,
+      "median": 91.44
+    },
+    "calories_roll3_mean": {
+      "min": 1314.33,
+      "max": 4277.0,
+      "mean": 2423.06,
+      "median": 2243.33
+    },
+    "calories_roll3_std": {
+      "min": 9.61,
+      "max": 1402.96,
+      "mean": 246.52,
+      "median": 189.04
+    },
+    "calories_roll7_mean": {
+      "min": 1399.71,
+      "max": 3881.57,
+      "mean": 2421.9,
+      "median": 2235.57
+    },
+    "calories_roll7_std": {
+      "min": 47.27,
+      "max": 1074.62,
+      "mean": 338.15,
+      "median": 266.17
+    },
+    "sleep_minutes_user_mean": {
+      "min": 124.0,
+      "max": 750.0,
+      "mean": 435.73,
+      "median": 447.37
+    },
+    "sleep_minutes_user_std": {
+      "min": 9.19,
+      "max": 475.18,
+      "mean": 74.23,
+      "median": 71.01
+    },
+    "steps_user_mean": {
+      "min": 517.0,
+      "max": 18213.0,
+      "mean": 8497.04,
+      "median": 9199.71
+    },
+    "steps_user_std": {
+      "min": 120.21,
+      "max": 10221.23,
+      "mean": 2991.52,
+      "median": 2850.94
+    },
+    "very_active_minutes_user_mean": {
+      "min": 0.0,
+      "max": 119.67,
+      "mean": 25.62,
+      "median": 17.62
+    },
+    "very_active_minutes_user_std": {
+      "min": 0.0,
+      "max": 67.39,
+      "mean": 17.74,
+      "median": 14.47
+    }
+  },
+  "best_model": "random_forest",
+  "best_family": "random_forest",
+  "best_params": {
+    "n_estimators": 300,
+    "max_depth": 8,
+    "min_samples_leaf": 3
+  },
+  "demo_user": "2026352035",
+  "sizes": {
+    "train": 240,
+    "val": 80,
+    "test": 75
+  },
+  "baseline_val_metrics": {
+    "MAE_minutes": 96.31,
+    "RMSE_minutes": 119.53,
+    "R2": -0.3919,
+    "MAE_hours": 1.605,
+    "RMSE_hours": 1.992,
+    "within_30min_ratio": 0.1875,
+    "within_60min_ratio": 0.425,
+    "bias_minutes": 63.42,
+    "n": 80
+  },
+  "baseline_train_mean_minutes": 448.8,
+  "candidates_val_metrics": {
+    "ridge_untuned": {
+      "MAE_minutes": 99.25,
+      "RMSE_minutes": 125.34,
+      "R2": -0.5306,
+      "MAE_hours": 1.654,
+      "RMSE_hours": 2.089,
+      "within_30min_ratio": 0.225,
+      "within_60min_ratio": 0.4,
+      "bias_minutes": 49.12,
+      "n": 80
+    },
+    "ridge": {
+      "MAE_minutes": 90.21,
+      "RMSE_minutes": 113.57,
+      "R2": -0.2566,
+      "MAE_hours": 1.503,
+      "RMSE_hours": 1.893,
+      "within_30min_ratio": 0.25,
+      "within_60min_ratio": 0.4125,
+      "bias_minutes": 53.49,
+      "n": 80
+    },
+    "random_forest_untuned": {
+      "MAE_minutes": 96.02,
+      "RMSE_minutes": 118.94,
+      "R2": -0.3784,
+      "MAE_hours": 1.6,
+      "RMSE_hours": 1.982,
+      "within_30min_ratio": 0.2,
+      "within_60min_ratio": 0.4125,
+      "bias_minutes": 80.89,
+      "n": 80
+    },
+    "random_forest": {
+      "MAE_minutes": 88.05,
+      "RMSE_minutes": 109.37,
+      "R2": -0.1654,
+      "MAE_hours": 1.467,
+      "RMSE_hours": 1.823,
+      "within_30min_ratio": 0.2375,
+      "within_60min_ratio": 0.425,
+      "bias_minutes": 70.05,
+      "n": 80
+    },
+    "gradient_boosting_untuned": {
+      "MAE_minutes": 115.27,
+      "RMSE_minutes": 146.76,
+      "R2": -1.0984,
+      "MAE_hours": 1.921,
+      "RMSE_hours": 2.446,
+      "within_30min_ratio": 0.15,
+      "within_60min_ratio": 0.4,
+      "bias_minutes": 91.14,
+      "n": 80
+    },
+    "gradient_boosting": {
+      "MAE_minutes": 116.05,
+      "RMSE_minutes": 147.9,
+      "R2": -1.1312,
+      "MAE_hours": 1.934,
+      "RMSE_hours": 2.465,
+      "within_30min_ratio": 0.15,
+      "within_60min_ratio": 0.4125,
+      "bias_minutes": 95.81,
+      "n": 80
+    }
+  },
+  "quantile_coverage_val": {
+    "coverage": 0.8,
+    "mean_width_minutes": 178.95,
+    "n": 80
+  },
+  "acceptance": {
+    "mae_hours_max": 0.75,
+    "mae_improve_vs_baseline": 0.15,
+    "interval_coverage": [
+      0.7,
+      0.9
+    ]
+  },
+  "notes": "test 集未参与训练与调参，仅在 src/evaluate.py 中评估一次。"
+}

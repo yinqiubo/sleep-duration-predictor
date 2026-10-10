@@ -1,0 +1,28 @@
+# 睡眠时长预测项目依赖
+# 安装：pip install -r requirements.txt
+# Python 版本：3.10 - 3.13（本项目在 Python 3.13.5 / Windows 下开发验证）
+
+# ---- 核心（必须） ----
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.5        # 预处理、模型、指标、划分、分位数回归
+joblib>=1.4              # 模型持久化
+tabulate>=0.9            # to_markdown：生成 metrics.md / error_analysis.md 中的表格
+
+# ---- 可视化 ----
+matplotlib>=3.8          # 全部图表（未使用 seaborn，故不列入依赖）
+
+# ---- 交互原型（必须） ----
+streamlit>=1.36          # 原型界面；内置换行 altair 图表，无需单独安装
+
+# ---- 可选增强（缺失时代码自动降级，见 src/train.py 顶部导入保护） ----
+# lightgbm>=4.3          # 更强的 GBDT；不可用时自动回退到 sklearn GradientBoosting
+# shap>=0.45             # 更细的特征贡献；不可用时自动回退到 permutation importance
+
+# ---- 数据获取（可选） ----
+# kaggle>=1.6            # 命令行下载 Kaggle 数据集：kaggle datasets download -d arashnic/fitbit
+
+# 说明：
+# 1) 本项目【不需要】PyTorch / TensorFlow，理由见 docs/02_tech_stack.md 第 1 节。
+# 2) 【不需要】PyYAML：配置写在 config/dataset.py（Python 模块），零额外依赖。
+# 3) 如果 pip 安装 lightgbm 失败，不用管，直接跳过，主流程仍可完整运行。

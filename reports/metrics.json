@@ -1,0 +1,101 @@
+{
+  "dataset": "fitbit_bellabeat",
+  "n_test": 75,
+  "models": [
+    {
+      "model": "mean_baseline",
+      "params": "\"训练集均值\"",
+      "val_MAE_minutes": "-",
+      "test_MAE_minutes": 52.82,
+      "test_RMSE_minutes": 68.19,
+      "test_R2": -0.1095,
+      "within_30min_ratio": 0.3867,
+      "improve_vs_baseline": 0.0
+    },
+    {
+      "model": "ridge_untuned",
+      "params": "{\"alpha\": 1.0}",
+      "val_MAE_minutes": 99.25,
+      "test_MAE_minutes": 65.11,
+      "test_RMSE_minutes": 81.73,
+      "test_R2": -0.594,
+      "within_30min_ratio": 0.28,
+      "improve_vs_baseline": -0.2327
+    },
+    {
+      "model": "ridge",
+      "params": "{\"alpha\": 10.0}",
+      "val_MAE_minutes": 90.21,
+      "test_MAE_minutes": 58.91,
+      "test_RMSE_minutes": 72.9,
+      "test_R2": -0.268,
+      "within_30min_ratio": 0.28,
+      "improve_vs_baseline": -0.1153
+    },
+    {
+      "model": "random_forest_untuned",
+      "params": "{\"n_estimators\": 100, \"max_depth\": null, \"min_samples_leaf\": 1}",
+      "val_MAE_minutes": 96.02,
+      "test_MAE_minutes": 49.25,
+      "test_RMSE_minutes": 62.86,
+      "test_R2": 0.0571,
+      "within_30min_ratio": 0.3733,
+      "improve_vs_baseline": 0.0676
+    },
+    {
+      "model": "random_forest",
+      "params": "{\"n_estimators\": 300, \"max_depth\": 8, \"min_samples_leaf\": 3}",
+      "val_MAE_minutes": 88.05,
+      "test_MAE_minutes": 46.03,
+      "test_RMSE_minutes": 59.02,
+      "test_R2": 0.1689,
+      "within_30min_ratio": 0.44,
+      "improve_vs_baseline": 0.1285
+    },
+    {
+      "model": "gradient_boosting_untuned",
+      "params": "{\"n_estimators\": 100, \"learning_rate\": 0.1, \"max_depth\": 3}",
+      "val_MAE_minutes": 115.27,
+      "test_MAE_minutes": 49.37,
+      "test_RMSE_minutes": 68.25,
+      "test_R2": -0.1115,
+      "within_30min_ratio": 0.4267,
+      "improve_vs_baseline": 0.0653
+    },
+    {
+      "model": "gradient_boosting",
+      "params": "{\"n_estimators\": 300, \"learning_rate\": 0.03, \"max_depth\": 3}",
+      "val_MAE_minutes": 116.05,
+      "test_MAE_minutes": 48.98,
+      "test_RMSE_minutes": 66.51,
+      "test_R2": -0.0555,
+      "within_30min_ratio": 0.4133,
+      "improve_vs_baseline": 0.0727
+    },
+    {
+      "model": "random_forest_final(train+val重训)",
+      "params": "{\"n_estimators\": 300, \"max_depth\": 8, \"min_samples_leaf\": 3}",
+      "val_MAE_minutes": "-",
+      "test_MAE_minutes": 41.85,
+      "test_RMSE_minutes": 52.99,
+      "test_R2": 0.3299,
+      "within_30min_ratio": 0.4,
+      "improve_vs_baseline": 0.2077
+    }
+  ],
+  "deployed_model": "random_forest_final(train+val重训)",
+  "best_single_model_on_test": "random_forest_final(train+val重训)",
+  "acceptance": {
+    "mae_hours_max": 0.75,
+    "mae_improve_vs_baseline": 0.15,
+    "interval_coverage": [
+      0.7,
+      0.9
+    ]
+  },
+  "interval_coverage_test": {
+    "coverage": 0.8667,
+    "mean_width_minutes": 161.27,
+    "n": 75
+  }
+}

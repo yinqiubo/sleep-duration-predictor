@@ -1,0 +1,17 @@
+# 交互原型在「本地」与「云端」共用的一份 Streamlit 配置。
+# 本地由 run_app.cmd / python -m scripts.run_app 启动；云端（Streamlit Community Cloud 等）会自动读取本文件。
+
+[theme]
+base = "light"
+primaryColor = "#2e7d32"              # 与结果页「变长 = 绿色」同一套语义色，避免界面与文案打架
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f3f6f4"
+textColor = "#1f2933"
+
+[server]
+headless = true                       # 云端必须为 true；本地也不影响使用（run_app.py 会打印网址）
+fileWatcherType = "auto"
+maxUploadSize = 5                     # 本原型不需要上传大文件，收紧一点
+
+[browser]
+gatherUsageStats = false              # 不上报匿名使用统计

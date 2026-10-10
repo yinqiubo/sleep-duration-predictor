@@ -1,0 +1,2 @@
+﻿user_id,gender,age,occupation,sleep_minutes,active_minutes,stress_level,bmi_category,heart_rate_mean,steps,sleep_disorder
+10,Male,29.0,Doctor,468.0,75.0,6.0,Normal,70.0,8000.0,

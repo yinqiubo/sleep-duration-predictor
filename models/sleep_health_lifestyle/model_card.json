@@ -1,0 +1,168 @@
+{
+  "dataset": "sleep_health_lifestyle",
+  "created_at": "2026-10-08T01:19:53",
+  "random_seed": 42,
+  "target": "sleep_minutes",
+  "target_unit": "minutes",
+  "n_features": 7,
+  "features": [
+    "age",
+    "active_minutes",
+    "stress_level",
+    "heart_rate_mean",
+    "steps",
+    "gender_Female",
+    "gender_Male"
+  ],
+  "feature_stats": {
+    "age": {
+      "min": 27.0,
+      "max": 59.0,
+      "mean": 42.18,
+      "median": 43.0
+    },
+    "active_minutes": {
+      "min": 30.0,
+      "max": 90.0,
+      "mean": 59.17,
+      "median": 60.0
+    },
+    "stress_level": {
+      "min": 3.0,
+      "max": 8.0,
+      "mean": 5.39,
+      "median": 5.0
+    },
+    "heart_rate_mean": {
+      "min": 65.0,
+      "max": 86.0,
+      "mean": 70.17,
+      "median": 70.0
+    },
+    "steps": {
+      "min": 3000.0,
+      "max": 10000.0,
+      "mean": 6816.84,
+      "median": 7000.0
+    },
+    "gender_Female": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.49,
+      "median": 0.0
+    },
+    "gender_Male": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.51,
+      "median": 1.0
+    }
+  },
+  "best_model": "gradient_boosting",
+  "best_family": "gradient_boosting",
+  "best_params": {
+    "n_estimators": 300,
+    "learning_rate": 0.1,
+    "max_depth": 3
+  },
+  "demo_user": "10",
+  "sizes": {
+    "train": 226,
+    "val": 74,
+    "test": 74
+  },
+  "baseline_val_metrics": {
+    "MAE_minutes": 43.21,
+    "RMSE_minutes": 48.96,
+    "R2": -0.0005,
+    "MAE_hours": 0.72,
+    "RMSE_hours": 0.816,
+    "within_30min_ratio": 0.2703,
+    "within_60min_ratio": 0.6892,
+    "bias_minutes": 1.07,
+    "n": 74
+  },
+  "baseline_train_mean_minutes": 428.12,
+  "candidates_val_metrics": {
+    "ridge_untuned": {
+      "MAE_minutes": 18.93,
+      "RMSE_minutes": 24.73,
+      "R2": 0.7448,
+      "MAE_hours": 0.315,
+      "RMSE_hours": 0.412,
+      "within_30min_ratio": 0.7297,
+      "within_60min_ratio": 1.0,
+      "bias_minutes": 0.54,
+      "n": 74
+    },
+    "ridge": {
+      "MAE_minutes": 18.91,
+      "RMSE_minutes": 24.71,
+      "R2": 0.7451,
+      "MAE_hours": 0.315,
+      "RMSE_hours": 0.412,
+      "within_30min_ratio": 0.7432,
+      "within_60min_ratio": 1.0,
+      "bias_minutes": 0.55,
+      "n": 74
+    },
+    "random_forest_untuned": {
+      "MAE_minutes": 4.2,
+      "RMSE_minutes": 5.7,
+      "R2": 0.9865,
+      "MAE_hours": 0.07,
+      "RMSE_hours": 0.095,
+      "within_30min_ratio": 1.0,
+      "within_60min_ratio": 1.0,
+      "bias_minutes": 0.11,
+      "n": 74
+    },
+    "random_forest": {
+      "MAE_minutes": 4.2,
+      "RMSE_minutes": 5.61,
+      "R2": 0.9868,
+      "MAE_hours": 0.07,
+      "RMSE_hours": 0.094,
+      "within_30min_ratio": 1.0,
+      "within_60min_ratio": 1.0,
+      "bias_minutes": -0.06,
+      "n": 74
+    },
+    "gradient_boosting_untuned": {
+      "MAE_minutes": 4.0,
+      "RMSE_minutes": 5.27,
+      "R2": 0.9884,
+      "MAE_hours": 0.067,
+      "RMSE_hours": 0.088,
+      "within_30min_ratio": 1.0,
+      "within_60min_ratio": 1.0,
+      "bias_minutes": 0.02,
+      "n": 74
+    },
+    "gradient_boosting": {
+      "MAE_minutes": 3.58,
+      "RMSE_minutes": 4.89,
+      "R2": 0.99,
+      "MAE_hours": 0.06,
+      "RMSE_hours": 0.082,
+      "within_30min_ratio": 1.0,
+      "within_60min_ratio": 1.0,
+      "bias_minutes": 0.06,
+      "n": 74
+    }
+  },
+  "quantile_coverage_val": {
+    "coverage": 0.6486,
+    "mean_width_minutes": 46.25,
+    "n": 74
+  },
+  "acceptance": {
+    "mae_hours_max": 0.75,
+    "mae_improve_vs_baseline": 0.15,
+    "interval_coverage": [
+      0.7,
+      0.9
+    ]
+  },
+  "notes": "test 集未参与训练与调参，仅在 src/evaluate.py 中评估一次。"
+}

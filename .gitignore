@@ -1,0 +1,41 @@
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# 数据（体积大 / 含第三方数据，不入库；用脚本或说明文档重新下载）
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# 模型产物（可由 python -m src.train 重新生成）
+models/*
+!models/.gitkeep
+
+# 报告图（可由 python -m src.evaluate 重新生成）
+reports/figures/*.png
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# 上线用的临时文件：公网隧道程序与日志（可按 deploy/README.md 重新下载）
+deploy/cloudflared.exe
+deploy/_*.log
+deploy/_*.txt
+.streamlit/secrets.toml
+
+# 临时文件
+*.tmp
+*.log
+_log*.txt
+_logdone.txt
+_ver.txt

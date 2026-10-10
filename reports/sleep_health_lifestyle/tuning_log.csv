@@ -1,0 +1,12 @@
+﻿model,params,val_MAE_minutes
+ridge,"{""alpha"": 0.1}",18.91
+ridge,"{""alpha"": 1.0}",18.93
+ridge,"{""alpha"": 10.0}",19.24
+random_forest,"{""n_estimators"": 300, ""max_depth"": null, ""min_samples_leaf"": 1}",4.2
+random_forest,"{""n_estimators"": 300, ""max_depth"": null, ""min_samples_leaf"": 3}",4.7
+random_forest,"{""n_estimators"": 300, ""max_depth"": 8, ""min_samples_leaf"": 1}",4.23
+random_forest,"{""n_estimators"": 300, ""max_depth"": 8, ""min_samples_leaf"": 3}",4.7
+gradient_boosting,"{""n_estimators"": 300, ""learning_rate"": 0.03, ""max_depth"": 2}",4.97
+gradient_boosting,"{""n_estimators"": 300, ""learning_rate"": 0.03, ""max_depth"": 3}",4.15
+gradient_boosting,"{""n_estimators"": 300, ""learning_rate"": 0.1, ""max_depth"": 2}",4.53
+gradient_boosting,"{""n_estimators"": 300, ""learning_rate"": 0.1, ""max_depth"": 3}",3.58
