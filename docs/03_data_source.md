@@ -365,7 +365,7 @@ python -m scripts.gate_experiment --skip-prepare   :: 只复算对照表，不�
 结果：`reports/gate_experiment.md` / `.json`（对照与判定；`.json` 里含每个变体的逐折、逐种子明细），
 外加每个变体自己的 `reports/sample_selection_<变体>.md`（被剔除的用户名单与原因）。
 > ℹ️ 第 7.7 节又加了 3 个"加特征"变体（`*_f2`），因此 `reports/gate_experiment.md` /
-> `cv_stability_summary.md` 现在是 9 个变体并排（7.6.1 的表格是其中的前 6 行）。
+> `cv_stability_summary.md` 现在是 9 个变体并排（7.6.1 的六个变体是其中的前 6 行）。
 想单独看某个变体的完整稳定性报告，再跑一次
 `python -m scripts.noise_floor --datasets fitbit_bellabeat,fitbit_bellabeat_qg,fitbit_2seg,fitbit_2seg_qg,fitbit_2seg_ctx,fitbit_2seg_ctx_qg`
 （它会写 `reports/cv_stability_<变体>.md` 与并排对照 `reports/cv_stability_summary.md`，用的是同一套冻结参数）。
@@ -666,7 +666,7 @@ python -m scripts.gender_analysis
 - `reports/error_analysis.md`：第四轮＝`61ac52f2`；本轮＝`61ac52f2`；说明＝未变
 - `app/app.py`：第四轮＝`8ca778bb`；本轮＝`9a9e4a42`；说明＝预期变化：结果页两段式与灵敏度区块、输入页提示（含 4 处注释引用修正）；收尾复核把兜底文案里过期的久坐数字按实测更正为 69 分钟，指纹变为 `9a9e4a42`
 - `src/predict.py`：第四轮＝`4ad818d9`；本轮＝`01592903`；说明＝不在交付产物台账内；本轮只改注释引用（`field_sensitivity` / `split_baseline` 在上一轮已加入）
-- `config/dataset.py`：第四轮＝`5bc9eca2`；本轮＝`5bc9eca2`；说明＝不在台账内；新增 `report_notes`（见上表）
+- `config/dataset.py`：第四轮＝`5bc9eca2`；本轮＝`5bc9eca2`；说明＝不在台账内；新增 `report_notes`（见上文第 2 节）
 - `src/evaluate.py`：第四轮＝`26e467e4`；本轮＝`26e467e4`；说明＝不在台账内；新增"把 `report_notes` 写进 metrics.md"
 - `scripts/test_app.py`：第四轮＝—；本轮＝`3ae516c7`；说明＝不在台账内；两条人群线的结果页新增断言（两段式与灵敏度清单必须渲染出来）
 - `reports/sleep_health_lifestyle/metrics.md`：第四轮＝—；本轮＝`94c74a4e`；说明＝第二数据集报告，因写入 `report_notes` 重新生成；表格数字与第四轮逐值一致（确定性）
@@ -747,11 +747,11 @@ python -m scripts.gender_analysis
 - `reports/metrics.md`：第六轮＝`6c4e1b2f`；本轮＝`6c4e1b2f`；结论＝未变
 - `reports/metrics.json`：第六轮＝`a4946b20`；本轮＝`a4946b20`；结论＝未变（9 个标量仍与交付一致）
 - `reports/error_analysis.md`：第六轮＝`61ac52f2`；本轮＝`61ac52f2`；结论＝未变
-- `app/app.py`：第六轮＝`9a9e4a42`；本轮＝`1e4c5203`；结论＝预期变化：① `DEFAULT_POPULATION` `fitbit → lifestyle`；② 手环线输入页 `sens_hint` 按上表实测重写
+- `app/app.py`：第六轮＝`9a9e4a42`；本轮＝`1e4c5203`；结论＝预期变化：① `DEFAULT_POPULATION` `fitbit → lifestyle`；② 手环线输入页 `sens_hint` 按上文实测数字重写
 
 > 本轮的指纹为什么出现过两个值：`app/app.py` 分两步改——先改默认人群线与输入页提示文案（当时算出
 > `02e82c47`，也就是 `docs/05` R16 引文里我点选那一刻的值），随后把注释里与文档口径不一致的「8h08」
-> 对齐成「8h09」，最终交付指纹 `1e4c5203`。以上表与 `README` §5 第 27 条为准（`docs/05` 保留引文原话、未回改）。
+> 对齐成「8h09」，最终交付指纹 `1e4c5203`。以上文实测数字与 `README` §5 第 27 条为准（`docs/05` 保留引文原话、未回改）。
 
 验收（全部实跑）：`python -m scripts.smoke_test` → `[OK] 两条人群线的「预测链条 + 解释链条」自检通过`；
 `python -m scripts.test_app` → `[OK] 首屏渲染正常：今晚我能睡多久？；默认人群 'lifestyle'` 与

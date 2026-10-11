@@ -308,7 +308,7 @@ sleep-duration-predictor/
     ├─ questionnaire.md          ★实际使用的 9 题问卷原文（题目 → raw.csv 字段对照 + 与设计版 T1–T5 的差异）
     ├─ record_sheet.md          可打印记录表（每位参与者一页，字段与 raw.csv 一致）
     ├─ raw.csv                  原始记录（**已录入 4 名真实参与者 P1–P4**）
-    └─ summary.md               汇总与改进建议（4.1 已实施 / 4.2 新增 / 4.3 未实施及原因 / 4.4 旧候选清单）
+    └─ summary.md               汇总与改进建议（4.1 已实施 / 4.2 新增 / 4.3 未实施及原因）
 ```
 
 ---
