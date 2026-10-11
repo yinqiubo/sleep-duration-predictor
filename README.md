@@ -5,6 +5,10 @@
 
 > ⚠️ 免责声明：本项目的所有模型与界面输出仅用于课程学习与演示，不构成任何医疗建议、
 > 诊断或治疗依据。数据均为公开/匿名化的第三方数据。
+>
+> 🔗 交互原型（公网入口）：<https://sleep-duration-predictor.streamlit.app>（Streamlit Community Cloud；
+> 空闲 12 小时会休眠，打开时点一下唤醒按钮）。现场演示仍以**本机运行**为准（双击 `run_app.cmd`，
+> 不联网、不用登录、不会休眠），详见 §1.3。
 
 ---
 
@@ -135,7 +139,7 @@ Windows 下可直接双击根目录的 `run_app.cmd`（内容就是切到项目�
 
 ---
 
-### 1.3 在网页上访问（上线）
+### 1.3 在网页上访问（本机运行 + 公网入口）
 
 本交付包不含上线脚本（原先的 `deploy/` 目录已按要求从交付包剔除），老师直接本机运行即可：
 
@@ -144,11 +148,25 @@ Windows 下可直接双击根目录的 `run_app.cmd`（内容就是切到项目�
   （首次会弹 Windows 防火墙提示，需勾选"专用网络"允许）；
 - 端口被占用＝`python -m scripts.run_app --port 8600`；只检查环境不启动界面＝`python -m scripts.run_app --check-only`。
 
+**公网入口（已建好，但演示仍走本机）**
+
+- 地址：<https://sleep-duration-predictor.streamlit.app> —— Streamlit Community Cloud，仓库
+  `yinqiubo/sleep-duration-predictor`（分支 `main`），入口文件 `app/app.py`，依赖 `requirements.txt`，主题配置 `.streamlit/config.toml`；
+- 实测口径（2026-10-10）：该域名存在、能解析到 Streamlit 平台（请求 `/` 与 `/_stcore/health` 均返回 HTTP 303，
+  跳到平台的鉴权网关 `share.streamlit.io/-/auth/app?...`）；同一台机器访问 Streamlit 官方公开应用
+  `roadmap.streamlit.app` 的行为完全相同 → 这一步只能证明"地址有效、平台可达"，
+  **云端界面的实际渲染效果本机没有复核过**（复核办法：登录 Streamlit 后打开应用，看右下角 `Manage app` 的日志）；
+- 已知两个坑：① 应用空闲 12 小时会自动休眠，第一次打开看到休眠页时点一下 **Yes, get this app back up!** 唤醒
+  （谁都能唤醒，不只是我）；② 云端 Python 版本在部署时一次性选定，必须选 **3.13（次选 3.12）**，部署后不能改
+  （要换只能删掉应用重新部署；原因见 `requirements.txt` 顶部注释）；
+- 因此**现场演示与提问一律走上面三条本机启动方式**（不联网、不用登录、不会休眠）；公网地址只当"课后随手看一眼"的入口，
+  打不开就直接用本机那一步演示，不必在现场排查网络。
+
 > 演示不需要联网，界面不保存任何输入，也不会把输入上传到任何地方；请不要在演示时填写姓名/联系方式等个人信息。
 >
 > 如需"老师随时能打开的网址"：把本仓库推到 GitHub，再到 Streamlit Community Cloud 建一个应用
 > （入口文件填 `app/app.py`，依赖用 `requirements.txt`，主题配置已在 `.streamlit/config.toml` 里）。
-> 本轮交付没有随包提供部署脚本，也没有已经建好的公网链接，如实写明。
+> 本轮已按这个办法建好应用（真实地址见本节的「公网入口」）；交付包仍不含上线脚本，地址打不开时按上面的本机启动方式运行。
 
 ### 1.4 第二数据集：加入性别变量（`sleep_health_lifestyle`，2026-10-08）
 
@@ -299,13 +317,14 @@ sleep-duration-predictor/
   实验报告与证据（`reports/`）、运行必需的模型产物（`models/`）、用户测试记录（`user_test/`）与本文件；
   过程中写给自己看的文档（`docs/00`–`02`）、实验分支的分变体报告与中间数据、上线脚本、候选模型文件
   （`models/**/candidates.pkl`）均不在包内；报告与中间数据可用包内脚本重新生成（主链路从 `python -m src.features`
-  起，实验分支见 `docs/data_source.md` §7.5），上线脚本不再提供——需要公网地址时按 §1.3 自建
+  起，实验分支见 `docs/data_source.md` §7.5），上线脚本不再提供——公网地址已按 §1.3 建好
+  （Streamlit Community Cloud，入口 `app/app.py`），本机运行仍是演示主路径
 - 数据来源说明：本项目产物＝`docs/data_source.md`
 - 可运行代码及运行说明：本项目产物＝本文件 + `src/` + `requirements.txt`
 - 模型对比表：本项目产物＝`reports/metrics.md`（自动生成）
 - 可视化结果：本项目产物＝`reports/figures/*.png`（自动生成）
 - 错误分析与局限性：本项目产物＝`reports/error_analysis.md` + `reports/figures/`
-- 交互原型：本项目产物＝`app/app.py`（Streamlit，可现场操作：双击 `run_app.cmd`；也可录屏为演示视频）
+- 交互原型：本项目产物＝`app/app.py`（Streamlit，可现场操作：双击 `run_app.cmd`；也可录屏为演示视频）；公网入口＝<https://sleep-duration-predictor.streamlit.app>（休眠需唤醒，演示以本机运行为准，见 §1.3）
 - 用户测试记录与改进建议：本项目产物＝`user_test/`（4 名真实参与者：原始记录 `raw.csv`、汇总 `summary.md`、实际问卷 `questionnaire.md`；招募流程见 `qq_invite.md`）
 - AI 使用说明：本项目产物＝`docs/ai_usage.md`
 - AI 对话提示词记录：本项目产物＝`docs/prompt_log.md`（15 个阶段 + 14 句逐字提示词原文 + 交付物 + 验收证据 + 采纳/否决）
@@ -337,7 +356,7 @@ sleep-duration-predictor/
 - 6：检查项＝错误分析与可能原因；位置＝`reports/error_analysis.md`（第 6 节人工解读）+ `reports/error_analysis_notes.md`；通过标准＝原因逐条有依据
 - 7：检查项＝必交文档齐全；位置＝`docs/data_source.md`（数据来源）、`docs/ai_usage.md`（AI 使用说明）、`docs/prompt_log.md`（提示词记录）；通过标准＝三份都在，且与 `docs/data_source.md` 第 8 节的核对清单一致
 - 8：检查项＝用户测试记录；位置＝`user_test/raw.csv`、`summary.md`、`questionnaire.md`；通过标准＝4 条真实记录（作业第 5 条最低 3 条 ✅）+ ≥3 条带归因的改进建议；未采集字段一律写"未采集"
-- 9：检查项＝演示可用；命令＝双击 `run_app.cmd` 或 `python -m scripts.run_app`；通过标准＝三步流程能走通，可现场操作/录屏
+- 9：检查项＝演示可用；命令＝双击 `run_app.cmd` 或 `python -m scripts.run_app`；通过标准＝三步流程能走通，可现场操作/录屏；公网入口＝<https://sleep-duration-predictor.streamlit.app>（休眠时点唤醒按钮；打不开就按 §1.3 本机运行）
 - 10：检查项＝免责声明；位置＝`app/app.py` 底部、本文件顶部；通过标准＝均明确"不构成医疗建议"
 - 11：检查项＝指标稳定性（噪声底线）；命令＝`python -m scripts.noise_floor`；通过标准＝打印 GroupKFold MAE 均值 ± 标准差与多种子极差，写入 `reports/cv_stability_summary.md`
 - 12：检查项＝加数据/加特征必须有证据；位置＝`reports/cv_stability_summary.md`、`reports/gate_experiment.md`；通过标准＝任何改善必须大于多种子极差（线上数据集实测 30.8 分钟），否则如实写成"证据不足"

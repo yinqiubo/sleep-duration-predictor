@@ -636,6 +636,46 @@
 > 〔编号说明（不是改引文）〕本节与更早条目里出现的 `docs/00` §8.x，是当时的章节号；
 > 交付前删掉"剩余待办""还缺什么"两节后，该文件已把 §8.x 重排为 §7.x（读旧记录时按此对应）。
 
+#### R17 续 交付方式落定：公网原型挂到 Streamlit Community Cloud（2026-10-10）
+
+> 它算不算一个新阶段？ 与本节对 `R15` / `R16` 的处理一致：本轮由我的新提问触发，
+> 但做的事只是把 `R11` 想做成而没做成的"公网地址"落到平台托管上（不新增功能、不改代码与结论），
+> 所以按 `R17` 的后续条目记录，阶段数 / 提示词条数保持不变。
+
+我的提问（逐字）
+
+> ```
+> 这不是app吗，这个链接不行是吗
+> ```
+
+> 〔附截图（不是引文）：Streamlit Community Cloud 工作区里已列出应用 `sleep-duration-predictor · main · app/app.py`。〕
+
+- 说明：`R11` 走的是临时隧道（`deploy/`，已从交付包剔除），隧道一断地址就失效；这次把仓库推上 GitHub 之后
+  在 Streamlit Community Cloud 建了应用。所以 `R15` 第 ① 条"能不能稳定访问"的结论要按本节更新：
+  当时写"现在不能"是对的（那会儿没有任何平台托管地址）；现在平台地址有了，但"老师端一定能打开"仍未由我复核。
+- → 交付：
+  - `README`：§1.3 改成"本机运行 + 公网入口"并新增「公网入口」一节（真实地址、实测口径、休眠与 Python 版本
+    两个坑、演示仍走本机），顶部加一行公网入口，§3 交互原型那行加地址，"上线脚本不再提供"改成"公网地址已建好"，
+    §5 第 9 条加公网入口与兜底；
+  - `user_test/host_guide.md` §6：把 `https://xxx.streamlit.app` 占位符换成真实地址，补"休眠 / 登录页"两条现象，
+    并把"公网地址无鉴权"改成"不设访问密码，但部分网络会被平台登录页拦住"。
+- ✔ 验收（命令 + 数字，全部实跑）：
+  - `curl -sS -o NUL -w "%{http_code}" https://sleep-duration-predictor.streamlit.app/_stcore/health`
+    → `303`，响应头 `location: https://share.streamlit.io/-/auth/app?redirect_uri=…sleep-duration-predictor.streamlit.app…`
+    → 域名存在、能解析到 Streamlit 平台，被平台的鉴权网关接住；
+  - 对照实验（排除"只有我这个应用坏了"）：同一台机器请求 Streamlit 官方公开应用 `https://roadmap.streamlit.app/`
+    与它的 `/_stcore/health`，加不加浏览器 UA 都是同一个 `303`、跳同一个 `/-/auth/app` → 这一层是平台 / 网络行为。
+    所以只能写"地址有效、平台可达"，**云端界面渲染本轮未复核**（复核办法写进 `README` §1.3：登录后看 `Manage app` 日志）；
+  - 部署前提核对（GitHub API 读 `main` 树）：`models/model.pkl`、`models/quantiles.pkl`、`models/model_card.json`、
+    `models/history_sample.csv`、`models/sleep_health_lifestyle/*`、`data/raw/{fitbit,sleep_health}/*.csv`、
+    `.streamlit/config.toml`、`requirements.txt` 都在远端 → 云端有跑起来所需的产物（原型只读 `models/`，
+    不读 `data/processed/`，远端该目录只有 `.gitkeep`，不影响）；
+  - 本机兜底仍可用：`python -m scripts.run_app --check-only` 通过（与 `R15` 第 ① 条、`README` §5 第 26 条同一口径）。
+- ✘ 否决：
+  - "把公网地址写成'老师随时能打开'" → 否决：本机网络下匿名访问会被平台登录页拦住（Streamlit 官方公开应用同样如此），
+    没复核过的事不写成结论，`README` 只写"地址有效"并列出两个坑；
+  - "演示改成打开云端应用" → 否决：现场演示继续用本机运行（不联网、不用登录、不会休眠），公网地址只当课后入口。
+
 ---
 
 ## 3. 我的提示词写法（可复用模板）
