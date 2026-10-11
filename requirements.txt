@@ -10,7 +10,8 @@
 #   "Processing dependencies..." 十几分钟直到被超时回收，或者装不上 sklearn、
 #   运行时直接 ModuleNotFoundError: No module named 'sklearn'。
 #
-# 用法见 deploy/README.md 第 5 节：在云端仓库里用本文件覆盖根目录 requirements.txt，
+# 用法（Streamlit Community Cloud）：在云端仓库里用本文件覆盖根目录 requirements.txt；
+# 步骤原记在 `deploy/README.md` 第 5 节（该目录已从交付包剔除），替代说明见 README 第 1.3 节。
 # 原因是模型是用 sklearn 1.6.1 训练的，云端装到不同大版本可能出现 InconsistentVersionWarning
 # 甚至反序列化失败；固定版本可以完全避免这一类"云端才报错"的问题。
 

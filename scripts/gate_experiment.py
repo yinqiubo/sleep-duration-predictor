@@ -445,7 +445,7 @@ def write_report(payload: dict) -> None:
         "那会改动**所有**数据集已落盘的中间表 | 单独一轮：加规范列 → 全量重建 → 重跑本脚本对照"
         "（约 1 小时，风险中等；本期为了“零风险”暂不做） |",
         "| 活动口径修复（两段导出的 `sedentary_minutes` 算法不一致） | 这是**数据口径**问题而不是特征问题，"
-        "改完必须重建 `fitbit_2seg` 及全部变体 | 见 `reports/data_build_fitbit_2seg.md` 的口径说明 |",
+        "改完必须重建 `fitbit_2seg` 及全部变体 | 见 `scripts/build_fitbit_2seg.py` 生成的口径报告 |",
         "",
         "### 8.2 本轮发现的实现缺陷（**只登记，未修**）",
         "",

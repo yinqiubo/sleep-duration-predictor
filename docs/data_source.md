@@ -222,8 +222,9 @@ streamlit run app/app.py
 
 > 结论先行：合并后样本翻倍（+102%）、指标更稳定，但精度反而变差，
 > 因此它目前是实验分支，不替换 `ACTIVE_DATASET`（线上仍是 `fitbit_bellabeat`）。
-> 数据构建见 `reports/data_build_fitbit_2seg.md`，对照结论见 `reports/cv_stability_summary.md`，
-> 原因诊断见 `reports/slice_analysis_fitbit_2seg.md`。
+> 对照结论与噪声基线见 `reports/cv_stability_summary.md`，本节全部数字都可由 §7.5.6 的复现命令直接算出，
+> 原因诊断的要点写在下面各行（本交付包只保留正式验收报告与两个线上数据集的报告；该实验分支的数据构建报告、
+> 分层诊断报告与中间表未随包提供，重跑对应脚本即可生成）。
 
 ### 7.5.1 为什么会有这一段
 
@@ -261,7 +262,7 @@ Kaggle 下载包里其实有两个导出目录，本项目此前只用了后者�
 
 1. 稳定性变好：逐折标准差 17.5 → 7.0 分钟，说明"更多数据让估计更可信"；
 2. 精度变差：MAE 63.8 → 73.2，相对基线提升 17.8% → 9.7%；
-3. 原因已定位（`reports/slice_analysis_fitbit_2seg.md`）：
+3. 原因已定位（分层诊断由 `python -m scripts.slice_analysis` 复算；该分支报告属中间产物，未随交付包）：
 
 - 4.12 段（标签来自官方日表）：条数＝395；MAE＝65.7；偏差＝+18.9
 - 3.12 段（标签来自分钟级求和）：条数＝404；MAE＝80.5；偏差＝+0.8
@@ -465,7 +466,7 @@ python -m scripts.smoke_test && python -m scripts.test_app   :: 界面链路自�
 #### 7.8.1 为什么现在做
 
 下一个作业需要性别变量。本项目在用的 Fitbit 数据没有任何人口学字段：实测扫描本机
-64 个 CSV，`data/raw/fitbit/**` 与 `backup_before_submit_20261004/data_raw/fitbit/**` 的
+64 个 CSV，`data/raw/fitbit/**` 的
 12+ 个表里一个 gender/sex 列都没有（只有 `Id` 哈希、日期、步数/睡眠/心率等）。
 而 §3.2 早已下载、当时只当"泛化对照"的 `Sleep Health and Lifestyle`（374 人 × 13 列）
 正好带 `Gender`（Male 189 / Female 185），字段还有年龄、BMI 分档、职业、压力、
@@ -516,7 +517,7 @@ python -m scripts.gender_analysis
 - 结论（写进报告的版本）：性别值得纳入分析口径与误差切片（否则会得出
   "女性睡得更久"这类被年龄混杂的结论），但不值得指望它提升预测精度；
   这是"相关"而非"因果"。
-- 完整表格与图：`reports/sleep_health_lifestyle/gender_analysis.md`、`figures/fig_gender_sleep.png`。
+- 完整表格与图：`reports/sleep_health_lifestyle/gender_analysis.md`、`reports/sleep_health_lifestyle/figures/fig_gender_sleep.png`。
 
 #### 7.8.5 "线上链路零改动"的证据
 
@@ -709,7 +710,8 @@ python -m scripts.gender_analysis
 
 > 同一次取证里还抓到一处真错并已修正：`app/app.py` 兜底文案把久坐写成 65 分钟（实测 69 分钟），
 > 指纹 `8ca778bb → d5a97f14 → 9a9e4a42`，8 个线上交付物逐字节未变；
-> 访问路线（老师能否稳定打开）的实测见 `deploy/README.md` §0 与 `docs/00` §7.6。
+> 访问路线（老师能否稳定打开）的实测结论：本机 `http://127.0.0.1:8501` 与局域网 `http://10.22.109.176:8501` 的
+> `/_stcore/health` 都返回 HTTP 200；公网隧道当时已死链，交付包不含上线脚本。
 
 ---
 
@@ -787,9 +789,15 @@ python -m scripts.gender_analysis
 保留的"实话"（这部分没有删）：预测区间与 80% 覆盖的含义、可信度标签与理由、模型典型误差、
 超出训练范围后结果不再变化、人群线数据按规则生成且只能读作人群参考值、界面底部的免责声明。
 
-删掉的交付包中间产物：`deploy/cloudflared.exe`（约 53 MB）、`deploy/_tunnel.log`（1775 条隧道报错）、
-4 个 `__pycache__/`、`data/processed/` 下的实验变体表（`*_f2_*` / `*_qg_*` / `*_ctx_*`）；
-`data/processed/` 只留三条主链路的 9 个文件（清洗表 + 特征表 + 划分文件）。
+最终交付包范围（2026-10-10 定稿）：只保留可运行代码（`src/` `scripts/` `app/` `config/`）、必交文档
+（`docs/03`–`05`）、实验报告与证据（`reports/`）、运行必需的模型产物（`models/` 下的 `model.pkl` /
+`quantiles.pkl` / `model_card.json` / `history_sample.csv` / `feature_importance.csv` 与
+`models/sleep_health_lifestyle/` 的同名前缀文件）、用户测试记录（`user_test/`）与本文件。
+不随包提供的有：过程文档 `docs/00`–`02`、上线脚本 `deploy/`（含约 53 MB 的 `cloudflared.exe` 与 1775 条
+隧道报错的 `_tunnel.log`）、实验分支的分变体报告（`reports/*_{2seg,ctx,qg,f2}*` 等）、候选模型文件
+（`models/**/candidates.pkl`）、中间数据（`data/processed/`、`data/interim/`）与 4 个 `__pycache__/`。
+这些都能用包内脚本重建：主链路按第 4 节的 6 步命令（从 `python -m src.features` 起）；实验分支按 §7.5
+先备好两段分钟级导出，再跑 `scripts/build_fitbit_2seg.py` 与 `scripts/gate_experiment.py`。
 
 验证与指纹：`python -m py_compile app/app.py src/metrics.py src/explain.py` 通过；
 `python -m scripts.test_app` 两条人群线三页全绿（含"两段式归因 + 灵敏度清单必须渲染"的常驻断言）；
@@ -812,7 +820,7 @@ python -m scripts.gender_analysis
 - ✅：检查项＝清洗报告的缺失率与剔除量合理；依据＝`reports/data_cleaning_report_fitbit_bellabeat.md`：目标越界剔除 15 条、重复 (用户,日期) 3 条、`calories` 越界 2 条，合计 413 → 395
 - ✅：检查项＝泄漏自检为"通过"；依据＝`reports/split_summary_fitbit_bellabeat.md`：train 240 / val 80 / test 75，用户与日期均不跨集合重叠
 - ✅：检查项＝用真实数据重跑 train / evaluate 并更新所有数字；依据＝`reports/metrics.md`（测试 MAE 41.9 分钟 / 提升 20.8% / 覆盖率 86.7%）、`reports/error_analysis.md` + `reports/error_analysis_notes.md`（已按真实数据重写）
-- ✅：检查项＝不把合成数据指标当作真实结论；依据＝合成数据相关数字已从 `docs/01` 第 7.1 节正文移除，只在 3.3 节作为"链路验证"保留
+- ✅：检查项＝不把合成数据指标当作真实结论；依据＝合成数据的数字只作为"链路验证"保留（见 §3.3），正文结论一律用真实数据指标
 - ✅：检查项＝界面把"填了没反应"讲清楚（输入灵敏度实测 + 两段式归因，且不写"实时"）；依据＝见 §7.8.8 第五轮复核表：`app/app.py` `8ca778bb → 9a9e4a42` 属预期变化（`src/predict.py` 同步改注释）；`model.pkl` / `quantiles.pkl` / `model_card.json` / `history_sample.csv` / `feature_importance.csv` / `metrics.md` / `metrics.json` / `error_analysis.md` 八个线上交付物逐字节未变（模型未重训、报告未重生成）；两段式相加＝点预测、逐项实测影响与典型误差同屏对比，两条人群线都由 `scripts/test_app.py` 断言渲染
 - ⬜：检查项＝数据集页面许可（CC0）与版本/下载日期留档；依据＝请在提交前把 Kaggle 页面截图或版本号一并留档（本地文件时间为 2026-10-04）
 - ✅：检查项＝第二数据集（含性别变量）接入完成，且与线上链路完全隔离；依据＝见 §7.8：`SLEEP_DATASET=sleep_health_lifestyle` 全链路跑通，产物写在 `models/sleep_health_lifestyle/`、`reports/sleep_health_lifestyle/`；8 个线上交付物指纹未变
@@ -821,7 +829,7 @@ python -m scripts.gender_analysis
 - ✅：检查项＝界面已接第二数据集（含性别输入），两条人群线互不污染；依据＝见 §7.8.7 第四轮复核表：`app/app.py` `7cc215f4 → 8ca778bb` 属预期变化；`model.pkl` / `quantiles.pkl` / `model_card.json` / `history_sample.csv` / `metrics.md` / `metrics.json` / `error_analysis.md` 七个逐字节未变（模型未重训）；`feature_importance.csv`（末位浮点）与 `explanation_example.md`（含文案，重生成）属预期变化并逐条写明原因；`worst_cases.csv` / `test_predictions.csv` 每次重跑末位小数不同，已实测属 1e-13 量级并声明不作为对拍文件
 - ✅：检查项＝手环线预测的确定性已复核（同一输入三次完全相同；换输入会动，单项 6–69 分钟，仍小于模型误差 ±88 分钟）；依据＝见 §7.8.9：三项同时拉到两端 529.3 ↔ 401.3 分钟（差 128 分钟）、步数 >20,000 后为平台期（⚠️ 该 128 分钟是极值四角的响应，用的是物理上不可能的组合；按真实作息最大跨度 77 分钟且全在"更闲"一侧、"更活跃"一侧只有 9 分钟，见 §7.8.10）；本轮未重训（`model.pkl e4423da8`，8 个线上交付物逐字节未变）
 - ✅：检查项＝手环线"填了没反应"已按真实作息复核，且不再用物理不可能的组合当证据；依据＝见 §7.8.10 第七轮复核：真实作息下最大跨度 411.9（很闲）↔ 488.8（他的习惯）＝ 77 分钟、"更活跃"一侧只有 9 分钟（上一轮 §7.8.9 的 128 分钟已标注为极值四角响应）；久坐 600→900 分 −69.6 分钟、只把步数降到 1,500 +48.9 分钟；`app/app.py` `9a9e4a42 → 1e4c5203` 属预期变化（默认进入人群线 + 输入页提示按实测重写），8 个线上交付物逐字节未变；`smoke_test` / `test_app` 均 `exit=0`
-- ✅：检查项＝交付出去的文字里没有开发过程的自言自语（第八轮）；依据＝见 §7.8.11：逐句读了界面渲染出的全部文字，删掉"不是界面坏了""没有上传入口""这句只用来"等表述与 help 里的内部术语（`MAE`/哑变量/消融实验/内部路径），诚实信息全部保留；交付包同时清掉 `cloudflared.exe`、`_tunnel.log`、`__pycache__` 与实验变体中间表；`app/app.py` `1e4c5203 → 2ddb7b7b`，8 个线上交付物逐字节未变，`test_app` 全绿
+- ✅：检查项＝交付出去的文字里没有开发过程的自言自语（第八轮）；依据＝见 §7.8.11：逐句读了界面渲染出的全部文字，删掉"不是界面坏了""没有上传入口""这句只用来"等表述与 help 里的内部术语（`MAE`/哑变量/消融实验/内部路径），诚实信息全部保留；交付包同时清掉 `cloudflared.exe`、`_tunnel.log`、`__pycache__` 与实验变体中间表（2026-10-10 定稿又按终版范围进一步收窄，见 §7.8.10 末段）；`app/app.py` `1e4c5203 → 2ddb7b7b`，8 个线上交付物逐字节未变，`test_app` 全绿
 
 ---
 

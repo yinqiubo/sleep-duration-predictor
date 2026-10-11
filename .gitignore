@@ -27,7 +27,8 @@ reports/figures/*.png
 Thumbs.db
 desktop.ini
 
-# 上线用的临时文件：公网隧道程序与日志（可按 deploy/README.md 重新下载）
+# 上线用的临时文件：公网隧道程序与日志（`deploy/` 目录已从交付包剔除，
+# 若本地重新启用上线脚本，这几条忽略规则仍然生效，避免把隧道程序与日志误入库）
 deploy/cloudflared.exe
 deploy/_*.log
 deploy/_*.txt

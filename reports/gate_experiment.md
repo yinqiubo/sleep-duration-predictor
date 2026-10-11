@@ -6,6 +6,9 @@
 > 差异只来自“哪些行进入建模”“特征用了多长的历史”与“有哪些特征列”。
 > ⚠️ 这是**实验对照**，不替代正式验收指标 `reports/metrics.md`。
 
+> 交付包范围：本包只附这张对照表与 `.json` 明细；各变体自己的分报告（`sample_selection_*.md`、
+> `cv_stability_*.md`）与实验分支的中间表未随包提供，可用文末复现命令重新生成。
+
 ## 1. 三个机制
 
 | 机制 | 规则 | 为什么这么做 | 配置键 |
@@ -151,7 +154,7 @@ python -m scripts.gate_experiment --skip-prepare --folds 5 --seeds 1,2,3
 |---|---|---|
 | 晚间活动窗口（例如 18:00 之后的步数/活动量） | 现有活动列是**全天汇总**，没有分钟级活动表；本机有的分钟级导出只有 `minuteSleep`（睡眠），造不出“晚间活动” | 需要 minuteSteps / minuteCalories 这类导出；拿不到就只能在报告里写成“无法验证的假设” |
 | 前几晚的睡眠碎片与效率（`sleep_in_bed_minutes`、`sleep_awake_minutes`、`sleep_restless_minutes`，滞后一天使用是合法的） | 数据已备在 `data/interim/fitbit_2seg/daily.csv`，但 `data_io` 只保留规范列，要先加进 `src/config.py::OPTIONAL_NUMERIC`——那会改动**所有**数据集已落盘的中间表 | 单独一轮：加规范列 → 全量重建 → 重跑本脚本对照（约 1 小时，风险中等；本期为了“零风险”暂不做） |
-| 活动口径修复（两段导出的 `sedentary_minutes` 算法不一致） | 这是**数据口径**问题而不是特征问题，改完必须重建 `fitbit_2seg` 及全部变体 | 见 `reports/data_build_fitbit_2seg.md` 的口径说明 |
+| 活动口径修复（两段导出的 `sedentary_minutes` 算法不一致） | 这是**数据口径**问题而不是特征问题，改完必须重建 `fitbit_2seg` 及全部变体 | 见 `scripts/build_fitbit_2seg.py` 生成的口径报告 |
 
 ### 8.2 本轮发现的实现缺陷（**只登记，未修**）
 

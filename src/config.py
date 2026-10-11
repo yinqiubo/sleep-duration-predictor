@@ -172,6 +172,7 @@ def model_paths(dataset_name: str | None = None) -> dict:
     models = output_dirs(dataset_name)["models"]
     return {
         "best": models / "model.pkl",
+        # 训练时的候选清单：体积大、可由 python -m src.train 重建，不随交付包提供
         "candidates": models / "candidates.pkl",
         "quantiles": models / "quantiles.pkl",
         "model_card": models / "model_card.json",

@@ -1,7 +1,7 @@
 """数据集与实验配置（本项目唯一的配置源）。
 
 为什么用 Python 而不是 YAML/JSON：
-    - 目标环境未安装 PyYAML（见 docs/02_tech_stack.md 第 2 节），Python 配置零依赖；
+    - 目标环境未安装 PyYAML，Python 配置零依赖；
     - 可写注释、可做类型检查、IDE 有补全，学生项目维护成本最低。
 
 字段说明（每个 dataset 项）：
@@ -124,7 +124,8 @@ DATASETS = {
             "标签由 minuteSleep 聚合（每晚主睡眠段，日期取起床日），已在 4.12 段上与 "
             "sleepDay_merged.csv 校验（|asleep-TotalMinutesAsleep| 中位数 0 分钟）。"
             "活动列与 fitbit_bellabeat 同源同列，用于隔离数据量这一个变量。"
-            "构建过程与分布漂移见 reports/data_build_fitbit_2seg.md。"
+            "构建过程与分布漂移由 scripts/build_fitbit_2seg.py 生成的构建报告记录"
+            "（该报告属实验分支中间产物，未随交付包提供）。"
         ),
         # 审计表：含 label_source / activity_source / source_export，供 scripts/slice_analysis.py 做切片诊断
         "audit_file": "data/interim/fitbit_2seg/daily.csv",

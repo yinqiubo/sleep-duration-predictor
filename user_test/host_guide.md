@@ -68,26 +68,28 @@ python -m scripts.test_app       :: 三个页面能否渲染
 
 - `src/`、`config/`、`app/`、`scripts/`：原因＝代码本体
 - `requirements.txt`、`run_app.cmd`、`README.md`：原因＝让对方知道怎么装、怎么跑
-- `models/` 里的 `model.pkl`、`model_card.json`、`history_sample.csv`（建议连 `quantiles.pkl`、`candidates.pkl`、`feature_importance.csv` 一起）：原因＝缺了界面直接报"尚未训练模型"；`history_sample.csv` 是界面默认载入的演示历史
+- `models/` 里的 `model.pkl`、`model_card.json`、`history_sample.csv`（建议连 `quantiles.pkl`、`feature_importance.csv` 一起）：原因＝缺了界面直接报"尚未训练模型"；`history_sample.csv` 是界面默认载入的演示历史
 
 作业交付还要带：`docs/`、`reports/`（含 `figures/`）、`user_test/`。
 
-不必带：`.venv/`、`__pycache__/`、`data/raw/`（体积大；只有"要重新训练"时才需要它）。
+不必带：`.venv/`、`__pycache__/`（虚拟环境与缓存）。`data/raw/` 约 150 KB（主链路必需的 3 个 CSV），随包提供，重跑清洗/训练时需要它。
 
-> 本次交付版已按上面这条把 `data/raw/fitbit/`（588 MB）移出项目（`data/raw/` 里只留 `.gitkeep`），
-> 所以交付包里跑 `python -m src.features` 会提示缺原始数据——这是有意为之，不是 bug。
-> 需要重跑清洗/训练时，按 `docs/03_data_source.md` 的下载来源把两个导出目录放回 `data/raw/fitbit/` 即可；
-> 只跑界面（`run_app.cmd`）、自检（`smoke_test`、`test_app`、`feature_check`）与对照实验（`gate_experiment`）
-> 都不需要 `data/raw/`，实测在移出后全部通过。
+> 交付包里的 `data/raw/` 只保留主链路必需的 3 个 CSV（约 150 KB）：`data/raw/fitbit/` 下的
+> `dailyActivity_merged.csv` + `sleepDay_merged.csv`，以及 `data/raw/sleep_health/` 的第二数据集。
+> 没随包提供的是分钟级文件与另一段导出（合计数百 MB，只服务于 `scripts/build_fitbit_2seg.py` 那个实验分支）；
+> 要重跑那个分支时，按 `docs/03_data_source.md` 的下载来源把两个导出目录放回 `data/raw/fitbit/` 即可。
+> 界面（`run_app.cmd`）、自检（`smoke_test`、`test_app`、`feature_check`）与对照实验（`gate_experiment`）都不需要这些文件，实测全部通过。
 
-> ⚠️ 最容易踩的坑：`.gitignore` 里排除了 `models/*` 和 `data/*`。
-> 用 git / GitHub / Streamlit Cloud 分发时，模型不会自动进仓库，对方打开界面会报
-> `ModelNotTrainedError`（"尚未训练模型"）。两种解法：
+> ⚠️ 最容易踩的坑：`.gitignore` 里排除了 `models/*` 和 `data/raw/*`，两条都会咬人。
+> 用 git / GitHub / Streamlit Cloud 分发时：
+> ① 模型不会自动进仓库 → 对方打开界面报 `ModelNotTrainedError`（"尚未训练模型"）；
+> ② 原始数据不会自动进仓库 → 对方重跑 `python -m src.features` 时报找不到 CSV。
+> 两种解法：
 > ```cmd
-> :: (a) 强制把模型产物纳入版本库
-> git add -f models/model.pkl models/candidates.pkl models/quantiles.pkl models/model_card.json models/history_sample.csv models/feature_importance.csv
+> :: (a) 强制把模型产物与 3 个原始 CSV 纳入版本库（体积小，可直接入库）
+> git add -f models/model.pkl models/quantiles.pkl models/model_card.json models/history_sample.csv models/feature_importance.csv data/raw/sleep_health data/raw/fitbit
 >
-> :: (b) 让对方拿到 data/raw/fitbit/... 两个 CSV 后自己训一遍
+> :: (b) 不带模型/数据，让对方拿到 data/raw/fitbit/... 两个 CSV 后自己训一遍
 > python -m src.features && python -m src.train
 > ```
 > 最省事的分发方式：右键项目文件夹 → 发送到 → 压缩(zipped)文件夹，对方解压后 `pip install -r requirements.txt` 再 `run_app.cmd` 即可。
@@ -164,10 +166,10 @@ python -m scripts.test_app       :: 三个页面能否渲染
 
 ## 6. 远程自助（方式 C）如何落地
 
-> 上线操作细节全部在 `deploy/README.md`；最快的一条路是双击 `deploy\share_web.cmd`
-> （Cloudflare 临时隧道，免注册，约 20 秒得到一个 `https://xxx.trycloudflare.com` 公网地址，
-> 参与者用手机流量也能打开；测完 `deploy\stop_web.cmd` 关闭）。
-> 想要"电脑关机也能打开"的长期链接，走方案 C（Streamlit Community Cloud）。
+> 交付包不含上线脚本，下面是远程自助（方式 C）实际的做法与取舍。
+> 本轮实际使用的是**在线问卷**（问卷星，题目原文见 `questionnaire.md`）＋ 把界面地址发给参与者
+> （访问范围取决于你怎么发布界面：局域网见第 2 节；想让参与者用手机流量也能打开，
+> 按下面第一条把项目部署到 Streamlit Community Cloud，入口文件填 `app/app.py`）。
 
 - 界面：把项目推到 GitHub 后在 Streamlit Community Cloud 建应用（入口文件填 `app/app.py`）；
   记得先按第 3 节把 `models/` 强制入库，否则云上会报"尚未训练模型"。得到 `https://xxx.streamlit.app` 后发给参与者；
