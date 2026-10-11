@@ -77,7 +77,7 @@ python -m scripts.test_app       :: 三个页面能否渲染
 > 交付包里的 `data/raw/` 只保留主链路必需的 3 个 CSV（约 150 KB）：`data/raw/fitbit/` 下的
 > `dailyActivity_merged.csv` + `sleepDay_merged.csv`，以及 `data/raw/sleep_health/` 的第二数据集。
 > 没随包提供的是分钟级文件与另一段导出（合计数百 MB，只服务于 `scripts/build_fitbit_2seg.py` 那个实验分支）；
-> 要重跑那个分支时，按 `docs/03_data_source.md` 的下载来源把两个导出目录放回 `data/raw/fitbit/` 即可。
+> 要重跑那个分支时，按 `docs/data_source.md` 的下载来源把两个导出目录放回 `data/raw/fitbit/` 即可。
 > 界面（`run_app.cmd`）、自检（`smoke_test`、`test_app`、`feature_check`）与对照实验（`gate_experiment`）都不需要这些文件，实测全部通过。
 
 > ⚠️ 最容易踩的坑：`.gitignore` 里排除了 `models/*` 和 `data/raw/*`，两条都会咬人。

@@ -148,7 +148,7 @@ def main() -> int:
     print()
     print("已登记缺陷（不算 FAIL，但要一直看得见）：")
     print("  src/features.py::add_rolling_features 对整张表 rolling，窗口会跨用户 —— "
-          "修它必须重训重评，见 docs/03 第 7.7.4 节")
+          "修它必须重训重评，见 docs/data_source.md 第 7.7.4 节")
     for line in contagion:
         print("   ", line)
 

@@ -169,4 +169,4 @@ python -m scripts.gate_experiment --skip-prepare --folds 5 --seeds 1,2,3
 - 修法：把 `.rolling(...)` 改成 `g[col].transform(lambda s: s.shift(1).rolling(w).mean())`（本轮新增的就寝环形特征用的就是这种写法）；
 - 影响面：每个用户的前 w−1 行 × 全部滚动列（`roll3`/`roll7` × `mean`/`std` × 9 个基础列）；
 - 定性：按用户分组交叉验证时，测试用户的这些行同样受影响，所以这是“该修的错”，不是“可以忽略的近似”；
-- 复现与量化见 `docs/03_data_source.md` 第 7.7.4 节与 `docs/04_ai_usage.md` 的踩坑记录。
+- 复现与量化见 `docs/data_source.md` 第 7.7.4 节与 `docs/ai_usage.md` 的踩坑记录。

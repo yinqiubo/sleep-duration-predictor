@@ -1,6 +1,6 @@
 """Step 2 实验：质量门槛 + “3 月段只作历史上下文” + 新增特征，能不能修掉合并带来的精度下降。
 
-背景（见 docs/03 第 7.5 节、reports/cv_stability_summary.md）：
+背景（见 docs/data_source.md 第 7.5 节、reports/cv_stability_summary.md）：
     把两段 Fitbit 导出合并后样本从 395 涨到 799，但按用户分组交叉验证的 MAE
     反而从 63.8 涨到 73.2。分层诊断指出两类“不该悄悄进训练集”的数据：
       ① 只有 1~5 天记录的用户 —— 滞后/滚动/个人基线几乎全是缺失值；
@@ -462,7 +462,7 @@ def write_report(payload: dict) -> None:
         "- 影响面：每个用户的前 w−1 行 × 全部滚动列（`roll3`/`roll7` × `mean`/`std` × 9 个基础列）；",
         "- 定性：按用户分组交叉验证时，测试用户的这些行同样受影响，所以这是“该修的错”，"
         "不是“可以忽略的近似”；",
-        "- 复现与量化见 `docs/03_data_source.md` 第 7.7.4 节与 `docs/04_ai_usage.md` 的踩坑记录。",
+        "- 复现与量化见 `docs/data_source.md` 第 7.7.4 节与 `docs/ai_usage.md` 的踩坑记录。",
         "",
     ]
     (C.REPORTS_DIR / "gate_experiment.md").write_text("\n".join(lines), encoding="utf-8")

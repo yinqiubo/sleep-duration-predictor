@@ -28,7 +28,7 @@ def _read_one_file(file_cfg: dict) -> pd.DataFrame:
     if not path.exists():
         raise DataNotFoundError(
             f"找不到原始数据文件：{path}\n"
-            "请按 docs/03_data_source.md 下载数据，"
+            "请按 docs/data_source.md 下载数据，"
             "或先运行 python -m scripts.make_synthetic_data 生成合成数据。"
         )
     df = pd.read_csv(path, encoding="utf-8-sig")  # utf-8-sig 兼容 Kaggle 文件的 BOM

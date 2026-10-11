@@ -1,4 +1,4 @@
-# 03 数据来源说明
+# 数据来源说明
 
 > 本文档说明：用了什么数据、为什么用它、字段怎么映射、有哪些偏差与限制。
 > 所有结论都对应到代码：数据源定义在 `config/dataset.py`，清洗规则在 `src/data_io.py`，
@@ -473,7 +473,7 @@ python -m scripts.smoke_test && python -m scripts.test_app   :: 界面链路自�
 心率、步数、睡眠障碍。
 
 > 明确不做的事：不给现有 Fitbit 用户"补"性别。原始数据没人收过这个信息，
-> 补出来等于伪造数据，违反本作业的诚信要求（见 §7 与 `docs/04`）。
+> 补出来等于伪造数据，违反本作业的诚信要求（见 §7 与 `docs/ai_usage.md`）。
 
 #### 7.8.2 改了什么（5 个文件，目的都是"让第二个数据集能跑，同时绝不碰线上链路"）
 
@@ -555,9 +555,9 @@ python -m scripts.gender_analysis
 - `reports/error_analysis.md`：§7.8.5 值＝`293fe37c`；本轮值＝`61ac52f2`；是否变化＝变了（预期）；原因＝该文件末尾会把人工撰写的 `reports/error_analysis_notes.md` 整段拼进来；旧版本是几轮之前生成的，落后于后来扩写的"人工解读"，重跑后两者一致（自动统计部分未变）
 - `reports/sleep_health_lifestyle/*`：§7.8.5 值＝—；本轮值＝—；是否变化＝除 `explanation_example.md` 外不变；原因＝第二数据集的 `metrics.md` / `error_analysis.md` / `gender_analysis.md` 指纹与第二轮一致，说明跨数据集隔离仍然成立
 
-> 教训（已登记为 `docs/04` 第 24 条）：只要交付物里带中文文案，
+> 教训（已登记为 `docs/ai_usage.md` 第 24 条）：只要交付物里带中文文案，
 > 改文案就必然改动它的指纹。所以"改完文案 → 重算指纹 → 同步更新文档"必须是一步，
-> 否则 `docs/03` 这张表和 README 检查清单第 20 条会自相矛盾——一份自相矛盾的证据，
+> 否则 `docs/data_source.md` 这张表和 README 检查清单第 20 条会自相矛盾——一份自相矛盾的证据，
 > 比没有证据更糟。
 
 #### 7.8.7 第四轮：把「性别」接进交互原型（2026-10-09）
@@ -601,7 +601,7 @@ python -m scripts.gender_analysis
 - `reports/worst_cases.csv`、`reports/test_predictions.csv`：§7.8.6 值＝—；本轮值＝`33343abc`、`74fd546a`；是否变化＝每次重跑都不同（浮点）；原因＝这两张表把 `y_pred` 的完整小数写进 CSV，而随机森林的并行求和顺序不固定。本轮做了两次重跑对拍：10 条案例里 `y_pred` 最大差 `1.7e-13` 分钟、`err_minutes` 最大差 `1.3e-13` 分钟；`user_id` / `date` / `y_true` / `steps` / 全部输入特征逐格相同 → 属于显示精度噪声，因此不把它们列为"可对拍文件"，对拍的锚点是 `metrics.json`（9 个标量）+ `metrics.md`
 - `models/sleep_health_lifestyle/*`、`reports/sleep_health_lifestyle/metrics.md`、`gender_analysis.md`：§7.8.6 值＝见 §7.8.4；本轮值＝`2d22757f`、`7110b4c3`、`bc6be910`、`7a6774dc`、`4745f96a`；是否变化＝不变；原因＝本轮重跑 `scripts.gender_analysis` 后与第三轮逐字节相同 → 跨数据集隔离仍然成立
 
-> 一条新的自检经验（已登记为 `docs/04` 第 26 条）：界面控件不能"因为看起来合理"就渲染。
+> 一条新的自检经验（已登记为 `docs/ai_usage.md` 第 26 条）：界面控件不能"因为看起来合理"就渲染。
 > 性别控件出现与否必须由模型卡里真实存在的特征决定（`requires_feature` 前缀匹配），
 > 否则就会造出"填了不影响结果"的假控件——而"界面上的假控件"正是用户测试里被用户直接指出的问题类型。
 
@@ -649,11 +649,11 @@ python -m scripts.gender_analysis
 1. 几十（分钟）量级是真的：手环线逐项影响的量级（6~69 分钟）小于模型自己的典型误差（±1.5 小时），
    所以"点估计看不出变化"不是 bug；界面因此明写"上面那个区间更值得看"。
 2. 灵敏度是"点完才算"：界面是表单，`cached_sensitivity` 只在提交后重算，文案统一写成
-   "点「生成预测」后……实测给你看"，不写"实时"（不实承诺已登记为 `docs/04` 第 29 条）。
+   "点「生成预测」后……实测给你看"，不写"实时"（不实承诺已登记为 `docs/ai_usage.md` 第 29 条）。
 
 性能（同一次运行内计时）：15 个候选值一次批量预测 52–54 ms；一次 `predict_one`（含两段式）124 ms。
 对比：改批量之前按候选值逐行调用 `model.predict` 时 15 次约 1.2 s（单行 sklearn 调用固定开销约 80 ms），
-结果页每次提交都会明显卡一下——已登记为 `docs/04` 第 28 条。
+结果页每次提交都会明显卡一下——已登记为 `docs/ai_usage.md` 第 28 条。
 
 ### 4. 指纹复核（SHA-256 前 8 位）
 
@@ -676,7 +676,7 @@ python -m scripts.gender_analysis
 > 手写会随重跑丢失、改动还会让"指纹未变"的证据自相矛盾。诚实化说明写在界面（用户真正看到的地方）、
 > `README`（§1.4 与 §5 第 24/25 条）与本文件里；第二数据集的报告则通过配置里的 `report_notes` 一起生成。
 
-### 5. 教训（已登记为 `docs/04` 第 27–29 条）
+### 5. 教训（已登记为 `docs/ai_usage.md` 第 27–29 条）
 
 1. 悬空引用：`app/app.py`（4 处）与 `src/predict.py`（1 处）的注释写"见 README 第 30 条"，
    而 README 的检查清单只到第 23 条——按图索骥找不到任何依据。这类错误不影响运行，
@@ -688,7 +688,7 @@ python -m scripts.gender_analysis
 3. 不要"逐行预测"：第一版 `field_sensitivity` 逐候选值调用 `model.predict`，15 次 1.2 s；
    改成一次批量后 52 ms。用户会以为"没反应"的那个卡顿，正是这一轮要回答的问题，不能自己再造一个。
 4. 一次性脚本的定位：本轮的验收脚本是临时脚本，放在系统临时目录、不随项目交付；
-   它们的输出已逐字抄进本节与 `docs/05` §2 R15，可长期复现的部分则固化进 `scripts/test_app.py`。
+   它们的输出已逐字抄进本节与 `docs/prompt_log.md` §2 R15，可长期复现的部分则固化进 `scripts/test_app.py`。
 
 ---
 
@@ -752,8 +752,8 @@ python -m scripts.gender_analysis
 - `app/app.py`：第六轮＝`9a9e4a42`；本轮＝`1e4c5203`；结论＝预期变化：① `DEFAULT_POPULATION` `fitbit → lifestyle`；② 手环线输入页 `sens_hint` 按上文实测数字重写
 
 > 本轮的指纹为什么出现过两个值：`app/app.py` 分两步改——先改默认人群线与输入页提示文案（当时算出
-> `02e82c47`，也就是 `docs/05` R16 引文里我点选那一刻的值），随后把注释里与文档口径不一致的「8h08」
-> 对齐成「8h09」，最终交付指纹 `1e4c5203`。以上文实测数字与 `README` §5 第 27 条为准（`docs/05` 保留引文原话、未回改）。
+> `02e82c47`，也就是 `docs/prompt_log.md` R16 引文里我点选那一刻的值），随后把注释里与文档口径不一致的「8h08」
+> 对齐成「8h09」，最终交付指纹 `1e4c5203`。以上文实测数字与 `README` §5 第 27 条为准（`docs/prompt_log.md` 保留引文原话、未回改）。
 
 验收（全部实跑）：`python -m scripts.smoke_test` → `[OK] 两条人群线的「预测链条 + 解释链条」自检通过`；
 `python -m scripts.test_app` → `[OK] 首屏渲染正常：今晚我能睡多久？；默认人群 'lifestyle'` 与
@@ -790,7 +790,7 @@ python -m scripts.gender_analysis
 超出训练范围后结果不再变化、人群线数据按规则生成且只能读作人群参考值、界面底部的免责声明。
 
 最终交付包范围（2026-10-10 定稿）：只保留可运行代码（`src/` `scripts/` `app/` `config/`）、必交文档
-（`docs/03`–`05`）、实验报告与证据（`reports/`）、运行必需的模型产物（`models/` 下的 `model.pkl` /
+（`docs/data_source.md`、`docs/ai_usage.md`、`docs/prompt_log.md`）、实验报告与证据（`reports/`）、运行必需的模型产物（`models/` 下的 `model.pkl` /
 `quantiles.pkl` / `model_card.json` / `history_sample.csv` / `feature_importance.csv` 与
 `models/sleep_health_lifestyle/` 的同名前缀文件）、用户测试记录（`user_test/`）与本文件。
 不随包提供的有：过程文档 `docs/00`–`02`、上线脚本 `deploy/`（含约 53 MB 的 `cloudflared.exe` 与 1775 条

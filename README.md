@@ -61,7 +61,7 @@ python -m scripts.make_synthetic_data
 > 类别列（性别）可通过 `FEATURES["encode_categorical"]` 打开 one-hot 进入模型。
 > `sleep_health_lifestyle` 现在已全链路跑通（features → train → evaluate → gender_analysis），
 > 产物隔离在 `models/sleep_health_lifestyle/`、`reports/sleep_health_lifestyle/`，
-> 线上模型与报告逐字节未变。详见下面 1.4 节与 `docs/03_data_source.md` §7.8。
+> 线上模型与报告逐字节未变。详见下面 1.4 节与 `docs/data_source.md` §7.8。
 
 额外自检（不启动界面也能验证「特征 → 预测 → 解释」链路）：
 
@@ -91,8 +91,8 @@ python -m scripts.smoke_test
 > （799 条 / 23 人 / 同样 70 个特征）。样本翻倍让估计更稳（逐折标准差 17.5 → 7.0 分钟），
 > 但精度下降（GroupKFold MAE 63.8 → 73.2，相对基线提升 17.8% → 9.7%）；
 > 原因已定位到新增那一段的数据质量与活动口径。它仍是实验分支，不替换 `ACTIVE_DATASET`；
-> 详见 `docs/03_data_source.md` 第 7.5 节与 `reports/cv_stability_summary.md`（本交付包只保留正式验收报告与
-> 两个线上数据集的报告；该实验分支的数据构建报告、分层诊断报告与中间表未随包提供，重跑 `docs/03` §7.5.6 的命令即可生成）。
+> 详见 `docs/data_source.md` 第 7.5 节与 `reports/cv_stability_summary.md`（本交付包只保留正式验收报告与
+> 两个线上数据集的报告；该实验分支的数据构建报告、分层诊断报告与中间表未随包提供，重跑 `docs/data_source.md` §7.5.6 的命令即可生成）。
 
 > Step 2 的两个修正机制（已实现并判定）：把"记录 < 7 天 / 个人 σ > 5 小时"的用户整人剔除
 > （质量门槛 `_qg`），以及把 3 月段只当历史上下文（`_ctx`，一行不删、目标分布不变）。
@@ -106,7 +106,7 @@ python -m scripts.smoke_test
 > 默认关闭，只有 `*_f2` 实验变体打开 —— 因此线上界面与模型逐字节不变（SHA-256 核对过）。
 > 判定结果：线上数据集 +0.01 分钟（零结果）；合并集 +2.03 分钟（反而更差）；
 > 候选配置 H 平均 −0.76 分钟、逐折 4/5 改善，但逐种子有一个 +4.05 抵消，多种子极差反而
-> 从 14.35 涨到 19.70 → 证据不足，线上配置不变。详见 `docs/03_data_source.md` 第 7.7 节。
+> 从 14.35 涨到 19.70 → 证据不足，线上配置不变。详见 `docs/data_source.md` 第 7.7 节。
 
 ---
 
@@ -183,9 +183,9 @@ python -m scripts.gender_analysis
 > 性别在这条线上是分析变量而非精度来源（消融实验：MAE 3.6 → 3.5 分钟，见
 > `reports/sleep_health_lifestyle/gender_analysis.md`）。
 > 时间线要说清楚：用户测试期间（10-04 ~ 10-08）界面逐字节未变（哈希证据见
-> `docs/03_data_source.md` §7.8.5），最后一份答卷 2026-10-08 18:06 提交之后，才按测试结果改界面
+> `docs/data_source.md` §7.8.5），最后一份答卷 2026-10-08 18:06 提交之后，才按测试结果改界面
 > （见 `user_test/summary.md` §4.1 与本章 §1.5）；人群切换器是测试结束后的第二批改动，
-> 指纹与自检证据见 `docs/03_data_source.md` §7.8.7 与本章 §5 第 23 条。
+> 指纹与自检证据见 `docs/data_source.md` §7.8.7 与本章 §5 第 23 条。
 >
 > 输入灵敏度实测 + 两段式归因（2026-10-09，测试结束后的第三批界面改动）：主试自测时报过
 > "手环线怎么改输入、预测都差不多，像是填了没反应"。这件事不靠嘴解释，改成当场量出来：
@@ -199,7 +199,7 @@ python -m scripts.gender_analysis
 > 三条如实说明：① 灵敏度是点「生成预测」之后才算的（表单没提交的值不算数，不能说成"实时"）；
 > ② 树模型不外推，步数超过约 20,000 步后预测不再变化，填到上限时界面会提示；
 > ③ 影响为 0 或很小的项也照实列出，并写明"填了看不出变化是正常的"。
-> 指纹与自检证据见 `docs/03_data_source.md` §7.8.8 与本章 §5 第 24/25 条。
+> 指纹与自检证据见 `docs/data_source.md` §7.8.8 与本章 §5 第 24/25 条。
 
 ---
 
@@ -213,7 +213,7 @@ python -m scripts.gender_analysis
 - 愿意用它 / 因素合理 / 估得挺准：结果＝4.25 / 4.00 / 4.25（"估得挺准"按 `tasks.md` 说明不进达标判定）
 - 功能太少太单调（反向）：结果＝3.00（P3 给 5、P4 给 1，分歧明显）
 - 无法判定的通过线：结果＝5 条：T2 提到范围/不确定、T2 把预测当事实、T3 指出主要因素、T3 因果误读、Q4 焦虑措辞 —— 本轮问卷没有对应题目
-- 最有价值的收获：结果＝P2 报出唯一由真实用户发现的 bug："中高强度为0的时候生成预测没反应"（详见 `summary.md` §2、`docs/04` 第 23 条）
+- 最有价值的收获：结果＝P2 报出唯一由真实用户发现的 bug："中高强度为0的时候生成预测没反应"（详见 `summary.md` §2、`docs/ai_usage.md` 第 23 条）
 - 已据此改动：结果＝`app/app.py`（删假控件、步数上限、同轮渲染、异常显式报错、文案改口）、`src/explain.py`；模型未重训
 - 下一步（未做）：结果＝补 T2/T3/焦虑措辞三道题并再招 3–5 人复测；区间优先展示；个人历史上传入口
 
@@ -234,15 +234,15 @@ sleep-duration-predictor/
 ├─ data/
 │   ├─ raw/                     原始数据（只读）
 │   │   ├─ fitbit/              Fitbit Bellabeat 原始 CSV：随包只带主链路必需的
-│   │   │                       `dailyActivity_merged.csv` + `sleepDay_merged.csv`（共 127 KB，见 docs/03 §3.1.1）
-│   │   │                       ⚠️ 重跑 `scripts/build_fitbit_2seg.py` 需再放回另一段导出（约 113 MB，见 docs/03 §7.5）
+│   │   │                       `dailyActivity_merged.csv` + `sleepDay_merged.csv`（共 127 KB，见 docs/data_source.md §3.1.1）
+│   │   │                       ⚠️ 重跑 `scripts/build_fitbit_2seg.py` 需再放回另一段导出（约 113 MB，见 docs/data_source.md §7.5）
 │   │   └─ sleep_health/        Kaggle Sleep Health and Lifestyle（含 Gender，第二数据集）
 │   ├─ interim/                 构建中间产物目录（`scripts/build_fitbit_2seg.py` 的落点，运行后生成）
 │   └─ processed/               清洗+特征工程后的数据（`python -m src.features` 生成，不随包提供）
 ├─ docs/
-│   ├─ 03_data_source.md        数据来源说明与数据集甄别结论（必交）
-│   ├─ 04_ai_usage.md           AI 辅助使用声明（用在哪、出了什么错、我怎么验证）
-│   └─ 05_prompt_log.md         AI 对话提示词记录（提示词 → 交付 → 验收 / 否决）
+│   ├─ data_source.md           数据来源说明与数据集甄别结论（必交）
+│   ├─ ai_usage.md              AI 辅助使用声明（用在哪、出了什么错、我怎么验证）
+│   └─ prompt_log.md            AI 对话提示词记录（提示词 → 交付 → 验收 / 否决）
 ├─ scripts/
 │   ├─ make_synthetic_data.py   合成数据生成器（无真实数据时的链路验证）
 │   ├─ build_fitbit_2seg.py     两段导出合并 → data/interim/fitbit_2seg/daily.csv（实验分支的数据准备）
@@ -295,21 +295,21 @@ sleep-duration-predictor/
 
 ## 3. 交付物与作业要求对照
 
-- 交付包范围：只含"交给老师的产物"——可运行代码（`src/` `scripts/` `app/` `config/`）、必交文档（`docs/03`–`05`）、
+- 交付包范围：只含"交给老师的产物"——可运行代码（`src/` `scripts/` `app/` `config/`）、必交文档（`docs/data_source.md`、`docs/ai_usage.md`、`docs/prompt_log.md`）、
   实验报告与证据（`reports/`）、运行必需的模型产物（`models/`）、用户测试记录（`user_test/`）与本文件；
   过程中写给自己看的文档（`docs/00`–`02`）、实验分支的分变体报告与中间数据、上线脚本、候选模型文件
   （`models/**/candidates.pkl`）均不在包内；报告与中间数据可用包内脚本重新生成（主链路从 `python -m src.features`
-  起，实验分支见 `docs/03` §7.5），上线脚本不再提供——需要公网地址时按 §1.3 自建
-- 数据来源说明：本项目产物＝`docs/03_data_source.md`
+  起，实验分支见 `docs/data_source.md` §7.5），上线脚本不再提供——需要公网地址时按 §1.3 自建
+- 数据来源说明：本项目产物＝`docs/data_source.md`
 - 可运行代码及运行说明：本项目产物＝本文件 + `src/` + `requirements.txt`
 - 模型对比表：本项目产物＝`reports/metrics.md`（自动生成）
 - 可视化结果：本项目产物＝`reports/figures/*.png`（自动生成）
 - 错误分析与局限性：本项目产物＝`reports/error_analysis.md` + `reports/figures/`
 - 交互原型：本项目产物＝`app/app.py`（Streamlit，可现场操作：双击 `run_app.cmd`；也可录屏为演示视频）
 - 用户测试记录与改进建议：本项目产物＝`user_test/`（4 名真实参与者：原始记录 `raw.csv`、汇总 `summary.md`、实际问卷 `questionnaire.md`；招募流程见 `qq_invite.md`）
-- AI 使用说明：本项目产物＝`docs/04_ai_usage.md`
-- AI 对话提示词记录：本项目产物＝`docs/05_prompt_log.md`（15 个阶段 + 14 句逐字提示词原文 + 交付物 + 验收证据 + 采纳/否决）
-- 第二数据集（性别变量）与消融实验：本项目产物＝`scripts/gender_analysis.py` → `reports/sleep_health_lifestyle/gender_analysis.md`（+ `models/sleep_health_lifestyle/`）；说明见 `docs/03_data_source.md` §7.8
+- AI 使用说明：本项目产物＝`docs/ai_usage.md`
+- AI 对话提示词记录：本项目产物＝`docs/prompt_log.md`（15 个阶段 + 14 句逐字提示词原文 + 交付物 + 验收证据 + 采纳/否决）
+- 第二数据集（性别变量）与消融实验：本项目产物＝`scripts/gender_analysis.py` → `reports/sleep_health_lifestyle/gender_analysis.md`（+ `models/sleep_health_lifestyle/`）；说明见 `docs/data_source.md` §7.8
 
 ---
 
@@ -325,7 +325,7 @@ sleep-duration-predictor/
 
 > 跑之前先做一次准备：主链路（第 1–10、17–28 条）先执行 `python -m src.features`——特征表与划分不随包提供，
 > 由这条命令从随包原始数据重建；第 11–16、19 条跑的是**实验分支**（`fitbit_2seg` 及 `*_qg` / `*_ctx` /
-> `*_f2` 变体），该分支的中间表与分变体报告同样不在包内，复现顺序为：按 `docs/03` §7.5 把分钟级导出
+> `*_f2` 变体），该分支的中间表与分变体报告同样不在包内，复现顺序为：按 `docs/data_source.md` §7.5 把分钟级导出
 > 放回 `data/raw/fitbit/` → `python -m scripts.build_fitbit_2seg` → `python -m scripts.gate_experiment`
 > → 再跑对应自检。各条"通过标准"里的数字是 2026-10-10 交付轮的实测值。
 
@@ -335,7 +335,7 @@ sleep-duration-predictor/
 - 4：检查项＝模型对比表与验收；位置＝`reports/metrics.md`；通过标准＝三项验收全部 ✅（真实数据实测：测试 MAE 41.9 分钟 / 相对均值基线提升 20.8% / 区间覆盖率 86.7%）
 - 5：检查项＝图表可读；位置＝`reports/figures/*.png`；通过标准＝7 张图，中文标题不显示方框
 - 6：检查项＝错误分析与可能原因；位置＝`reports/error_analysis.md`（第 6 节人工解读）+ `reports/error_analysis_notes.md`；通过标准＝原因逐条有依据
-- 7：检查项＝必交文档齐全；位置＝`docs/03_data_source.md`（数据来源）、`docs/04_ai_usage.md`（AI 使用说明）、`docs/05_prompt_log.md`（提示词记录）；通过标准＝三份都在，且与 `docs/03` 第 8 节的核对清单一致
+- 7：检查项＝必交文档齐全；位置＝`docs/data_source.md`（数据来源）、`docs/ai_usage.md`（AI 使用说明）、`docs/prompt_log.md`（提示词记录）；通过标准＝三份都在，且与 `docs/data_source.md` 第 8 节的核对清单一致
 - 8：检查项＝用户测试记录；位置＝`user_test/raw.csv`、`summary.md`、`questionnaire.md`；通过标准＝4 条真实记录（作业第 5 条最低 3 条 ✅）+ ≥3 条带归因的改进建议；未采集字段一律写"未采集"
 - 9：检查项＝演示可用；命令＝双击 `run_app.cmd` 或 `python -m scripts.run_app`；通过标准＝三步流程能走通，可现场操作/录屏
 - 10：检查项＝免责声明；位置＝`app/app.py` 底部、本文件顶部；通过标准＝均明确"不构成医疗建议"
@@ -344,16 +344,16 @@ sleep-duration-predictor/
 - 13：检查项＝样本质量门槛 / 历史上下文 / 加特征三个机制可复现；命令＝`python -m scripts.gate_experiment`；通过标准＝打印各变体的 MAE±σ、相对提升、多种子极差与配对 Δ，写入 `reports/gate_experiment.md`；判为"证据不足"时也照实写，不挑对自己有利的数字
 - 14：检查项＝实验分支不污染线上产物；命令＝重跑 `python -m scripts.gate_experiment` / `noise_floor` 后核对 `data/processed/fitbit_bellabeat_{features.csv,splits.json}`、`models/`、`reports/metrics.md`；通过标准＝线上特征表与划分逐字节不变，`models/` 与 `reports/metrics.md` 全程未被触碰
 - 15：检查项＝新特征默认关（不影响线上）；命令＝`python -c "from src import config as C; print(C.features_cfg()['extra'])"`；通过标准＝打印 `{'enabled': False, ...}`；只有 `*_f2` 变体为 `True`；`reports/gate_experiment.md` 第 1.1 节显示 F +1 / G +19 / H +19、移除 0 列
-- 16：检查项＝特征工程自检；命令＝`python -m scripts.feature_check`（默认比对 `fitbit_2seg` 与 `fitbit_2seg_f2`，需先按 `docs/03` §7.5 备好实验分支数据并跑 `scripts.gate_experiment`）；通过标准＝8 项全部 `[OK]`、退出码 0
-- 17：检查项＝提示词记录（教师要求）；位置＝`docs/05_prompt_log.md`；通过标准＝逐字提示词原文（`P1`–`P14`）、"提示词 → 交付 → 验收 / 否决"的记录与"刻意不问"清单齐全
+- 16：检查项＝特征工程自检；命令＝`python -m scripts.feature_check`（默认比对 `fitbit_2seg` 与 `fitbit_2seg_f2`，需先按 `docs/data_source.md` §7.5 备好实验分支数据并跑 `scripts.gate_experiment`）；通过标准＝8 项全部 `[OK]`、退出码 0
+- 17：检查项＝提示词记录（教师要求）；位置＝`docs/prompt_log.md`；通过标准＝逐字提示词原文（`P1`–`P14`）、"提示词 → 交付 → 验收 / 否决"的记录与"刻意不问"清单齐全
 - 18：检查项＝招募与分发文案；位置＝`user_test/qq_invite.md`；通过标准＝文案里的 `【粘贴当前链接】` 等占位符已替换；发布纪律已确认（不刷屏、不收个人信息）
 - 19：检查项＝模型不是只打赢"最弱的对手"；命令＝`python -m scripts.baseline_compare`；通过标准＝打印模型 41.9 vs 全局均值 52.8 / 个人历史均值 53.4 / 近 7 天滚动 56.0 / 昨天 70.2 分钟，配对改善 12.9–15.3 分钟、胜出 61%–70% 的行；并如实写出"该幅度小于 30.8 分钟噪声底线，只能算方向性证据"
 - 20：检查项＝第二数据集（含性别变量）可复现且不污染线上产物；命令＝`set "SLEEP_DATASET=sleep_health_lifestyle"` 后依次跑 `src.features` / `src.train` / `src.evaluate` / `scripts.gender_analysis`；通过标准＝产物只写在 `models/sleep_health_lifestyle/`、`reports/sleep_health_lifestyle/`，线上 8 个交付物指纹全部不变
-- 21：检查项＝改界面/文案后重新核对指纹；位置＝`docs/03_data_source.md` §7.8.6 的清单；通过标准＝预期变化的文件逐条写明原因，其余逐字节不变
-- 22：检查项＝原始数据随包 + 从零复现；命令＝清空 `data/processed/` 后依次跑 `src.features` / `src.train` / `src.evaluate` / `scripts.smoke_test`；通过标准＝四步全 `exit=0`，划分 train=240 / val=80 / test=75、泄漏自检通过；细节见 `docs/03` 第 8 节
-- 23：检查项＝界面加入性别输入；命令＝启动界面 → 侧栏「预测对象」切到睡眠健康人群 → 填性别 → 生成预测；再跑 `python -m scripts.smoke_test` 与 `python -m scripts.test_app`；通过标准＝两条人群线各自 `exit=0`；含性别的数据集出现性别控件、手环线没有；完整表见 `docs/03` §7.8.7
-- 24：检查项＝输入灵敏度实测（正面回答"填了没反应"）；命令＝界面 → 手环线填一组输入 → 点「生成预测」→ 展开结果页「每个输入能改变多少？」；通过标准＝结果页逐项给出实测范围（手环线步数 56 / 久坐 69 / 中高强度 6 分钟，横截面线压力自评 94 / 性别 3 分钟），`python -m scripts.test_app` 断言该清单必须渲染；完整表见 `docs/03` §7.8.8
+- 21：检查项＝改界面/文案后重新核对指纹；位置＝`docs/data_source.md` §7.8.6 的清单；通过标准＝预期变化的文件逐条写明原因，其余逐字节不变
+- 22：检查项＝原始数据随包 + 从零复现；命令＝清空 `data/processed/` 后依次跑 `src.features` / `src.train` / `src.evaluate` / `scripts.smoke_test`；通过标准＝四步全 `exit=0`，划分 train=240 / val=80 / test=75、泄漏自检通过；细节见 `docs/data_source.md` 第 8 节
+- 23：检查项＝界面加入性别输入；命令＝启动界面 → 侧栏「预测对象」切到睡眠健康人群 → 填性别 → 生成预测；再跑 `python -m scripts.smoke_test` 与 `python -m scripts.test_app`；通过标准＝两条人群线各自 `exit=0`；含性别的数据集出现性别控件、手环线没有；完整表见 `docs/data_source.md` §7.8.7
+- 24：检查项＝输入灵敏度实测（正面回答"填了没反应"）；命令＝界面 → 手环线填一组输入 → 点「生成预测」→ 展开结果页「每个输入能改变多少？」；通过标准＝结果页逐项给出实测范围（手环线步数 56 / 久坐 69 / 中高强度 6 分钟，横截面线压力自评 94 / 性别 3 分钟），`python -m scripts.test_app` 断言该清单必须渲染；完整表见 `docs/data_source.md` §7.8.8
 - 25：检查项＝两段式归因（个人基线 + 今日调整 = 点预测）；命令＝结果页 →「这个数字是怎么来的」；实现见 `src/predict.py::split_baseline`；通过标准＝两段相加＝点预测（差 < 0.2 分钟），并列出基线用的历史中位数（手环线示例：520.5 ＋ (−31.8) = 488.8 分钟）
-- 26：检查项＝访问与预测确定性复核；命令＝`python -m scripts.run_app --check-only` → 起服务后探 `/_stcore/health`；通过标准＝本机 `http://127.0.0.1:8501` 与局域网地址健康检查 HTTP 200；同输入连点 3 次逐位相同（488.8 分钟、区间 [374.5, 536.2]）；换输入会动，但单项影响（6–69 分钟）小于模型典型误差（±88 分钟），步数 >20,000 为平台期；明细见 `docs/03` §7.8.9
-- 27：检查项＝默认进入哪条线 + 手环线"填了没反应"按真实作息复核；命令＝启动界面看首屏默认人群，手环线按真实作息反方向联动填写；通过标准＝首屏默认 `lifestyle`；真实的一天（1500 步 + 久坐 1000 分）411.9 分钟（6h51），真正拉得动的只有久坐（600→900 分 −69.6 分钟），且两个方向在真实的一天里互相抵消；完整表见 `docs/03` §7.8.10
-- 28：检查项＝交付前清掉界面与文档里"写给自己看"的文字；命令＝逐页读原型渲染出的全部文字（用 AppTest 把输入页/结果页的 markdown / caption / 提示导出后逐句看）；通过标准＝界面文案里没有"自证清白"的句子与内部术语（`MAE`、"哑变量"、"消融实验"、内部报告路径），诚实信息（区间、可信度、典型误差、超范围不再变化、人群线数据按规则生成）全部保留；明细见 `docs/03` §7.8.11
+- 26：检查项＝访问与预测确定性复核；命令＝`python -m scripts.run_app --check-only` → 起服务后探 `/_stcore/health`；通过标准＝本机 `http://127.0.0.1:8501` 与局域网地址健康检查 HTTP 200；同输入连点 3 次逐位相同（488.8 分钟、区间 [374.5, 536.2]）；换输入会动，但单项影响（6–69 分钟）小于模型典型误差（±88 分钟），步数 >20,000 为平台期；明细见 `docs/data_source.md` §7.8.9
+- 27：检查项＝默认进入哪条线 + 手环线"填了没反应"按真实作息复核；命令＝启动界面看首屏默认人群，手环线按真实作息反方向联动填写；通过标准＝首屏默认 `lifestyle`；真实的一天（1500 步 + 久坐 1000 分）411.9 分钟（6h51），真正拉得动的只有久坐（600→900 分 −69.6 分钟），且两个方向在真实的一天里互相抵消；完整表见 `docs/data_source.md` §7.8.10
+- 28：检查项＝交付前清掉界面与文档里"写给自己看"的文字；命令＝逐页读原型渲染出的全部文字（用 AppTest 把输入页/结果页的 markdown / caption / 提示导出后逐句看）；通过标准＝界面文案里没有"自证清白"的句子与内部术语（`MAE`、"哑变量"、"消融实验"、内部报告路径），诚实信息（区间、可信度、典型误差、超范围不再变化、人群线数据按规则生成）全部保留；明细见 `docs/data_source.md` §7.8.11

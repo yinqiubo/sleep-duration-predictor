@@ -1,8 +1,8 @@
-# 05 与 AI 的对话提示词记录（Prompt Log）
+# 与 AI 的对话提示词记录（Prompt Log）
 
 > 这份文档回答一个问题：我是怎么向 AI 提问的。
-> 与 `docs/04_ai_usage.md` 的分工：`04` 讲"AI 用在哪、AI 出了什么错、我怎么验证"；
-> `05` 讲"我发出的提示词 → AI 交付了什么 → 我采纳 / 否决了什么 → 用什么证据验收"。
+> 与 `docs/ai_usage.md` 的分工：那份讲"AI 用在哪、AI 出了什么错、我怎么验证"；
+> 本文档讲"我发出的提示词 → AI 交付了什么 → 我采纳 / 否决了什么 → 用什么证据验收"。
 >
 > 阅读约定（先看这一节，避免误读）：
 >
@@ -24,7 +24,7 @@
 > 交付包范围（2026-10-10 定稿）：本文档提到的 `docs/00`–`02`（过程文档）、`deploy/`（上线脚本）、
 > 实验分支的分变体报告（`reports/data_build_*`、`reports/slice_analysis_*`、`reports/*_{qg,ctx,f2}*`）、
 > 候选模型文件（`models/**/candidates.pkl`）与中间数据（`data/processed/`、`data/interim/`）都不随
-> 交付包提供；文中对它们的引用是当时的真实交付记录，需要时按 `README` §1.2 与 `docs/03` §4 / §7.5
+> 交付包提供；文中对它们的引用是当时的真实交付记录，需要时按 `README` §1.2 与 `docs/data_source.md` §4 / §7.5
 > 的命令重新生成。
 
 > 轮次是怎么来的（重要）：本文档按项目阶段编号 R1–R15，而我在整个项目里实际发出的提示词只有
@@ -39,7 +39,7 @@
 ## 1. 总览：15 个阶段（R1–R15）与 14 句提示词（P1–P14）
 
 - R1：我的目标（一句话）＝立项：把作业要求拆成需求与技术栈；关键约束（我定的；逐字提示词见 §6）＝"先列方案与风险，不许写代码"；AI 交付＝`docs/01`、`docs/02`；我的验收证据＝逐条对照作业要求；采纳＝采纳（自己改写了验收数值）
-- R2：我的目标（一句话）＝选数据集；关键约束（我定的；逐字提示词见 §6）＝"候选要给我许可与字段清单，选哪个由我定"；AI 交付＝`docs/03`；我的验收证据＝打开数据集页面核对字段/许可；采纳＝部分（否决了纯合成数据作为最终数据）
+- R2：我的目标（一句话）＝选数据集；关键约束（我定的；逐字提示词见 §6）＝"候选要给我许可与字段清单，选哪个由我定"；AI 交付＝`docs/data_source.md`；我的验收证据＝打开数据集页面核对字段/许可；采纳＝部分（否决了纯合成数据作为最终数据）
 - R3：我的目标（一句话）＝数据清洗 + 防泄漏；关键约束（我定的；逐字提示词见 §6）＝"只能用就寝前可得的信息，越界值要报数"；AI 交付＝`src/data_io.py`、`reports/data_cleaning_report_*.md`；我的验收证据＝清洗报告剔除量是否合理 + 人工抽查越界样本；采纳＝采纳
 - R4：我的目标（一句话）＝特征工程（周期/滞后/滚动/个人基线）；关键约束（我定的；逐字提示词见 §6）＝"每个特征标注它用到的时间范围，禁止未来信息"；AI 交付＝`src/features.py`；我的验收证据＝泄漏自检 + 手工核对 `shift(1)`；采纳＝采纳
 - R5：我的目标（一句话）＝训练选优 + 评价出图；关键约束（我定的；逐字提示词见 §6）＝"调参只能在验证集，测试集只用一次"；AI 交付＝`src/train.py`、`src/evaluate.py`、`reports/*`；我的验收证据＝`metrics.md` 三项验收 + 7 张图人工看；采纳＝采纳
@@ -138,7 +138,7 @@
 > 我要选择睡眠相关数据，进行睡眠时长监测预测的任务。我需要确认，既然是训练模型，需不需要虚拟环境，并使用如pytorch的深度学习框架，如果不需要，请告诉我进行此次作业的最合适的技术栈，建立基本项目结构目录，并告诉我有什么是更适合人工改进的，另外，https:// archive.ics.uci.edu/和https://www.kaggle.com/datasets?search=BMI 这两个数据集是不是优秀的数据集，如果是，帮我看看是不是监测睡眠质量的优秀数据集，如果有就用，没有就用你方才推荐的数据集；然后，我需要你给我详细的项目需求分析文档和技术栈的文档。
 > ```
 
-- → 交付：`docs/03_data_source.md`（候选对比 + 甄别结论）、`scripts/make_synthetic_data.py`
+- → 交付：`docs/data_source.md`（候选对比 + 甄别结论）、`scripts/make_synthetic_data.py`
 - ✔ 验收：我打开数据集页面逐项核对字段与许可；确认 Fitbit Bellabeat 日表没有 `bedtime_minutes`
 - ✘ 否决：AI 早期版本把合成数据的结果写成"模型效果良好"——我要求全部标注为"仅用于验证链路，不代表真实结论"
 
@@ -183,7 +183,7 @@
 
 - → 交付：`src/features.py`、`src/splits.py`
 - ✔ 验收：逐列人工核对 `shift`；看自检报告
-- ✘ 否决 / 遗留：分组滚动这条没有做到（见 `docs/04` 第 17 条：`add_rolling_features` 对整张表滚动，窗口跨用户，实测 120/799 行不一致）。当时没发现，后来靠"每个用户第一行必须为空"这条断言才暴露 → 我把它登记为缺陷，而不是悄悄改掉（改它会让已上线模型与指标失效）
+- ✘ 否决 / 遗留：分组滚动这条没有做到（见 `docs/ai_usage.md` 第 17 条：`add_rolling_features` 对整张表滚动，窗口跨用户，实测 120/799 行不一致）。当时没发现，后来靠"每个用户第一行必须为空"这条断言才暴露 → 我把它登记为缺陷，而不是悄悄改掉（改它会让已上线模型与指标失效）
 
 ---
 
@@ -229,7 +229,7 @@
 
 - → 交付：`app/app.py`、`src/explain.py`、`scripts/smoke_test.py`、`scripts/test_app.py`
 - ✔ 验收：`smoke_test` + `test_app` 通过；逐句审文案；把界面里每个控件与 `models/model_card.json` 的特征列表一一对上
-- ✘ 否决：AI 起初保留了"你打算几点上床睡觉"输入框，而该数据集没有这个字段、模型也不用它——用户改了没反应，会以为坏了。我要求按模型卡条件渲染，并在界面上明写"当前数据集没有该字段，这一项不会被模型使用"（`docs/04` 第 8 条）
+- ✘ 否决：AI 起初保留了"你打算几点上床睡觉"输入框，而该数据集没有这个字段、模型也不用它——用户改了没反应，会以为坏了。我要求按模型卡条件渲染，并在界面上明写"当前数据集没有该字段，这一项不会被模型使用"（`docs/ai_usage.md` 第 8 条）
 
 ### R7 稳定性：先告诉我"多大的差异才算真差异"
 
@@ -307,7 +307,7 @@
 
 - → 交付：`scripts/gate_experiment.py`（9 个变体并排）、`reports/gate_experiment.md`、`reports/slice_analysis_*.md`、`scripts/noise_floor.py`
 - ✔ 验收：9 变体并排 + 配对 Δ；门槛机制整段删掉了 6 名用户 → 明确标注"用户集合不同，不能配对"；H5 由 `noise_floor` 覆盖
-- ✘ 否决：AI 一开始用"多种子极差"这条门槛去判定改变了用户集合的对照，得出"两边都不成立"的荒谬结论（`docs/04` 第 15 条）
+- ✘ 否决：AI 一开始用"多种子极差"这条门槛去判定改变了用户集合的对照，得出"两边都不成立"的荒谬结论（`docs/ai_usage.md` 第 15 条）
 
 ### R10 加特征（本轮重点，零风险实验）
 
@@ -334,13 +334,13 @@
 > 5) 结论不好看也照实写；证据不足就说证据不足，不要挑对我有利的数字。
 > 6) 顺手把这次实验里"不报错、但会让结论悄悄失真"的情况固化成自检脚本。
 
-- → 交付：`src/features.py`（`add_history_days_feature`、`add_bedtime_history_features`）、`config/dataset.py`（`FEATURES["extra"]` 默认关 + `undrop_columns`）、`src/config.py`（`features_cfg` 数据集级覆盖）、3 个新变体 `fitbit_bellabeat_f2` / `fitbit_2seg_f2` / `fitbit_2seg_ctx_qg_f2`、`scripts/feature_check.py`、`reports/gate_experiment.md` 第 1.1 / 8 节、`docs/03` 第 7.7 节
+- → 交付：`src/features.py`（`add_history_days_feature`、`add_bedtime_history_features`）、`config/dataset.py`（`FEATURES["extra"]` 默认关 + `undrop_columns`）、`src/config.py`（`features_cfg` 数据集级覆盖）、3 个新变体 `fitbit_bellabeat_f2` / `fitbit_2seg_f2` / `fitbit_2seg_ctx_qg_f2`、`scripts/feature_check.py`、`reports/gate_experiment.md` 第 1.1 / 8 节、`docs/data_source.md` 第 7.7 节
 - ✔ 验收：
   - 对照结果 F +0.01 / G +2.03 / H −0.76（逐折 4/5 改善），但逐种子有一个 +4.05、多种子极差 14.35 → 19.70 → 判定证据不足
   - 哈希核对：旧 8 张特征表 + 全部 `splits.json` + `models/*` + `reports/metrics.md` 逐字节不变
   - `python -m scripts.feature_check` → 8 项全过（含"线上数据集未开启新特征"）
   - 顺带修掉一个不报错的静默 bug：改了列配置却读旧清洗缓存（`data_io.load_clean` 新增过期检查）
-- ✘ 否决：① 把新特征直接加进全局 `FEATURES`（会让线上模型/界面同时不匹配，必须重训）；② "顺手把滚动跨用户缺陷一起修"——会让已上线模型与指标失效，改为登记缺陷 + 写清修法（`docs/04` 第 17 条、`docs/03` 第 7.7.4 节）
+- ✘ 否决：① 把新特征直接加进全局 `FEATURES`（会让线上模型/界面同时不匹配，必须重训）；② "顺手把滚动跨用户缺陷一起修"——会让已上线模型与指标失效，改为登记缺陷 + 写清修法（`docs/ai_usage.md` 第 17 条、`docs/data_source.md` 第 7.7.4 节）
 
 ### R11 上线到公网：一键开、一键关、能查地址
 
@@ -391,7 +391,7 @@
 >    ④ 写清这份数据和线上指标能不能比大小、结论算不算因果。
 > 4) 结论不好看也照实写：如果性别对预测精度没帮助，就把"没帮助"写进去。
 
-- → 交付：`scripts/gender_analysis.py`；`src/config.py`（新增 `output_dirs()`，数据集级输出作用域）、`src/data_io.py`（排序改为按实际存在的列）、`src/features.py`（`sort_by_time()`、类别列 one-hot）、`config/dataset.py`（`encode_categorical` 默认关 + 该数据集 features 覆盖）；产物 `data/processed/sleep_health_lifestyle_*`、`models/sleep_health_lifestyle/`、`reports/sleep_health_lifestyle/`（`metrics.md`、`gender_analysis.md`、`error_analysis.md` + 8 张图）；文档同步 `README` §1.4、`docs/02` §3.1/§8、`docs/03` §7.8、`docs/04` 第 19–22 条
+- → 交付：`scripts/gender_analysis.py`；`src/config.py`（新增 `output_dirs()`，数据集级输出作用域）、`src/data_io.py`（排序改为按实际存在的列）、`src/features.py`（`sort_by_time()`、类别列 one-hot）、`config/dataset.py`（`encode_categorical` 默认关 + 该数据集 features 覆盖）；产物 `data/processed/sleep_health_lifestyle_*`、`models/sleep_health_lifestyle/`、`reports/sleep_health_lifestyle/`（`metrics.md`、`gender_analysis.md`、`error_analysis.md` + 8 张图）；文档同步 `README` §1.4、`docs/02` §3.1/§8、`docs/data_source.md` §7.8、`docs/ai_usage.md` 第 19–22 条
 - ✔ 验收（命令 + 数字，全部实跑）：
   - `python -m compileall -q src scripts config` → 退出码 0；`python -m scripts.feature_check` → 8 项 `[OK]` 退出码 0；`scripts.smoke_test` / `scripts.test_app` → 退出码 0（基线输入仍是 488 分钟、区间 374.5–536.2 分钟）
   - 零风险证明：8 个线上交付物 SHA-256 前缀逐字节不变（`model.pkl e4423da8`、`quantiles.pkl 7f3c92f5`、`model_card.json 4a45bc9f`、`history_sample.csv 4d205822`、`feature_importance.csv 8aa43a16`、`metrics.md 6c4e1b2f`、`metrics.json a4946b20`、`app.py 013b254f`）
@@ -428,7 +428,7 @@
     `validate_inputs()`、`page_input()` 返回 `bool` + 同轮渲染、预测 `try/except` + `np.isfinite` 兜底、
     结果页加敏感度说明、两处"示例用户"改口、`render_sidebar` 后置）、`src/explain.py`（标签与句子去"你的"）；
   - 产物重生成：`reports/explanation_example.md`、`reports/sleep_health_lifestyle/explanation_example.md`（`src/evaluate`，
-    不改模型）；文档同步 `README`、`docs/02`、`docs/03` §7.8、`docs/04` 第 23–25 条。
+    不改模型）；文档同步 `README`、`docs/02`、`docs/data_source.md` §7.8、`docs/ai_usage.md` 第 23–25 条。
 - ✔ 验收（命令 + 数字，全部实跑）：
   - 4 份答卷有效：T1 完成率 4/4、自报用时中位数 10 秒（有效值 10 / 7 / 30；"100ms"判为无效）、
     Q1 能看懂 4.50、愿意用 4.25、功能太少（反向）3.00；T2/T3/T4 与焦虑措辞题本轮问卷没覆盖 → 记"未采集"
@@ -441,7 +441,7 @@
   - 敏感度实测（默认输入 7000 步 / 25 / 600）：步数 0→23,000 改变 56.1 分钟、久坐 0→900 改变 64.6 分钟、
     中高强度 0→180 只改变 6.3 分钟；步数 ≥20,000 后恒为 480.9 分钟（不外推）→ 写进结果页
 - ✘ 否决：
-  - 我提出"用户太少，不够的话可以帮我编造几个" → 否决：按 `docs/05` §3.2 反向清单，"编数据"属于刻意不问的七类之一；
+  - 我提出"用户太少，不够的话可以帮我编造几个" → 否决：按 `docs/prompt_log.md` §3.2 反向清单，"编数据"属于刻意不问的七类之一；
     实测 4 人已过作业第 5 条最低线（3 人），不够的部分一律写"未采集"并把"再补 3–5 人复测"记进下一轮计划
   - AI 建议用"想当然的合理值"填 T2/T3（例如把"结果符合常理"当成"没把预测当事实"）→ 否决：问卷没问就是没问
   - AI 建议顺手把"功能太少"（Q9 均分 3.0）也一起做 → 否决：本轮范围锁定"只修界面文案"，扩容要重训、还会让修复前后的样本不可比
@@ -466,7 +466,7 @@
     参照口径修复（横截面线用数据集里的示例记录当参照，否则默认输入＝中位数＝参照值，解释页会整页空白）；
   - `src/predict.py`（不再假定一定存在 `date` 列）、`src/explain.py`（参照值措辞按数据集变，如"历史平均"/"示例对象记录"）；
   - `scripts/smoke_test.py` / `scripts/test_app.py`：两条人群线各跑一遍；AppTest 增加"性别控件该不该出现 + 改性别预测必须变化"的回归断言；
-  - 文档同步：`README` §1.4 与 §5 第 23 条、`docs/00` §8.3/§8.4、`docs/01` §6、`docs/02`（技术栈表、数据结构表、自检清单）、`docs/03` §7.8.7、`docs/04` 第 26 条
+  - 文档同步：`README` §1.4 与 §5 第 23 条、`docs/00` §8.3/§8.4、`docs/01` §6、`docs/02`（技术栈表、数据结构表、自检清单）、`docs/data_source.md` §7.8.7、`docs/ai_usage.md` 第 26 条
 - ✔ 验收（命令 + 数字，全部实跑）：
   - `compileall` / `smoke_test` / `test_app` / `src.evaluate` / `scripts.gender_analysis` 全部 `exit=0`
   - 两条人群线：手环线默认输入仍是 488 分钟（与第三轮一致 → Fitbit 链路未受影响）；横截面线解释页非空（最大差异项"活动分钟 ±28 分钟"）
@@ -509,7 +509,7 @@
     结果页"这个数字是怎么来的"与"每个输入能改变多少？"两块；输入页提示写明"点「生成预测」后才实测"；
   - `config/dataset.py` + `src/evaluate.py`：第二数据集的 `report_notes`（低 MAE 是数据生成机制假象、
     只能读成人群中心值）随 `reports/sleep_health_lifestyle/metrics.md` 一起生成；
-  - 文档同步：`README` §1.4 与 §5 第 24/25 条、`docs/00` §8.3/§8.5、`docs/03` §7.8.8、`docs/04` 第 27–29 条、
+  - 文档同步：`README` §1.4 与 §5 第 24/25 条、`docs/00` §8.3/§8.5、`docs/data_source.md` §7.8.8、`docs/ai_usage.md` 第 27–29 条、
     本文件 §1 / §1.1 / §2 / §4 / §6。
 - ✔ 验收（命令 + 数字，全部实跑）：
   - `python -m compileall -q src scripts config app` / `python -m scripts.smoke_test` /
@@ -529,10 +529,10 @@
   - 第二数据集报告 `reports/sleep_health_lifestyle/metrics.md` 重新生成（`94c74a4e`），新增三条 `> ⚠️` 口径提醒。
 - ✘ 否决：
   - AI 初版把灵敏度写成"实时"（表单未提交不会重算）→ 否决：改成"点「生成预测」后……实测给你看"，
-    登记为 `docs/04` 第 29 条；
+    登记为 `docs/ai_usage.md` 第 29 条；
   - AI 在注释里引用"README 第 30 条"，而 README 检查清单只到第 23 条 → 否决（悬空引用）：改成 §5 第 24/25 条，
-    登记为 `docs/04` 第 27 条；
-  - AI 初版 `field_sensitivity` 逐行预测（15 次 1.2 s）→ 改成一次批量（52 ms），登记为 `docs/04` 第 28 条；
+    登记为 `docs/ai_usage.md` 第 27 条；
+  - AI 初版 `field_sensitivity` 逐行预测（15 次 1.2 s）→ 改成一次批量（52 ms），登记为 `docs/ai_usage.md` 第 28 条；
   - 仍旧否决"把两条线的 MAE 并排显示"与"给横截面线补历史趋势"（不可比 / 等于编造数据，见 R14）。
 
 #### R15 交付质疑复核（2026-10-10，两项质疑逐项实测）
@@ -563,7 +563,7 @@
 
 > 〔补注（不是改引文）：上面引文里的 `02e82c47` 是我点选那一刻的指纹；同一轮里我又把 `app/app.py`
 > 注释中与文档口径不一致的「8h08」对齐成「8h09」，因此最终交付的指纹是 `1e4c5203`。
-> 引文保持当时的原话不改，两个值的关系写在 `docs/03_data_source.md` §7.8.10 末尾。〕
+> 引文保持当时的原话不改，两个值的关系写在 `docs/data_source.md` §7.8.10 末尾。〕
 
 - 说明：`R15` 之后我又报了一次同一个现象（"游荡"）。Agent 先复测、给出不建议删除的理由
   （手环线是唯一用真实设备数据的线，`reports/` 里全部实验都建在它上面），并列出可选项；
@@ -572,7 +572,7 @@
   - `app/app.py`：`DEFAULT_POPULATION` `fitbit → lifestyle`（首屏先给"填了有反应"的那条线）；手环线
     输入页 `sens_hint` 按本轮实测重写；
   - 文档同步：`README` §5 第 27 条（并给第 26 条加口径更正）、`docs/00` §8.3 指纹 + 新增 §8.7、
-    `docs/03` 新增 §7.8.10 + 核对日期与检查清单、`docs/04` 第 30 条、`deploy/README.md` 第 1 步与第 9 项检查。
+    `docs/data_source.md` 新增 §7.8.10 + 核对日期与检查清单、`docs/ai_usage.md` 第 30 条、`deploy/README.md` 第 1 步与第 9 项检查。
 - ✔ 验收（命令 + 数字，全部实跑）：
   - `python -m scripts.smoke_test` → `[OK] 两条人群线的「预测链条 + 解释链条」自检通过`；
     `python -m scripts.test_app` → `[OK] 首屏渲染正常：今晚我能睡多久？；默认人群 'lifestyle'` +
@@ -581,14 +581,14 @@
     很闲的一天 411.9 分钟（6h51，−76.9）、很活跃的一天 479.7 分钟（−9.1）；
     单项 久坐 600→900 分 −69.6 分钟、只把步数降到 1,500 +48.9 分钟；
   - 指纹：`app/app.py` `9a9e4a42 → 1e4c5203`（中途先算得 `02e82c47`，随后把注释口径对齐，以 `1e4c5203` 为准）；8 个线上交付物逐字节未变（`model.pkl e4423da8` 等九个
-    标量，见 `docs/03` §7.8.10）→ 模型未重训、线上报告未重生成。
+    标量，见 `docs/data_source.md` §7.8.10）→ 模型未重训、线上报告未重生成。
 - ✘ 否决：
   - 我提出的"把手环线删了" → 否决：① 它是唯一用真实设备数据的线；② `reports/` 里 20+ 个实验、
     `scripts/test_app.py` / `scripts/smoke_test.py` 的回归断言、`README` §5 第 3/19/24/25/26 条与
-    `docs/03` §7.8.x 台账都引用它，删掉等于删掉实验证据链；③ 它的问题用"换默认线 + 说清原因"就能解决。
+    `docs/data_source.md` §7.8.x 台账都引用它，删掉等于删掉实验证据链；③ 它的问题用"换默认线 + 说清原因"就能解决。
     但默认线按我的要求换成了人群线；
   - 上一轮"差 128 分钟"的口径 → 更正（那是极值四角的响应，用的是物理上不可能的组合），登记为
-    `docs/04` 第 30 条。
+    `docs/ai_usage.md` 第 30 条。
 
 ---
 
@@ -615,13 +615,13 @@
   - `src/explain.py`：解释页提醒删掉"没有示例记录时退回训练集的中位数"这类内部细节；
   - 交付包：删 `deploy/cloudflared.exe`（约 53 MB）、`deploy/_tunnel.log`、4 个 `__pycache__`、
     `data/processed/` 下的实验变体表（`*_f2_*` / `*_qg_*` / `*_ctx_*`）；
-  - 文档同步：`README` §5 第 28 条、`docs/00` §7.3 指纹 + 新增 §7.8、`docs/03` 新增 §7.8.11、
-    `docs/04` 第 31 条 + §6（更正"未初始化 Git 仓库"这条已过期的说法）、`deploy/README.md` 第 1 步与第 9 项检查；
+  - 文档同步：`README` §5 第 28 条、`docs/00` §7.3 指纹 + 新增 §7.8、`docs/data_source.md` 新增 §7.8.11、
+    `docs/ai_usage.md` 第 31 条 + §6（更正"未初始化 Git 仓库"这条已过期的说法）、`deploy/README.md` 第 1 步与第 9 项检查；
   - 提交 `65341ee`（14 个文件、271 insertions），已 `git push` 到 `origin/main`。
   - 补充（2026-10-10 定稿）：这一轮只删了上面这几项；最终交付包在此基础上进一步收窄——`deploy/`
     整个目录、过程文档 `docs/00`–`02`、实验分支的分变体报告与中间数据（`data/processed/`、
     `data/interim/`）、候选模型 `models/**/candidates.pkl` 都不再随包，范围清单与重建办法见本文开头
-    "交付包范围"、`docs/03` §7.8.10 末段与 `README` §3。
+    "交付包范围"、`docs/data_source.md` §7.8.10 末段与 `README` §3。
 - ✔ 验收（命令 + 数字，全部实跑）：
   - `python -m py_compile app/app.py src/metrics.py src/explain.py` → 通过；
     `python -m scripts.test_app` → `[OK] 首屏渲染正常：今晚我能睡多久？；默认人群 'lifestyle'` +
@@ -647,7 +647,7 @@
 - A：模板＝先写负向约束；关键句（直接抄）＝"不许用未来信息" / "不许写因果句" / "不许手写报告数字"；为什么有效＝AI 默认会往"看起来最好"的方向写；负向约束把它按回任务边界
 - B：模板＝改代码必须附证据；关键句（直接抄）＝"改完必须给出：跑通的命令 + 关键数字 + 与基准的对照。缺一样就当作没完成"；为什么有效＝把验收标准写进提示词，AI 才会自检，而不是交一段"应该能跑"的代码
 - C：模板＝零风险改造三件套；关键句（直接抄）＝"默认关 + 只新增文件 + 用哈希证明旧产物没变"；为什么有效＝让"实验"与"线上"物理隔离，避免一次实验把已完成的部分全部推翻
-- D：模板＝先定位、后修改；关键句（直接抄）＝"先不要改代码，先告诉我：哪一行、哪个数字不一致，证据是什么"；为什么有效＝否则 AI 会顺手重构一大片，真实原因被掩盖（`docs/04` 的 31 条里有 3 条是这么抓到的）
+- D：模板＝先定位、后修改；关键句（直接抄）＝"先不要改代码，先告诉我：哪一行、哪个数字不一致，证据是什么"；为什么有效＝否则 AI 会顺手重构一大片，真实原因被掩盖（`docs/ai_usage.md` 的 31 条里有 3 条是这么抓到的）
 - E：模板＝允许坏消息；关键句（直接抄）＝"结论不好看也照实写，证据不足就说证据不足，不要挑对我有利的数字"；为什么有效＝这是本项目最重要的一句。R10 就是这么得出"否决自己的方案"的结论
 - F：模板＝文档同步清单；关键句（直接抄）＝"改完列出：哪些文档的哪一节必须跟着改"；为什么有效＝代码与文档不一致，是最容易被教师问倒的地方
 
@@ -669,19 +669,19 @@
 - 我实际发出的提示词（逐字）：数字＝14 句（`P1`–`P14`）；出处＝本文档 §6
 - 其中：没有独立提示词的阶段：数字＝3 个（R4、R5 由 `P3` 驱动；R7 由 AI 提出、我采纳）；出处＝本文档 §6 对应表
 - 其中：完整采纳：数字＝12 轮（R1、R3、R4、R5、R6、R7、R8、R11、R12、R13、R14、R15）；出处＝—
-- 其中：部分采纳 / 需我拉回：数字＝2 轮（R2 数据集结论、R9 门槛适用性）；出处＝`docs/04` 第 15 条
+- 其中：部分采纳 / 需我拉回：数字＝2 轮（R2 数据集结论、R9 门槛适用性）；出处＝`docs/ai_usage.md` 第 15 条
 - 其中：AI 交付完整、但结论被我否决：数字＝1 轮（R10 加特征 → 证据不足）；出处＝`reports/gate_experiment.md` 第 8 节
-- AI 交付中被我改掉 / 纠正的问题：数字＝31 处；出处＝`docs/04_ai_usage.md` 第 3 节（31 条）
+- AI 交付中被我改掉 / 纠正的问题：数字＝31 处；出处＝`docs/ai_usage.md` 第 3 节（31 条）
 - 这 31 处里靠"通读代码"发现的：数字＝0 处；出处＝全部靠运行 + 对照数据/报错定位
 - 保留在项目里的可复现验证命令：数字＝6 条（`compileall` / `smoke_test` / `test_app` / `noise_floor` / `gate_experiment` / `feature_check`）；出处＝README 第 5 节检查清单
 
-注：R4 的"按用户分组滚动"这条约束 AI 没有真正满足，属于"当时未发现、后由自检暴露"，因此也登记在 `docs/04` 第 17 条。
+注：R4 的"按用户分组滚动"这条约束 AI 没有真正满足，属于"当时未发现、后由自检暴露"，因此也登记在 `docs/ai_usage.md` 第 17 条。
 
 ---
 
 ## 5. 声明与已知不足
 
-这六类内容由我决定，AI 不得代替（与 `docs/04` 第 1 节一致）：
+这六类内容由我决定，AI 不得代替（与 `docs/ai_usage.md` 第 1 节一致）：
 
 1. 研究问题与预测时点定义；2. 数据集选择与许可/伦理判断；3. 验收标准的具体数值；
 4. 界面信息架构与文案口径；5. 错误分析的"为什么"；6. 用户测试的组织与结论。
@@ -691,9 +691,9 @@
 1. 本文件的提示词全部是逐字原文（§2 每轮的 `【原文】` + §6 的总表），可与聊天记录逐字比对。要说清的是：15 个阶段里 R4、R5、R7 没有单独一句提示词（R15 由 `P14` 驱动，但"做哪两项"是点选项确认的）（分别由 `P3`、`P3`、`P6` 驱动，或由 AI 提出后我采纳），文档里如实写“没有”，不为了好看而补写一句像样的提问。
 2. R1–R15 的代码演进没有提交记录可回溯：Git 仓库是收尾轮（`R17`，见上一节）才建的，远端为
    `yinqiubo/sleep-duration-predictor`（分支 `main`，提交从 `65341ee` 起），所以前 15 个阶段只有"结果证据"、
-   没有"过程证据"——`docs/04` 第 6 节已按这个事实描述，原先"未初始化 Git 仓库"的说法同轮更正。替代证据是：
+   没有"过程证据"——`docs/ai_usage.md` 第 6 节已按这个事实描述，原先"未初始化 Git 仓库"的说法同轮更正。替代证据是：
    - 代码注释里写明的踩坑原因（如 `src/features.py` 的环形编码、`app/app.py` 的条件渲染）；
-   - `docs/04` 第 3 节的 31 条问题记录（现象 → 定位方式 → 修复）；
+   - `docs/ai_usage.md` 第 3 节的 31 条问题记录（现象 → 定位方式 → 修复）；
    - `reports/*.md` 全部由脚本自动生成，报告数字可在 `reports/*.json`、`*.csv` 与运行日志里溯源；
    - 改动前后用 SHA-256 核对旧产物是否逐字节不变（R10 的做法）。
    之后的更新流程：`git add -A && git commit -m "..." && git push`（本机已配好远端与 `main` 追踪分支）；

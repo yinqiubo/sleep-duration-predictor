@@ -11,7 +11,7 @@ Step 2 路线 2 新增了两类特征（由 config/dataset.py::FEATURES["extra"]
     history_days              该用户此前已有多少天记录（特征可靠性的直接指标）；
     bedtime_circular_history  就寝时刻的环形滞后 + “最近 N 天几点睡、有多规律”。
 为什么默认关、以及"加特征"为什么必须用同一批行的配对对照来判定，见
-reports/gate_experiment.md 与 docs/03_data_source.md 第 7.7 节。
+reports/gate_experiment.md 与 docs/data_source.md 第 7.7 节。
 """
 
 from __future__ import annotations
@@ -162,7 +162,7 @@ def add_bedtime_history_features(
           这就是"7 天规律性"这个特征。
     ⚠️ 滚动统计一律先按用户分组 shift(1)，且**用 groupby(...).transform 保证窗口不跨用户**
     （同文件 add_rolling_features 用的是全局 rolling，窗口会越过用户边界，属于历史遗留
-    缺陷，见 docs/04_ai_usage.md 与 reports/gate_experiment.md 第 8 节——本轮不修，
+    缺陷，见 docs/ai_usage.md 与 reports/gate_experiment.md 第 8 节——本轮不修，
     因为改动基准特征值等于让线上模型与 reports/metrics.md 失效）。
     """
     sin_col, cos_col = "bedtime_minutes_sin", "bedtime_minutes_cos"
